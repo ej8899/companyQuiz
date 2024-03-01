@@ -14,7 +14,7 @@ function Options({ options, onAnswerClick }) {
       {shuffledOptions.map((option, index) => (
         <button
           key={index}
-          className="option"
+          className="option text-2xl text-sky-700 p-2 m-2 border-2 border-slate-500 rounded-lg"
           onClick={() => onAnswerClick(option)}
         >
           {option}

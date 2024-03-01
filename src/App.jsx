@@ -7,7 +7,7 @@ import QuizApp from './pages/QuizApp'
 function App() {
 
   return (
-    <div className='w-full border-2 border-gray-800'>
+    <div className=''>
     <Navbar/>
     <QuizApp/>
     <MyFooter />
