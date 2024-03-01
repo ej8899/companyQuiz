@@ -4,7 +4,7 @@
 const fetchImage = async (keyword, retryCount = 3) => {
   return;
   try {
-    const response = await fetch('https://api.unsplash.com/photos/random?query=' + keyword + '&orientation=portrait&w=300&client_id=', {
+    const response = await fetch('https://api.unsplash.com/photos/random?query=' + keyword + '&orientation=landscape&w=200&client_id=', {
       headers: {
         'Authorization': 'Client-ID 4fRj7AMw1h-PMqQ8NDHBvg7U4_nzSuGISxujk6CKfP0' // Replace with your Unsplash API key
       }

@@ -1,7 +1,8 @@
 
 'use client';
 
-import { Footer } from 'flowbite-react';
+import { DarkThemeToggle } from 'flowbite-react';
+
 import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-icons/bs';
 import { globalconfig } from '../config.js';
 
@@ -13,8 +14,8 @@ export default function MyFooter() {
       <span className="ml-2">{globalconfig.companyName}</span>
     </div>
     <div className="flex items-end items-center p-0 ml-4 border-0">
-    more here
-
+    <DarkThemeToggle className="text-gray-500 hover:text-gray-900 dark:hover:text-white" /> | 
+    soc links here
     </div>
   </div>
   );

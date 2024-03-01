@@ -22,13 +22,13 @@ const quizData = [
     question: 'What is phishing?',
     options: ['A type of fishing sport.', 'A fraudulent attempt to obtain sensitive information through deceitful means.', 'A form of exercise.'],
     correctAnswer: 'A fraudulent attempt to obtain sensitive information through deceitful means.',
-    image: 'phishing',
+    image: 'phishing computer security',
   },
   {
     question: 'When should you lock your computer?',
     options: ['Only when you leave the office for the day.', 'Whenever you step away from your desk or leave your computer unattended.', 'Never, because it\'s unnecessary.'],
     correctAnswer: 'Whenever you step away from your desk or leave your computer unattended.',
-    image: 'computer lock',
+    image: 'computer security',
   },
   {
     question: 'What does "HTTPS" stand for in a website URL?',
@@ -58,7 +58,7 @@ const quizData = [
     question: 'When setting up Wi-Fi at home or in the office, what should you do to enhance security?',
     options: ['Keep the default Wi-Fi password.', 'Use an easily guessable password.', 'Choose a strong, unique password and enable WPA2/WPA3 encryption.'],
     correctAnswer: 'Choose a strong, unique password and enable WPA2/WPA3 encryption.',
-    image: 'wifi security',
+    image: 'internet wifi security',
   },
   {
     question: 'What is two-factor authentication (2FA)?',
@@ -98,7 +98,7 @@ const quizData = [
       'Sharing your data with everyone.'
     ],
     correctAnswer: 'Using a VPN (Virtual Private Network).',
-    image: 'vpn',
+    image: 'public computer',
   },
   {
     question: 'What is a strong email password practice?',
@@ -118,7 +118,7 @@ const quizData = [
       'Trust the website\'s appearance; if it looks professional, it\'s secure.'
     ],
     correctAnswer: 'Look for the padlock icon in the browser\'s address bar and use secure websites (HTTPS).',
-    image: 'https',
+    image: 'computer security',
   },
   {
     question: 'What is the most secure way to dispose of old documents containing sensitive information?',
@@ -188,7 +188,7 @@ const quizData = [
       'To block unwanted pop-up windows, often used for advertising or malicious purposes.'
     ],
     correctAnswer: 'To block unwanted pop-up windows, often used for advertising or malicious purposes.',
-    image: 'computer popup',
+    image: 'computer ads',
   },
   {
     question: 'What is the best practice when it comes to software updates on your devices?',
@@ -228,7 +228,7 @@ const quizData = [
       'Hand it over to IT or a responsible authority for security reasons.'
     ],
     correctAnswer: 'Hand it over to IT or a responsible authority for security reasons.',
-    image: 'usb thumb drive',
+    image: 'computer usb',
   },
   {
     question: 'Why is it important to log out of your online accounts when using public computers?',
@@ -258,7 +258,7 @@ const quizData = [
       'Share your PIN or password with friends for convenience.'
     ],
     correctAnswer: 'Use a strong PIN, password, or biometric authentication (e.g., fingerprint or face recognition).',
-    image: 'phone security',
+    image: 'smartphone security',
   },
 ];
 
