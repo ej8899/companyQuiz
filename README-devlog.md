@@ -5,3 +5,4 @@
 - install tailwindcss
 - add sample quiz data
 - add global config file
+- add flowbite library
