@@ -1,5 +1,5 @@
 // config.js
-const config = {
+export const globalconfig = {
   //
   // CONFIG for company deploying CompanyQuiz! app
   //
@@ -30,4 +30,3 @@ const config = {
   },
 };
 
-export default config;
