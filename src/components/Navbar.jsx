@@ -23,7 +23,6 @@ const TitleBar = () => {
 
   return (
     <div className="bg-gray-800 text-white p-2 flex flex-row items-center justify-between px-6 bg-opacity-85">
-      test
       <div className="flex items-center">
         <img src="http://rpi.local/public/logo.jpg" alt="Company Logo" className="w-64 h-32 mr-2 rounded-lg" />
         <div className="text-5xl font-thin pl-4">

@@ -7,7 +7,7 @@ import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitter } from 'react-
 export default function MyFooter() {
   return (
     
-      <div className="w-full">
+      <div className="w-full text-slate-700 mt-4">
         footer to build
       </div>
   );
