@@ -1,24 +1,22 @@
 // imageSearch.js
-// import axios from 'axios';
+
 
 const fetchImage = async (keyword, retryCount = 3) => {
   return;
   try {
-    const response = await axios.get('https://api.unsplash.com/photos/random', {
-      params: {
-        query: keyword,
-        orientation: 'portrait', // Landscape-oriented images
-        client_id: '', // Replace with your Unsplash API key
-        w: 400, // Set the maximum width to 600 pixels
-      },
+    const response = await fetch('https://api.unsplash.com/photos/random?query=' + keyword + '&orientation=portrait&w=300&client_id=', {
+      headers: {
+        'Authorization': 'Client-ID 4fRj7AMw1h-PMqQ8NDHBvg7U4_nzSuGISxujk6CKfP0' // Replace with your Unsplash API key
+      }
     });
 
-    if (response.status === 200) {
-      const image = response.data.urls.regular;
-      return image;
-    } else {
+    if (!response.ok) {
       throw new Error(`Unsplash API returned status code ${response.status}`);
     }
+
+    const responseData = await response.json();
+    const image = responseData.urls.regular;
+    return image;
   } catch (error) {
     console.error('Error fetching image from Unsplash:', error);
     if (retryCount > 0) {
