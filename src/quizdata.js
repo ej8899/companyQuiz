@@ -52,7 +52,7 @@ const quizData = [
     question: 'What should you do if you suspect your computer is infected with malware?',
     options: ['Keep using it as usual.', 'Run a trusted antivirus scan and follow its recommendations.', 'Shut it down and never use it again.'],
     correctAnswer: 'Run a trusted antivirus scan and follow its recommendations.',
-    image: 'malware',
+    image: 'malware computer virus',
   },
   {
     question: 'When setting up Wi-Fi at home or in the office, what should you do to enhance security?',
