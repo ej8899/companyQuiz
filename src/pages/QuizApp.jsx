@@ -10,6 +10,7 @@ import { globalconfig } from '../config.js';
 import  quizData from '../quizdata.js'; 
 
 import { fetchImage } from '../utilities/imageSearch';
+import ProgressBar from '../components/ProgressBar.jsx';
 
 function QuizApp() {
   const [quizQuestions, setQuizQuestions] = useState([]);
@@ -127,6 +128,8 @@ function QuizApp() {
   };
 
   return (
+      <>
+      <ProgressBar currentQuestionIndex={currentQuestionIndex} totalQuestions={quizQuestions.length} />
       <div className={`flex flex-col justify-center h-svh z-50 overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
       {showRetryPrompt ? (
         <div>
@@ -161,6 +164,7 @@ function QuizApp() {
         </div>
       )}
     </div>
+    </>
   );
 }
 
