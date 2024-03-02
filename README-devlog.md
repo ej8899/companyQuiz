@@ -9,3 +9,5 @@
 03/02/24 - Day 02
 - activate light/dark theme toggle w persistence to localstorage
 - tweak styling
+- restructure quizData to an object (for future growth)
+- add quiz key handler A, B, C etc
