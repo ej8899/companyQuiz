@@ -73,41 +73,47 @@ function QuizApp() {
 
   const handleAnswerClick = (selectedAnswer) => {
     const currentQuestion = quizQuestions[currentQuestionIndex];
+  
     if (selectedAnswer === currentQuestion.correctAnswer) {
       setScore(score + 1);
     }
-  
-    // Add the current question to the list of asked questions
-    setAskedQuestions([...askedQuestions, currentQuestion]);
-  
-    // Slide out the current question
-    setSlideOut(true);
-  
-    // Wait for the slide out animation to finish before moving to the next question
+    // Wait for a brief pause before starting the slide out animation
     setTimeout(() => {
-      // Get the next question
-      const nextQuestion = getNextQuestion();
-    
-      if (nextQuestion) {
-        // Move to the next question
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      // Slide out the current question
+      setSlideOut(true);
+  
+      // Wait for a brief pause before moving to the next question
+      setTimeout(() => {
+        // Add the current question to the list of asked questions
+        setAskedQuestions([...askedQuestions, currentQuestion]);
         // Reset slide out state
         setSlideOut(false);
-      }
-    
-      // End of the quiz (check if currentQuestionIndex is the last question)
-      if (currentQuestionIndex >= quizQuestions.length - 1) {
-        if (score >= (globalconfig.passingGrade / globalconfig.numQuestions)) {
-          setShowPassMessage(true);
-          setShowRetryPrompt(false);
+  
+        // Get the next question
+        const nextQuestion = getNextQuestion();
+  
+        if (nextQuestion) {
+          // Move to the next question after the pause
+          setTimeout(() => {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+          }, 500); // Adjust the duration of the pause before moving to the next question
         }
-        else {
-          setShowRetryPrompt(true); // Show the retry prompt
-          setShowPassMessage(false); // Hide pass message
+  
+        // End of the quiz (check if currentQuestionIndex is the last question)
+        if (currentQuestionIndex >= quizQuestions.length - 1) {
+          if (score >= globalconfig.passingGrade / globalconfig.numQuestions) {
+            setShowPassMessage(true);
+            setShowRetryPrompt(false);
+          } else {
+            setShowRetryPrompt(true); // Show the retry prompt
+            setShowPassMessage(false); // Hide pass message
+          }
         }
-      }
-    }, 500); // Wait for the slide out animation duration
+      }, 700); // Wait for the slide out animation duration
+    }, 900); // Wait for the brief pause before starting the slide out animation
   };
+  
+  
 
   const handleRetryClick = () => {
     // Reset the quiz by shuffling questions again
@@ -129,7 +135,7 @@ function QuizApp() {
 
   return (
       <>
-      <ProgressBar currentQuestionIndex={currentQuestionIndex} totalQuestions={quizQuestions.length} />
+      <ProgressBar currentQuestionIndex={currentQuestionIndex } totalQuestions={quizQuestions.length} />
       <div className={`flex flex-col justify-center h-svh z-50 overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
       {showRetryPrompt ? (
         <div>
@@ -139,17 +145,23 @@ function QuizApp() {
           <button onClick={handleRetryClick}>Retry</button>
         </div>
       ) : currentQuestionIndex < quizQuestions.length ? (
-        <div className={`quiz-container bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
+        <div className={`quiz-container flex flex-col bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
           {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
           <div className="quiz-content w-4/5">
             <h2 className="text-2xl text-slate-300">Question {currentQuestionIndex + 1}:</h2>
             <Question question={quizQuestions[currentQuestionIndex].question} />
-            <Options
-              options={quizQuestions[currentQuestionIndex].options}
-              onAnswerClick={handleAnswerClick}
-            />
-            <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
+            <div className="flex flex-col">
+              <div className="flex flex-col">
+                <Options
+                  options={quizQuestions[currentQuestionIndex].options}
+                  onAnswerClick={handleAnswerClick}
+                  correctAnswer={quizQuestions[currentQuestionIndex].correctAnswer}
+                />
+              </div>
+              <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
+            </div>
           </div>
+
         </div>
       ) : (
         <div className="quiz-container">

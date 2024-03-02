@@ -1,13 +1,22 @@
 // Options.jsx
 import { useState, useEffect, useRef } from 'react';
 
-function Options({ options, onAnswerClick }) {
+function Options({ options, onAnswerClick, correctAnswer }) {
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+
   // Shuffle the answer options
   const shuffledOptions = [...options];
-  for (let i = shuffledOptions.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
-  }
+  // TODO how to allow shuffle of items, but not after click? -perhaps shuffle when data is loaded - not now when data is being presented
+  // for (let i = shuffledOptions.length - 1; i > 0; i--) {
+  //   const j = Math.floor(Math.random() * (i + 1));
+  //   [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+  // }
+
+
+  const handleOptionClick = (option) => {
+    setSelectedAnswer(option);
+    onAnswerClick(option);
+  };
 
   // Function to convert index to letter (A, B, C, ...)
   const indexToLetter = (index) => {
@@ -34,13 +43,19 @@ function Options({ options, onAnswerClick }) {
   
 
   return (
-    <div className="options">
+    <div className="options flex flex-col">
       {shuffledOptions.map((option, index) => (
         <button
           key={index}
           ref={index === 0 ? firstButtonRef : null}
-          className="option text-2xl text-sky-600 p-2 m-2 border-2 border-slate-500 rounded-lg hover:bg-slate-500 hover:text-white text-left bg-slate-800 opacity-70 focus:outline-none"
-          onClick={() => onAnswerClick(option)}
+          className={`option text-2xl text-sky-600 p-2 m-2 border-2 border-slate-500 rounded-lg hover:bg-slate-500 hover:text-white text-left bg-slate-800 opacity-70 focus:outline-none ${
+            selectedAnswer === option
+              ? option === correctAnswer
+                ? 'border-green-500'
+                : 'border-red-500'
+              : 'border-slate-500'
+          }`}
+          onClick={() => handleOptionClick(option)}
           onKeyDown={(event) => {
             // Check if the pressed key is a valid option
             if (validKeyCodes.includes(event.keyCode)) {
@@ -50,7 +65,7 @@ function Options({ options, onAnswerClick }) {
               if (selectedOptionIndex < shuffledOptions.length) {
                 const selectedOption = shuffledOptions[selectedOptionIndex];
                 // Call the onAnswerClick function with the selected option
-                onAnswerClick(selectedOption);
+                handleOptionClick(selectedOption);
               }
             }
           }}
