@@ -6,3 +6,6 @@
 - add structure for MVP stage 1 including sample data, render test questions, scoring, and results
 - add unsplash image 'decoration'
 
+03/02/24 - Day 02
+- activate light/dark theme toggle w persistence to localstorage
+- tweak styling
