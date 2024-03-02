@@ -136,16 +136,16 @@ function QuizApp() {
           <button onClick={handleRetryClick}>Retry</button>
         </div>
       ) : currentQuestionIndex < quizQuestions.length ? (
-        <div className={`quiz-container  p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
+        <div className={`quiz-container bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
           {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
           <div className="quiz-content w-4/5">
-            <h2 className="text-2xl">Question {currentQuestionIndex + 1}:</h2>
+            <h2 className="text-2xl text-slate-300">Question {currentQuestionIndex + 1}:</h2>
             <Question question={quizQuestions[currentQuestionIndex].question} />
             <Options
               options={quizQuestions[currentQuestionIndex].options}
               onAnswerClick={handleAnswerClick}
             />
-            <p className="text-2xl">Your Score: {score} / {quizQuestions.length}</p>
+            <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
           </div>
         </div>
       ) : (
