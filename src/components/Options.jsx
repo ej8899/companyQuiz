@@ -9,6 +9,11 @@ function Options({ options, onAnswerClick }) {
     [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
   }
 
+  // Function to convert index to letter (A, B, C, ...)
+  const indexToLetter = (index) => {
+    return String.fromCharCode(65 + index); // 65 is ASCII code for 'A'
+  };
+
   return (
     <div className="options">
       {shuffledOptions.map((option, index) => (
@@ -17,7 +22,7 @@ function Options({ options, onAnswerClick }) {
           className="option text-2xl text-sky-700 p-2 m-2 border-2 border-slate-500 rounded-lg hover:bg-slate-500 hover:text-white"
           onClick={() => onAnswerClick(option)}
         >
-          {option}
+          <span className="border-2 border-slate-600 mr-2 pl-2 pr-2 rounded-lg">{indexToLetter(index)}</span> {option}
         </button>
       ))}
     </div>
