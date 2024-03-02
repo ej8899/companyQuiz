@@ -19,6 +19,7 @@ function QuizApp() {
   const [showPassMessage, setShowPassMessage] = useState(false);
   const [askedQuestions, setAskedQuestions] = useState([]);
   const [image, setImage] = useState(null);
+  const [slideOut, setSlideOut] = useState(false);
 
   // Shuffle function to randomize questions
   const shuffleArray = (array) => {
@@ -78,28 +79,34 @@ function QuizApp() {
     // Add the current question to the list of asked questions
     setAskedQuestions([...askedQuestions, currentQuestion]);
   
-    // Get the next question
-    const nextQuestion = getNextQuestion();
+    // Slide out the current question
+    setSlideOut(true);
   
-    if (nextQuestion) {
-      // Move to the next question
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }
-  
-    // End of the quiz (check if currentQuestionIndex is the last question)
-    if (currentQuestionIndex >= quizQuestions.length - 1) {
-      if (score >= (globalconfig.passingGrade / globalconfig.numQuestions)) {
-        setShowPassMessage(true);
-        setShowRetryPrompt(false);
+    // Wait for the slide out animation to finish before moving to the next question
+    setTimeout(() => {
+      // Get the next question
+      const nextQuestion = getNextQuestion();
+    
+      if (nextQuestion) {
+        // Move to the next question
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        // Reset slide out state
+        setSlideOut(false);
       }
-      else {
-        setShowRetryPrompt(true); // Show the retry prompt
-        setShowPassMessage(false); // Hide pass message
+    
+      // End of the quiz (check if currentQuestionIndex is the last question)
+      if (currentQuestionIndex >= quizQuestions.length - 1) {
+        if (score >= (globalconfig.passingGrade / globalconfig.numQuestions)) {
+          setShowPassMessage(true);
+          setShowRetryPrompt(false);
+        }
+        else {
+          setShowRetryPrompt(true); // Show the retry prompt
+          setShowPassMessage(false); // Hide pass message
+        }
       }
-    }
+    }, 500); // Wait for the slide out animation duration
   };
-  
-  
 
   const handleRetryClick = () => {
     // Reset the quiz by shuffling questions again
@@ -120,7 +127,7 @@ function QuizApp() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-gray-200 dark:bg-gray-400 h-full">
+    <div className="flex flex-col justify-center items-center bg-gray-100 dark:bg-gray-400 h-full">
       {showRetryPrompt ? (
         <div>
           <h2>Quiz Complete!</h2>
@@ -129,7 +136,7 @@ function QuizApp() {
           <button onClick={handleRetryClick}>Retry</button>
         </div>
       ) : currentQuestionIndex < quizQuestions.length ? (
-        <div className="quiz-container border-2 border-gray-500 border-opacity-50 rounded-lg p-4 m-2">
+        <div className={`quiz-container border-2 border-gray-500 border-opacity-50 rounded-lg p-4 m-2 ${slideOut ? 'slide-out' : 'slide-in'}`}>
           {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
           <div className="quiz-content w-4/5">
             <h2 className="text-2xl">Question {currentQuestionIndex + 1}:</h2>
