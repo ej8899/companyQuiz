@@ -19,7 +19,7 @@ function Options({ options, onAnswerClick }) {
       {shuffledOptions.map((option, index) => (
         <button
           key={index}
-          className="option text-2xl text-sky-700 p-2 m-2 border-2 border-slate-500 rounded-lg hover:bg-slate-500 hover:text-white"
+          className="option text-2xl text-sky-700 p-2 m-2 border-2 border-slate-500 rounded-lg hover:bg-slate-500 hover:text-white text-left"
           onClick={() => onAnswerClick(option)}
         >
           <span className="border-2 border-slate-600 mr-2 pl-2 pr-2 rounded-lg">{indexToLetter(index)}</span> {option}

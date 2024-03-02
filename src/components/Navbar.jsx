@@ -65,9 +65,9 @@ export default function Ournavbar() {
   
 
   return (
-    <Navbar fluid rounded>
+    <Navbar fluid rounded className='z-50'>
       {/* Left-justified content */}
-      <div className="flex items-center w-auto justify-between">
+      <div className="flex items-center w-auto justify-between z-50">
         <Navbar.Brand href="https://erniejohnson.ca/companyquiz/">
           <img src="https://erniejohnson.ca/favicon.svg" className="mr-3 h-6 sm:h-9" alt="ErnieJohnson.ca Logo" />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Company Quiz</span>

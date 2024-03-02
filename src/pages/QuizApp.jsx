@@ -127,7 +127,7 @@ function QuizApp() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-gray-100 dark:bg-gray-400 h-full">
+    <div className="flex flex-col justify-center items-center bg-gray-100 dark:bg-gray-400 h-full z-50 overflow-hidden">
       {showRetryPrompt ? (
         <div>
           <h2>Quiz Complete!</h2>
@@ -136,7 +136,7 @@ function QuizApp() {
           <button onClick={handleRetryClick}>Retry</button>
         </div>
       ) : currentQuestionIndex < quizQuestions.length ? (
-        <div className={`quiz-container border-2 border-gray-500 border-opacity-50 rounded-lg p-4 m-2 ${slideOut ? 'slide-out' : 'slide-in'}`}>
+        <div className={`quiz-container border-2 border-gray-500 border-opacity-50 rounded-lg p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
           {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
           <div className="quiz-content w-4/5">
             <h2 className="text-2xl">Question {currentQuestionIndex + 1}:</h2>
