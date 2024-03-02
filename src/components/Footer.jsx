@@ -14,7 +14,6 @@ export default function MyFooter() {
       <span className="ml-2">{globalconfig.companyName}</span>
     </div>
     <div className="flex items-end items-center p-0 ml-4 border-0">
-    <DarkThemeToggle className="text-gray-500 hover:text-gray-900 dark:hover:text-white" /> | 
     soc links here
     </div>
   </div>
