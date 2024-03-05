@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Question from '../components/Question';
 import Options from '../components/Options';
 import Result from '../components/Result';
+import { Button } from 'flowbite-react';
 
 import { globalconfig } from '../config.js';
 
@@ -135,14 +136,17 @@ function QuizApp() {
 
   return (
       <>
+      <div className={`flex flex-col  h-dvh z-50 overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
       <ProgressBar currentQuestionIndex={currentQuestionIndex } totalQuestions={quizQuestions.length} />
-      <div className={`flex flex-col justify-center h-svh z-50 overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
+      <div className="sticky top-0 text-5xl text-slate-300 font-extrabold z-50 p-4 font-sans">{quizData.quizName}</div>
+      
+      <div className='flex flex-col justify-center h-full'>
       {showRetryPrompt ? (
-        <div>
-          <h2>Quiz Complete!</h2>
-          <p>Your Score: {score} / {quizQuestions.length}</p>
-          <p>Would you like to try the test again?</p>
-          <button onClick={handleRetryClick}>Retry</button>
+        <div className="bg-black bg-opacity-20 rounded-xl w-1/2 flex flex-col items-center">
+          <h2 className="text-4xl text-slate-300 font-bold ">Quiz Complete!</h2>
+          <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
+          <p className="text-2xl text-slate-400">Would you like to try the test again?</p>
+          <Button onClick={handleRetryClick}>Retry</Button>
         </div>
       ) : currentQuestionIndex < quizQuestions.length ? (
         <div className={`quiz-container flex flex-col bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
@@ -158,7 +162,7 @@ function QuizApp() {
                   correctAnswer={quizQuestions[currentQuestionIndex].correctAnswer}
                 />
               </div>
-              <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
+              <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length} (hint)</p>
             </div>
           </div>
 
@@ -169,12 +173,14 @@ function QuizApp() {
             <div>
               <h2>Congratulations, you passed!</h2>
               <p>Your Score: {score} / {quizQuestions.length}</p>
+              <Button>select a new exam</Button>
             </div>
           ) : (
             <Result score={score} totalQuestions={quizQuestions.length} />
           )}
         </div>
       )}
+      </div>
     </div>
     </>
   );
