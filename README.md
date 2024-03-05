@@ -121,3 +121,4 @@ Distributed under the MIT License. See [LICENSE](https://github.com/ej8899/compa
 ## Acknowledgements
 
 * [Shields IO badges (on readme)](https://shields.io/badges)
+* [React-Icons](https://react-icons.github.io/react-icons/)
