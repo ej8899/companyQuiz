@@ -1,7 +1,26 @@
 const quizData = {
+  quizName: 'Cyber Security Review',
   backgroundImage : 'http://www.tcmd.com/lhl/final1.jpeg',
+
+  // TODO below if not null searches unsplash for the bg image
+  backgroundImageSearch: '',
+
+  // TODO - apply a mute level to the background image
   backgroundMuteLevel : 0.5,
+
+  // TODO - below sets teh overall colors for any accents, text etc via tailwindcss colors
   colorTheme: '',
+
+
+  // TODO - make below work:
+  passingGrade: 70,
+  numQuestions: 10,
+
+  // TODO - below if set to true would show an option on quiz screen for 'help' and then remove a wrong answer from list (just blur it w styles)
+  allowHints: false,
+  
+  // TODO - source data can be blank for 'qna' type or 'ai' for AI data source (on the fly generation)
+  sourceData: '',
   qna : [
     {
       question: 'What should you do if you receive an email from an unknown sender with an attachment?',
