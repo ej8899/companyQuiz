@@ -1,3 +1,5 @@
+Don the Developer March 2024 Hackathon
+
 03/01/24 - Day 01 - Start of Hackathon
 - create logo (WIP)
 - create readme initial framework
@@ -11,3 +13,15 @@
 - tweak styling
 - restructure quizData to an object (for future growth)
 - add quiz key handler A, B, C etc
+- add quiz progress bar
+- misc other mvp stage 1 cosmetics
+
+03/03/24 - 
+- build out notion task board, populate w ideas, tasks, mvp, user stories & ref. notes
+- minor ui tweaks
+- add react-icons
+(not posted to discord)
+
+03/04/24 -
+- convert footer to slide up drawer panel
+- import google font Rubik
