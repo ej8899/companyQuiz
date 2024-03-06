@@ -1,6 +1,6 @@
 
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { DarkThemeToggle } from 'flowbite-react';
 
@@ -8,7 +8,7 @@ import { BsDribbble, BsFacebook, BsGithub, BsInstagram, BsTwitterX, BsDiscord,} 
 import { globalconfig } from '../config.js';
 
 export default function MyFooter() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const toggleDrawer = (event) => {
@@ -22,6 +22,11 @@ export default function MyFooter() {
     setIsDarkTheme(!isDarkTheme);
     document.documentElement.classList.toggle('dark');
   };
+
+  useEffect(() => {
+    // Check the current theme when the component mounts
+    setIsDarkTheme(document.documentElement.classList.contains('dark'));
+  }, []);
 
   return (
 <>
@@ -53,7 +58,7 @@ export default function MyFooter() {
         <div className="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
         <DarkThemeToggle className=''/>
         </div>
-        <div className="font-medium text-center text-gray-500 dark:text-gray-400">Theme</div>
+        <div className="font-medium text-center text-gray-500 dark:text-gray-400">{isDarkTheme ? 'Light Theme' : 'Dark Theme'}</div>
       </div>
       <div className="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
         <div className="flex justify-center items-center p-2 mx-auto mb-2 bg-gray-200 dark:bg-gray-600 rounded-full w-[48px] h-[48px] max-w-[48px] max-h-[48px]">
