@@ -27,4 +27,10 @@ Don the Developer March 2024 Hackathon
 - import google font Rubik
 
 03/05/24 - 
+- assemble wireframes for mvp stages 2 & 3
+- remove top nav bar - footer drawer will handle things (unless I change my mind again)
+
+03/06/24 -
+- create login page (will function for users and admins)
+- create landing page (WIP)
 - 
