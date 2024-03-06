@@ -135,8 +135,8 @@ function QuizApp() {
   };
 
   return (
-      <>
-      <div className={`flex flex-col  h-dvh z-50 overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
+      <div className='h-full z-0'>
+      <div className={`flex flex-col  h-full  overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
       <ProgressBar currentQuestionIndex={currentQuestionIndex } totalQuestions={quizQuestions.length} />
       <div className="sticky top-0 text-5xl text-slate-300 font-extrabold z-50 p-4 font-sans">{quizData.quizName}</div>
       
@@ -152,7 +152,7 @@ function QuizApp() {
         <div className={`quiz-container flex flex-col bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
           {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
           <div className="quiz-content w-4/5">
-            <h2 className="text-2xl text-slate-300">Question {currentQuestionIndex + 1}:</h2>
+            <h2 className="text-2xl text-slate-300">Question {currentQuestionIndex + 1} of {quizQuestions.length} :</h2>
             <Question question={quizQuestions[currentQuestionIndex].question} />
             <div className="flex flex-col">
               <div className="flex flex-col">
@@ -182,7 +182,7 @@ function QuizApp() {
       )}
       </div>
     </div>
-    </>
+    </div>
   );
 }
 

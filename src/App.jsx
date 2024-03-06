@@ -9,12 +9,12 @@ import QuizApp from './pages/QuizApp'
 function App() {
 
   return (
-    <Flowbite>
-      
-      <Navbar/>
+    <Flowbite >
+      <div className='h-screen'>
+      {/* <Navbar/> */}
       <QuizApp/>
       <MyFooter />
-      
+      </div>
     </Flowbite>
   )
 }
