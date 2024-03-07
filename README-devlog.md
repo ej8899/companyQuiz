@@ -31,6 +31,8 @@ Don the Developer March 2024 Hackathon
 - remove top nav bar - footer drawer will handle things (unless I change my mind again)
 
 03/06/24 -
-- create login page (will function for users and admins)
-- create landing page (WIP)
-- 
+- create login page (WIP) (will function for users and admins)
+- create sign up page (WIP)
+- create landing page (WIP) - hero, price cards, 
+- navbar is back but will be for specific pages (landing page, sign in/up, admin, etc)
+- add cookies consent (WIP to save settings)

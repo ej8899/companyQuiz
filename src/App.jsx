@@ -1,5 +1,7 @@
 import './App.css'
 
+import { BrowserRouter as Router, HashRouter, Route, Link, Routes, useNavigate , useLocation} from 'react-router-dom';
+
 import { Flowbite, DarkThemeToggle } from 'flowbite-react';
 
 import Navbar from './components/Navbar'
@@ -14,16 +16,20 @@ function App() {
   return (
     <Flowbite >
       <div className='h-screen'>
+      <HashRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/quiz" element={<QuizApp />} />
+        {/* <Route path="/locations" element={<LocationList />} />
+        <Route path="/users/:title" element={<UserList />} />
+        <Route path="/location/:location" element={<UserListByLocation />} /> */}
+      </Routes>
+
       <Navbar/>
-      {/* <QuizApp/> */}
-      
-      <LandingPage />
-      
-
-      <Login/>
-      
-
+  
       <MyFooter />
+      </HashRouter>
       </div>
     </Flowbite>
   )
