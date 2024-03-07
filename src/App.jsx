@@ -4,12 +4,12 @@ import { BrowserRouter as Router, HashRouter, Route, Link, Routes, useNavigate ,
 
 import { Flowbite, DarkThemeToggle } from 'flowbite-react';
 
-import Navbar from './components/Navbar'
-import MyFooter from './components/Footer'
+
 import QuizApp from './pages/QuizApp'
 import Login from './pages/LogIn';
-
 import LandingPage from './pages/LandingPage';
+import NotFound from './pages/404';
+
 
 function App() {
 
@@ -21,14 +21,11 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/quiz" element={<QuizApp />} />
+        <Route path="*" element={<NotFound />} />
         {/* <Route path="/locations" element={<LocationList />} />
         <Route path="/users/:title" element={<UserList />} />
         <Route path="/location/:location" element={<UserListByLocation />} /> */}
       </Routes>
-
-      <Navbar/>
-  
-      <MyFooter />
       </HashRouter>
       </div>
     </Flowbite>
