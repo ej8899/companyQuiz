@@ -65,7 +65,7 @@ export default function Ournavbar() {
   
 
   return (
-    <Navbar fluid rounded className='z-50 opacity sticky top-0 z-50'>
+    <Navbar fluid rounded className='fixed top-0 left-0 w-full backdrop-filter backdrop-blur-lg bg-opacity-75 bg-gray-200 dark:bg-gray-800 dark:bg-opacity-75 z-40'>
       {/* Left-justified content */}
       <div className="flex items-center w-auto justify-between z-50">
         <Navbar.Brand href="https://erniejohnson.ca/companyquiz/">
