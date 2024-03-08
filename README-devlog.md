@@ -36,3 +36,14 @@ Don the Developer March 2024 Hackathon
 - create landing page (WIP) - hero, price cards, 
 - navbar is back but will be for specific pages (landing page, sign in/up, admin, etc)
 - add cookies consent (WIP to save settings)
+- setup react-router & setup basic routes for testing
+
+03/07/24 - 
+- add 404 page route
+- cookie consent to individual component (DRY)
+- add admin page (WIP)
+- add newsletter subscribe component
+- add quiz admin page
+- add sample company & user data
+- add landingpage footer (WIP)
+- start working with sample data on admin side
