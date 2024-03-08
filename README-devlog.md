@@ -47,3 +47,7 @@ Don the Developer March 2024 Hackathon
 - add sample company & user data
 - add landingpage footer (WIP)
 - start working with sample data on admin side
+
+03/08/24 -
+- add user main page (WIP)
+- 
