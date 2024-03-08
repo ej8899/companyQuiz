@@ -1,5 +1,13 @@
-const quizData = {
+export const quizData = {
+  quizID: 1,
   quizName: 'Cyber Security Review',
+  
+  // TODO - make public and private quizes to work
+  quizType: 'public', // (or 'private' if it's proprietary to the company)
+
+  // TODO - make allow Retry option to work
+  allowRetry: true, // allow retaking quiz after failing (or false to deny)
+
   backgroundImage : 'http://www.tcmd.com/lhl/final1.jpeg',
 
   // TODO below if not null searches unsplash for the bg image
@@ -284,5 +292,3 @@ const quizData = {
     },
   ]
 };
-
-export default quizData;
