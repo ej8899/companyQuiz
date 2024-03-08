@@ -12,6 +12,7 @@ import NotFound from './pages/404';
 import { CookieBanner } from './components/CookieBanner';
 import AdminPage from './pages/AdminPage';
 import QuizAdmin from './pages/QuizAdmin';
+import UserMain from './pages/UserMain';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/quiz" element={<QuizApp />} />
         <Route path="/quizadmin" element={<QuizAdmin />} />
+        <Route path="/usermain" element={<UserMain  />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/locations" element={<LocationList />} />
         <Route path="/users/:title" element={<UserList />} />
