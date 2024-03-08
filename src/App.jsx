@@ -9,7 +9,9 @@ import QuizApp from './pages/QuizApp'
 import Login from './pages/LogIn';
 import LandingPage from './pages/LandingPage';
 import NotFound from './pages/404';
-
+import { CookieBanner } from './components/CookieBanner';
+import AdminPage from './pages/AdminPage';
+import QuizAdmin from './pages/QuizAdmin';
 
 function App() {
 
@@ -20,13 +22,16 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/quiz" element={<QuizApp />} />
+        <Route path="/quizadmin" element={<QuizAdmin />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/locations" element={<LocationList />} />
         <Route path="/users/:title" element={<UserList />} />
         <Route path="/location/:location" element={<UserListByLocation />} /> */}
       </Routes>
       </HashRouter>
+      <CookieBanner/>
       </div>
     </Flowbite>
   )
