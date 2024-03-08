@@ -19,9 +19,7 @@ export const userData = [
     name: 'Preston Garvey',
     email: 'prestong@example.com',
     scores: [
-      { quizId: 1, 
-        score: 0, 
-        dateTested: ''
+      { 
       },
     ]
   },
@@ -35,6 +33,10 @@ export const userData = [
         score: 80, 
         dateTested: '2023-01-15'
       },
-    ]
+      { quizId: 12,
+        score: 100,
+        dateTested: '2024-02-02'
+      }
+    ],
   },
 ];
