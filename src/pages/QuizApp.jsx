@@ -7,11 +7,12 @@ import Result from '../components/Result';
 import { Button } from 'flowbite-react';
 
 import { globalconfig } from '../config.js';
-
-import  quizData from '../quizdata.js'; 
+ 
+import {quizData} from "../quizdata.js"
 
 import { fetchImage } from '../utilities/imageSearch';
 import ProgressBar from '../components/ProgressBar.jsx';
+import MyFooter from '../components/Footer'
 
 function QuizApp() {
   const [quizQuestions, setQuizQuestions] = useState([]);
@@ -182,6 +183,7 @@ function QuizApp() {
       )}
       </div>
     </div>
+    <MyFooter />
     </div>
   );
 }

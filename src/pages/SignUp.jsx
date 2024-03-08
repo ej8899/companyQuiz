@@ -8,9 +8,9 @@ function SignUp() {
 
   return (
     <>
-    <section className="bg-gray-50 dark:bg-gray-900 items-center justify-center">
+    <section className="bg-gray-50 dark:bg-gray-900 ">
     
-  <div className="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-14">
+  <div className="flex flex-col items-center px-6 py-8 mx-auto  lg:py-14">
       <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-gray-900 dark:text-white font-sans font-extrabold">
           <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
           CompanyQuiz
