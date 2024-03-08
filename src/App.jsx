@@ -13,6 +13,7 @@ import { CookieBanner } from './components/CookieBanner';
 import AdminPage from './pages/AdminPage';
 import QuizAdmin from './pages/QuizAdmin';
 import UserMain from './pages/UserMain';
+import QuizBuilder from './pages/QuizBuilder';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/quiz" element={<QuizApp />} />
         <Route path="/quizadmin" element={<QuizAdmin />} />
+        <Route path="/quizbuilder" element={<QuizBuilder  />} />
         <Route path="/usermain" element={<UserMain  />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/locations" element={<LocationList />} />
