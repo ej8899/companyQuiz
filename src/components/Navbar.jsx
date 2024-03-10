@@ -4,6 +4,8 @@
 import { Navbar, Modal, Button } from 'flowbite-react';
 import { DarkThemeToggle } from 'flowbite-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 // import logger from './logger';
 
 // import aboutImage from './assets/smartmarkups.png';
@@ -11,6 +13,7 @@ import { useEffect, useState } from 'react';
 export default function Ournavbar() {
   const [openAboutModal, setOpenAboutModal] = useState(false);
   const [openContactModal, setOpenContactModal] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false); // State to track login status
 
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
@@ -19,6 +22,25 @@ export default function Ournavbar() {
   const [isSendPending, setIsSendPending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const aboutImage = "./public/android-chrome-192x192.png"
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if the user is logged in by accessing localStorage
+    const isLoggedIn = localStorage.getItem('loggedIn');
+    if (isLoggedIn === 'true') {
+      setLoggedIn(true);
+    }
+  }, []);
+
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedIn');
+    setLoggedIn(false);
+    // TODO return to landing page
+    navigate(`/`);
+  };
 
   useEffect(() => {
     setEmail('');
@@ -69,7 +91,7 @@ export default function Ournavbar() {
       {/* Left-justified content */}
       <div className="flex items-center w-auto justify-between z-50">
         <Navbar.Brand href="https://erniejohnson.ca/companyquiz/">
-          <img src="https://erniejohnson.ca/favicon.svg" className="mr-3 h-6 sm:h-9" alt="ErnieJohnson.ca Logo" />
+          <img src="./public/favicon-32x32.png" className="mr-3 h-6 sm:h-9" alt="ErnieJohnson.ca Logo" />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Company Quiz</span>
         </Navbar.Brand>
       </div>
@@ -94,6 +116,11 @@ export default function Ournavbar() {
           >
             Contact
           </Navbar.Link>
+          {loggedIn && (
+            <Navbar.Link onClick={handleLogout} className='cursor-pointer'>
+              Logout
+            </Navbar.Link>
+          )}
         </Navbar.Collapse>
 
         <DarkThemeToggle className='ml-6'/>
@@ -104,9 +131,12 @@ export default function Ournavbar() {
       <Modal.Header><h2 className="mb-0 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">About</h2></Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            {/* <img src={aboutImage} alt="About Image" className="mx-auto rounded-lg" /> */}
+            <img src={aboutImage} alt="About Image" className="mx-auto" width={200} height={200} />
             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-            our cutting edge modern quiz system for your company policy enforcement program
+            &quot;Company Quiz!&quot; is a user-friendly application designed to streamline employee knowledge assessment on company policies and procedures. With its intuitive interface, businesses can easily administer simple yet effective quizzes to gauge employees&apos; understanding of crucial company protocols. This tool offers a convenient way to ensure that staff members are up-to-date with the latest policies, promoting compliance and adherence to company standards. By regularly conducting quizzes through this application, businesses can identify areas for improvement and tailor training programs accordingly, ultimately enhancing overall operational efficiency and minimizing risks associated with non-compliance.
+            </p>
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            Through &quot;Company Quiz!&quot;, businesses can customize quizzes to cover specific areas of company policy and procedure, ensuring that employees are well-versed in essential protocols. The application facilitates easy tracking of quiz results, allowing management to monitor progress and address any knowledge gaps promptly. By incorporating this tool into their training regimen, businesses can foster a culture of continuous learning and accountability, ultimately leading to a more knowledgeable and proficient workforce.
             </p>
           </div>
         </Modal.Body>
@@ -131,7 +161,9 @@ export default function Ournavbar() {
   <div className="py-8 px-4 mx-auto max-w-screen-md">
       {!isSendPending && !isSent && !isError && (
         <>
-      <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Got a technical issue? Want to send feedback? Need details about our web & app development plan? Let us know.</p>
+      <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
+      Have technical support questions, or need assistance before making a purchase? Feel free to reach out to us using the contact form below. Our dedicated team is here to address your inquiries promptly and provide the assistance you need to make informed decisions.
+      </p>
       <form className="space-y-8"
         onSubmit={(e) => void handleFormSubmit(e)}
       >
