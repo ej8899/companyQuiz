@@ -14,6 +14,9 @@ import AdminPage from './pages/AdminPage';
 import QuizAdmin from './pages/QuizAdmin';
 import UserMain from './pages/UserMain';
 import QuizBuilder from './pages/QuizBuilder';
+import GenerateCertificate from './pages/GenerateCertificate';
+
+// TODO - need a route for custom login page based on company ID
 
 function App() {
 
@@ -23,12 +26,18 @@ function App() {
       <HashRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminPage />} />
+        
+        
         <Route path="/quiz" element={<QuizApp />} />
+        <Route path="/certificate" element={<GenerateCertificate />} />
         <Route path="/quizadmin" element={<QuizAdmin />} />
         <Route path="/quizbuilder" element={<QuizBuilder  />} />
-        <Route path="/usermain" element={<UserMain  />} />
+        {/* <Route path="/usermain" element={<UserMain  />} /> */}
+        
+        <Route path="/login" element={<Login />} />
+        <Route path="/quiz/:quizId" element={<QuizApp/>} />
+        <Route path="/admin/:adminId" element={<AdminPage />} />
+        <Route path="/usermain/:userId" element={<UserMain  />} />
         <Route path="*" element={<NotFound />} />
         {/* <Route path="/locations" element={<LocationList />} />
         <Route path="/users/:title" element={<UserList />} />
