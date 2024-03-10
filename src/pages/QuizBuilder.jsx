@@ -3,9 +3,11 @@ import { Button } from 'flowbite-react';
 
 import { quizData } from '../quizdata.js';
 import Navbar from '../components/Navbar'
+import { setPageTitle } from '../utilities/helpers.js';
 
 const QuizBuilder = () => {
   const [formData, setFormData] = useState(quizData);
+  setPageTitle('Quiz Builde: ' +  formData.quizName);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

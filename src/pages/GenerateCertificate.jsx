@@ -1,5 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import {todayLong} from '../utilities/helpers.js'
+import { setPageTitle } from '../utilities/helpers.js';
 
 const GenerateCertificate = () => {
   const location = useLocation();
@@ -7,6 +9,9 @@ const GenerateCertificate = () => {
   //const { quizId, userId, quizScore, quizDateTested } = location.state;
   //const stateData = location.state ? location.state : null;
   console.log('data', data);
+  const today = new Date();
+
+  setPageTitle(data.state.userId + ' Certificate of Achievement in ' + data.state.quizId);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
@@ -25,7 +30,7 @@ const GenerateCertificate = () => {
         </div>
         <div className="mt-8">
           <p className="text-lg">Issued by:</p>
-          <p className="text-lg font-bold">[Company Name]</p>
+          <p className="text-lg font-bold">[Company Name], {todayLong()}</p>
         </div>
       </div>
     </div>
