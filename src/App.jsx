@@ -15,6 +15,7 @@ import QuizAdmin from './pages/QuizAdmin';
 import UserMain from './pages/UserMain';
 import QuizBuilder from './pages/QuizBuilder';
 import GenerateCertificate from './pages/GenerateCertificate';
+import SignUp from './pages/SignUp';
 
 // TODO - need a route for custom login page based on company ID
 
@@ -35,6 +36,7 @@ function App() {
         {/* <Route path="/usermain" element={<UserMain  />} /> */}
         
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/quiz/:quizId" element={<QuizApp/>} />
         <Route path="/admin/:adminId" element={<AdminPage />} />
         <Route path="/usermain/:userId" element={<UserMain  />} />
