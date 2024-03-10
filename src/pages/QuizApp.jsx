@@ -6,8 +6,10 @@ import Options from '../components/Options';
 import Result from '../components/Result';
 import { Button } from 'flowbite-react';
 
+import { Link, useParams } from 'react-router-dom';
+
 import { globalconfig } from '../config.js';
- 
+
 import {quizData} from "../quizdata.js"
 
 import { fetchImage } from '../utilities/imageSearch';
@@ -15,6 +17,7 @@ import ProgressBar from '../components/ProgressBar.jsx';
 import MyFooter from '../components/Footer'
 
 function QuizApp() {
+  const { quizId } = useParams();
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -137,11 +140,11 @@ function QuizApp() {
 
   return (
       <div className='h-full z-0'>
-      <div className={`flex flex-col h-full border-2 overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
+      <div className={`flex flex-col h-full overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
       <ProgressBar currentQuestionIndex={currentQuestionIndex } totalQuestions={quizQuestions.length} />
-      <div className="sticky top-0 text-5xl text-slate-300 font-extrabold z-50 p-4 font-sans">{quizData.quizName}</div>
+      <div className="sticky top-0 text-5xl text-slate-300 font-extrabold z-50 p-4 font-sans">{quizData.quizName} ({quizId})</div>
       
-      <div className='flex flex-col justify-center h-full border-2'>
+      <div className='flex flex-col justify-center h-full '>
       {showRetryPrompt ? (
         <div className="bg-black bg-opacity-20 rounded-xl w-1/2 flex flex-col items-center">
           <h2 className="text-4xl text-slate-300 font-bold ">Quiz Complete!</h2>

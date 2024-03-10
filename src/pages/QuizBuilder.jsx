@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Button } from 'flowbite-react';
+
 import { quizData } from '../quizdata.js';
 import Navbar from '../components/Navbar'
 
@@ -35,7 +37,7 @@ const QuizBuilder = () => {
     const newQuestion = {
       question: '',
       options: ['', '', ''],
-      correctAnswer: '',
+      correctAnswer: null,
       image: ''
     };
     setFormData({
@@ -71,12 +73,21 @@ const QuizBuilder = () => {
     });
   };
 
+  const handleCorrectAnswerChange = (questionIndex, optionIndex) => {
+    const updatedQuestions = [...formData.qna];
+    updatedQuestions[questionIndex].correctAnswer = optionIndex;
+    setFormData({
+      ...formData,
+      qna: updatedQuestions
+    });
+  };
+
   return (
     <>
     <Navbar />
-    <div className="mt-40">
+    <div className="mt-40 ml-8 pb-40">
       <h1 className="px-6 py-3 text-left text-xl font-bold font-sans text-gray-500 uppercase tracking-wider">Quiz Builder</h1>
-      <form>
+      <form className="w-full border-2">
         <label>
           Quiz Name:
           <input
@@ -92,7 +103,7 @@ const QuizBuilder = () => {
         {formData.qna.map((question, questionIndex) => (
           <div key={questionIndex} className="pt-4">
             <label>
-              Question:
+              Question {questionIndex + 1}:
               <input
                 type="text"
                 value={question.question}
@@ -102,7 +113,7 @@ const QuizBuilder = () => {
             <br />
             {/* Answer options */}
             {question.options.map((option, answerIndex) => (
-              <div key={answerIndex}>
+              <div key={answerIndex} className="w-full flex flex-row">
                 <label>
                   Answer {answerIndex + 1}:
                   <input
@@ -111,16 +122,19 @@ const QuizBuilder = () => {
                     onChange={(e) => handleAnswerChange(questionIndex, answerIndex, e.target.value)}
                   />
                 </label>
-                <button type="button" onClick={() => deleteAnswer(questionIndex, answerIndex)}>Delete Answer</button>
+                <Button type="Button" onClick={() => deleteAnswer(questionIndex, answerIndex)}>Delete Answer</Button>
+                <Button type="Button" onClick={() => handleCorrectAnswerChange(questionIndex, answerIndex)}>
+                  {question.correctAnswer === answerIndex ? 'Correct Answer' : 'Mark as Correct Answer'}
+                </Button>
               </div>
             ))}
-            <button type="button" onClick={() => addAnswer(questionIndex)}>Add Answer</button>
-            <button type="button" onClick={() => deleteQuestion(questionIndex)}>Delete Question</button>
+            <Button type="Button" onClick={() => addAnswer(questionIndex)}>Add Answer</Button>
+            <Button type="Button" onClick={() => deleteQuestion(questionIndex)}>Delete Question</Button>
           </div>
         ))}
-        <button type="button" onClick={addQuestion}>Add Question</button>
+        <Button type="Button" onClick={addQuestion}>Add Question</Button>
         <br />
-        <button type="submit">Save</button>
+        <Button type="submit">Save</Button>
       </form>
     </div>
     </>
