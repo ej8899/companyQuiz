@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/ej8899/companyQuiz">
-    <img src="./design/logo.png" alt="Logo" width="200" height="180">
+    <img src="./public/android-chrome-512x512.png" alt="Logo" width="200" height="200">
   </a>
 
   <h1 align="center">CompanyQuiz!</h1>
