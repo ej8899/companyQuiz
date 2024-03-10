@@ -1,11 +1,49 @@
-
-
 import { Button } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
+import {quizData} from "../quizdata.js";
+import {companyData, userData } from "../sampledata.js";
 
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
+
+// TODO - login and pass to user (if a user)
+// TODO - login and pass to admin (if admin)
+
 function Login() {
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    console.log('email', email);
+    // Check if the email exists in companyData
+    const isAdmin = companyData.some(company => company.administratorEmail === email);
+    if (isAdmin) {
+      // Find the companyId for the matching administratorEmail
+      const companyId = companyData.find(company => company.administratorEmail === email).companyId;
+      localStorage.setItem('isAdmin', 'true');
+      navigate(`/admin/${companyId}`);
+      return;
+    }
+
+    // Check if the email exists in userData
+    const isUser = userData.some(user => user.email === email);
+    if (isUser) {
+      localStorage.setItem('isAdmin', 'false');
+      // Redirect to user dashboard
+      const userId = userData.find(user => user.email === email).userId;
+      navigate(`/usermain/${userId}`);
+      return;
+    }
+
+    // Handle invalid email
+    console.log('Invalid email address. Please try again.');
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   return (
     <>
@@ -23,7 +61,7 @@ function Login() {
                     <form className="space-y-4 md:space-y-6" action="#">
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your company email address:</label>
-                            <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
+                            <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" value={email} onChange={handleEmailChange} required="" />
                         </div>
                         <div>
                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password:</label>
@@ -40,9 +78,9 @@ function Login() {
                             </div>
                             <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                         </div>
-                        <Button className="w-full">Sign in</Button>
+                        <Button className="w-full" onClick={handleLogin} >Sign in</Button>
                         <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                            Don&apos;t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                         </p>
                     </form>
                 </div>
