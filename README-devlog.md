@@ -59,3 +59,13 @@ Don the Developer March 2024 Hackathon
 - add user status overview and details (for company admin)
 - add company and user login with subsequent routing (no password auth yet)
 - add certificate of completion generator
+
+3/10/24 -
+- create & add favicons
+- add index.html meta tags
+- work on additional routing/project flows
+- add misc UI cleanups (conditional formatting)
+- add login/out persistence across pages (admin & user)
+- add dynamic page titles
+
+3/11/24 - 
