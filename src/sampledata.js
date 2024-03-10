@@ -6,7 +6,16 @@ export const companyData = [
     industry: 'Manufacturing',
     companyLogoURL: '',
     copmanyBGImageURL: '',
-    quizList: [1,],
+    quizList: ['1aaf4c7b-dc7b-4a4f-b9e0-27968a9a8874',],
+  },
+  {
+    companyId: 2,
+    name: 'Beta Corp',
+    administratorEmail: 'admin@betacorp.com',
+    industry: 'Transportation',
+    companyLogoURL: '',
+    copmanyBGImageURL: '',
+    quizList: ['1aaf4c7b-dc7b-4a4f-b9e0-27968a9a8',],
   }
 
 ];
@@ -29,14 +38,22 @@ export const userData = [
     name: 'Piper Wright',
     email: 'piperw@example.com',
     scores: [
-      { quizId: 1, 
+      { quizId: '1aaf4c7b-dc7b-4a4f-b9e0-27968a9a8874', 
         score: 80, 
         dateTested: '2023-01-15'
       },
       { quizId: 12,
         score: 100,
         dateTested: '2024-02-02'
-      }
+      },
+      { quizId: 342,
+        score: null,
+        dateTested: null,
+      },
+      { quizId: 234234,
+        score: 24,
+        dateTested: '2024-01-15',
+      },
     ],
   },
 ];
