@@ -50,4 +50,12 @@ Don the Developer March 2024 Hackathon
 
 03/08/24 -
 - add user main page (WIP)
-- 
+- add quiz builder page (WIP)
+- add test routes for above
+- start connecting all sample data
+
+03/09/24 - 
+- add admin routing based on company identifier
+- add user status overview and details (for company admin)
+- add company and user login with subsequent routing (no password auth yet)
+- add certificate of completion generator
