@@ -1,18 +1,19 @@
 
-
+import { Link } from "react-router-dom";
 import { Button } from 'flowbite-react';
 
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
 function SignUp() {
-
+  const logoImage = "./public/android-chrome-192x192.png";
   return (
     <>
     <section className="bg-gray-50 dark:bg-gray-900 ">
     
-  <div className="flex flex-col items-center px-6 py-8 mx-auto  lg:py-14">
+  {/* <div className="flex flex-col items-center px-6 py-8 mx-auto  lg:py-14"> */}
+  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-gray-900 dark:text-white font-sans font-extrabold">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+          <img className="w-8 h-8 mr-2" src={logoImage} alt="logo" />
           CompanyQuiz
           Get Started Now (arrowR)
       </a>
@@ -46,7 +47,7 @@ function SignUp() {
                   </div>
                   <Button type="submit" className="w-full">Create an account</Button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                      Already have an account? <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
                   </p>
               </form>
           </div>
