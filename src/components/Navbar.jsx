@@ -4,7 +4,7 @@
 import { Navbar, Modal, Button } from 'flowbite-react';
 import { DarkThemeToggle } from 'flowbite-react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 // import logger from './logger';
 
@@ -23,21 +23,37 @@ export default function Ournavbar() {
   const [isSent, setIsSent] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const [navId, setNavId] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(null);
+
   const aboutImage = "./public/android-chrome-192x192.png"
   const navigate = useNavigate();
+
+  let cId = 0;
+  let uId = 0;
 
   useEffect(() => {
     // Check if the user is logged in by accessing localStorage
     const isLoggedIn = localStorage.getItem('loggedIn');
     if (isLoggedIn === 'true') {
       setLoggedIn(true);
+      const cId = localStorage.getItem('companyId');
+      const uId = localStorage.getItem('userId');
+      console.log(cId,uId)
+      if(cId) setNavId(cId);
+      if(uId) setNavId(uId);
+      setIsAdmin(localStorage.getItem('isAdmin'));
+      console.log("cid:"+cId + '\nuid:' + uId + '\nisadmin:'+isAdmin + '\nnavid:'+navId)
     }
   }, []);
 
 
   const handleLogout = () => {
     localStorage.removeItem('loggedIn');
+    localStorage.removeItem('isAdmin');
     setLoggedIn(false);
+    localStorage.setItem('companyId',null);
+    localStorage.setItem('userId',null);
     // TODO return to landing page
     navigate(`/`);
   };
@@ -101,9 +117,16 @@ export default function Ournavbar() {
         <Navbar.Toggle />
 
         <Navbar.Collapse>
-          <Navbar.Link href="#" active>
+          {/* <Link to={`/usermain/${navId}`}> */}
+          {/* <Link to={isAdmin ? `/admin/${navId}` : `/usermain/${navId}`}> */}
+          {/* <Link to={isAdmin ? `/admin/${cId || ''}` : `/user/${uId || ''}`}> */}
+          {/* <Link to={isAdmin ? `/admin/${cId}` : `/usermain/${uId}`}> */}
+          <Link to={isAdmin === true ? `/admin/${cId}` : isAdmin === false ? `/user/${uId}` : null}>
+
+          <Navbar.Link href="#" active as="div">
             Home
           </Navbar.Link>
+          </Link>
           <Navbar.Link
             onClick={() => setOpenAboutModal(true)}
             className='cursor-pointer'
@@ -158,7 +181,7 @@ export default function Ournavbar() {
         <Modal.Header><h2 className="mb-0 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Contact Us</h2></Modal.Header>
         <Modal.Body>
 <section className="bg-white dark:bg-gray-700">
-  <div className="py-8 px-4 mx-auto max-w-screen-md">
+  <div className=" px-4 mx-auto max-w-screen-md">
       {!isSendPending && !isSent && !isError && (
         <>
       <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">

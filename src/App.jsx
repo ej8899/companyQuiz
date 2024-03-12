@@ -32,9 +32,9 @@ function App() {
         <Route path="/quiz" element={<QuizApp />} />
         <Route path="/certificate" element={<GenerateCertificate />} />
         <Route path="/quizadmin" element={<QuizAdmin />} />
-        <Route path="/quizbuilder" element={<QuizBuilder  />} />
         {/* <Route path="/usermain" element={<UserMain  />} /> */}
         
+        <Route path="/quizbuilder/:quizId" element={<QuizBuilder  />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/quiz/:quizId" element={<QuizApp/>} />

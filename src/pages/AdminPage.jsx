@@ -35,8 +35,8 @@ function AdminPage() {
               <div className="font-sans text-2xl">Admin page for {company.name}</div>
               <div>Administrator email: {company.administratorEmail}</div>
               <div>Industry: {company.industry}</div>
-              <AdminUserList />
-              <AdminQuizList />
+              <AdminUserList companyIdent={adminId}/>
+              <AdminQuizList companyIdent={adminId}/>
               <div>View of public quiz list (& allow adding to this company quiz list)</div>
             </>
           ) : (

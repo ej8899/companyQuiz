@@ -25,6 +25,10 @@ function Login() {
       // Find the companyId for the matching administratorEmail
       const companyId = companyData.find(company => company.administratorEmail === email).companyId;
       localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('userId', null);
+      localStorage.setItem('isAdmin', true);
+      console.log('company id',companyId)
+      localStorage.setItem('companyId',companyId);
       navigate(`/admin/${companyId}`);
       return;
     }
@@ -33,8 +37,12 @@ function Login() {
     const isUser = userData.some(user => user.email === email);
     if (isUser) {
       localStorage.setItem('loggedIn', 'true');
-      // Redirect to user dashboard
+      localStorage.setItem('companyId', null);
+      localStorage.setItem('isAdmin', false);
       const userId = userData.find(user => user.email === email).userId;
+      localStorage.setItem('userId',userId);
+      // Redirect to user dashboard
+      
       navigate(`/usermain/${userId}`);
       return;
     }

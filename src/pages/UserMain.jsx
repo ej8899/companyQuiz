@@ -39,7 +39,7 @@ export default function UserMain() {
 
   // console.log(userId)
   // console.log(userIndex)
-  setPageTitle(userData[userIndex].name + ' - Admin')
+  setPageTitle(userData[userIndex].name + ' - Admin');
   return (
     <>
     <Navbar/>
