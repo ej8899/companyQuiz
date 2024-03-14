@@ -88,7 +88,7 @@ const QuizBuilder = () => {
     <>
     <Navbar />
     <div className="mt-40 ml-8 pb-40">
-      <h1 className="px-6 py-3 text-left text-xl font-bold font-sans text-gray-500 uppercase tracking-wider">Quiz Builder</h1>
+      <h1 className="px-6 py-3 text-center text-2xl font-bold font-sans text-gray-500 uppercase tracking-wider">Quiz Builder</h1>
       <form className="w-full border-2">
         <label>
           Quiz Name:
