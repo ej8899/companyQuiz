@@ -69,3 +69,14 @@ Don the Developer March 2024 Hackathon
 - add dynamic page titles
 
 3/11/24 - 
+- add dynamic navbar (based on user or company admin)
+
+3/13/23 -
+- started creating database.  promptly lost direction in my MVP and started contemplating "future features". Decided to put db on hold while I hash out some additional DB concepts stricly in front end.
+- tweaked some layouts, 
+- work out 'quiz builder' section. 
+
+3/14/23 - companyquiz
+- so a 'thing' happened today - the ceo of the company I'm doing some other software development and IT management work for found my companyquiz repo and asked about it.  after a  quick demo of it's current state, I was asked - how much would it cost and how soon can you have it ready to deploy in our company?   Yikes!
+- add public quiz listings w copy & view operations (WIP)
+- admin section: add placeholder buttons (import/export/ai quiz generator, edit company info)
