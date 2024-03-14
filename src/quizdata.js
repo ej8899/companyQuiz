@@ -1,3 +1,21 @@
+export const quizList = [
+  {
+    quizId: '1aaf4c7b-dc7b-4a4f-b9e0-27968a9a8874',
+    quizName: 'Cyber Security Review',
+    quizType: 'public',
+  },
+  {
+    quizId: '1aaf4c7b-dc7b-4a4f-b9e0-3333',
+    quizName: 'privacy policy',
+    quizType: 'private',
+  },
+  {
+    quizId: '1aaf4c7b-dc7b-4a4f-b9e0-32434',
+    quizName: 'dei review',
+    quizType: 'public',
+  },
+];
+
 export const quizData = {
   quizID: "1aaf4c7b-dc7b-4a4f-b9e0-27968a9a8874",
   quizName: 'Cyber Security Review',
