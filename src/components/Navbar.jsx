@@ -118,10 +118,10 @@ export default function Ournavbar() {
 
         <Navbar.Collapse>
           {/* <Link to={`/usermain/${navId}`}> */}
-          {/* <Link to={isAdmin ? `/admin/${navId}` : `/usermain/${navId}`}> */}
+          <Link to={isAdmin ? `/admin/1` : `/usermain/${navId}`}>
           {/* <Link to={isAdmin ? `/admin/${cId || ''}` : `/user/${uId || ''}`}> */}
           {/* <Link to={isAdmin ? `/admin/${cId}` : `/usermain/${uId}`}> */}
-          <Link to={isAdmin === true ? `/admin/${cId}` : isAdmin === false ? `/user/${uId}` : null}>
+          {/* <Link to={isAdmin === true ? `/admin/${cId}` : isAdmin === false ? `/user/${uId}` : null}> */}
 
           <Navbar.Link href="#" active as="div">
             Home
@@ -269,7 +269,7 @@ export default function Ournavbar() {
                   </svg>
                   <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
                     Thank you for reaching out...
-                    <br />I will respond to your message asap!
+                    <br />A member of our team will respond to your message asap!
                   </p>
                 </div>
               </div>
