@@ -64,4 +64,13 @@ export const userData = [
       },
     ],
   },
+  {
+    userId: '234324-2343423',
+    companyId: 1,
+    name: 'Eddie Winter',
+    email: 'eddiew@example.com',
+    scores: [
+
+    ]
+  },
 ];
