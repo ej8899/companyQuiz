@@ -5,7 +5,7 @@ import { Button } from 'flowbite-react';
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
 function SignUp() {
-  const logoImage = "./public/android-chrome-192x192.png";
+  const logoImage = "./android-chrome-192x192.png";
   return (
     <>
     <section className="bg-gray-50 dark:bg-gray-900 ">
