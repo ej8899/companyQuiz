@@ -48,7 +48,7 @@ export default function MyFooter() {
         >
           <span className="absolute w-8 h-1 -translate-x-1/2 bg-gray-300 rounded-lg top-3 left-1/2 dark:bg-gray-600"></span>
           <h5 id="drawer-swipe-label" className="inline-flex items-center text-base text-gray-500 dark:text-gray-400 font-medium">
-            user name here (logout)
+            user name here (Logout)
           </h5>
     
         </div>
@@ -66,7 +66,7 @@ export default function MyFooter() {
               <path d="M18 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM9 6v2H2V6h7Zm2 0h7v2h-7V6Zm-9 4h7v2H2v-2Zm9 2v-2h7v2h-7Z"/>
           </svg>
         </div>
-        <div className="font-medium text-center text-gray-500 dark:text-gray-400"><a href="http://localhost:5173/#/usermain">Quiz List</a></div>
+        <div className="font-medium text-center text-gray-500 dark:text-gray-400"><a href="http://localhost:5173/#/usermain/23">Quiz List</a></div>
       </div>
  
       <div className="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700">
