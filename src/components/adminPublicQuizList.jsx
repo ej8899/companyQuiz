@@ -16,16 +16,18 @@ export function AdminPublicQuizList({companyIdent}) {
     return publicQuizzes.map((quiz, index) => (
       <tr key={index}>
         <td>{quiz.quizName}</td>
-        <td>view | <Link to={`/quizbuilder/${quiz.quizId}`}>copy</Link></td>
+        <td>view | <Link to={`/quizbuilder/${quiz.quizId}`}>copy to company</Link></td>
       </tr>
     ));
   };
   
 
   return (
-
-<section className="flex items-center  bg-gray-50 dark:bg-gray-900 pt-8">
-  <div className="w-full max-w-screen-xl px-4 mx-auto lg:px-12">
+<section className="flex flex-col items-center w-full pt-4">
+  
+  <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-400 bg-gray-50 dark:bg-gray-800">
+{/* <section className="flex items-center  bg-gray-50 dark:bg-gray-900 pt-8">
+  <div className="w-full max-w-screen-xl px-4 mx-auto lg:px-12"> */}
     
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
       <div className="flex-row items-center justify-center p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4 ">
@@ -38,7 +40,7 @@ export function AdminPublicQuizList({companyIdent}) {
             <table className="min-w-full">
               <thead>
                 <tr>
-                  <th>Quiz ID</th>
+                  <th>Quiz Name</th>
                   <th>Actions</th>
                 </tr>
               </thead>
