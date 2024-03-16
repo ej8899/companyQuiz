@@ -77,6 +77,11 @@ Don the Developer March 2024 Hackathon
 - work out 'quiz builder' section. 
 
 3/14/23 - companyquiz
-- so a 'thing' happened today - the ceo of the company I'm doing some other software development and IT management work for found my companyquiz repo and asked about it.  after a  quick demo of it's current state, I was asked - how much would it cost and how soon can you have it ready to deploy in our company?   Yikes!
 - add public quiz listings w copy & view operations (WIP)
 - admin section: add placeholder buttons (import/export/ai quiz generator, edit company info)
+- integrate unsplash API to allow admins to select background images for company login and individual quizzes
+
+3/15/23 - companyquiz
+- work more on quizbuilder page
+- added csv export of users & test results
+- 
