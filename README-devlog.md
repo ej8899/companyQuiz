@@ -85,3 +85,9 @@ Don the Developer March 2024 Hackathon
 - work more on quizbuilder page
 - added csv export of users & test results
 - create users, scoring, quiz assignment tables
+- start api code (get users)
+
+3/16/23 - companyquiz
+- add quiz image search middleware for unsplash (access key protection)
+- remove footer and return to header nav on quiz displays
+- tweak certification display to 'full screen'
