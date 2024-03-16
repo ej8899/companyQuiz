@@ -48,8 +48,10 @@ function AdminPage() {
               <div className="p-2 flex flex-row justify-center">
                 <Button><FaFileExport className="h-6 w-6 mr-2"/>export user summary (csv)</Button>&nbsp;
                 <Button><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>&nbsp;
-                <Button><FaEdit className="h-6 w-6 mr-2"/>edit company info</Button>&nbsp;
                 <Button><IoMdPersonAdd className="h-6 w-6 mr-2" />add employee</Button>&nbsp;
+                
+                <Button><FaEdit className="h-6 w-6 mr-2"/>edit company info</Button>&nbsp;
+                
               </div>
               <AdminUserList companyIdent={adminId}/>
               <AdminQuizList companyIdent={adminId}/>

@@ -131,9 +131,9 @@ export function AdminUserList() {
             {openRows[user.userId] && (
               <tr key={`${user.userId}-scores`} className="text-gray-500 p-8">
                 <td colSpan="5" className="w-full justify-end border-0 text-right">
-                  <div className="border-1 border border-separate rounded-xl border-gray-300 shadow-md overflow-hidden w-full justify-end flex flex-col">
+                  <div className="border-0 border border-separate rounded-xl border-gray-300 shadow-md overflow-hidden w-full justify-end flex flex-col">
                   <table className="w-full shadow-md m-0 p-0 table-auto">
-                    <thead className="p-0 m-0 bg-gray-300 border-2 border-gray-200 rounded-xl border">
+                    <thead className="p-0 m-0 bg-gray-300 border-0 border-gray-200 rounded-xl border">
                       {/* <tr className="bg-gray-300 border-2 border-gray-200 rounded-xl border"> */}
                         <th className="text-s font-medium text-right uppercase tracking-wider">Quiz ID</th>
                         <th className="text-s font-medium text-center uppercase tracking-wider">Score</th>
@@ -143,10 +143,10 @@ export function AdminUserList() {
                     </thead>
                     <tbody>
                       {user.scores.map((score, index) => (
-                        <tr key={index}>
+                        <tr key={index} className="bg-gray-200 dark:bg-gray-700">
                           <td className="pr-4">{score.quizId}</td>
                           <td className="text-center">
-                            <div className={`text-center rounded-full border-1 border-white p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
+                            <div className={`text-center rounded-full  p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
                             {score.score !== null ? score.score : '--'}
                             </div>
                           </td>

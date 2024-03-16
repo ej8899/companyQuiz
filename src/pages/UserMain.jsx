@@ -46,8 +46,8 @@ export default function UserMain() {
     
     <section className="bg-white dark:bg-gray-900 h-full items-center flex flex-col pt-24">
       <div className="px-6 py-3 text-left text-xl font-bold font-sans text-gray-500 uppercase tracking-wider">{userData[userIndex].name}</div>
-      <div># TODO copmany name</div>
-      <div># TODO copmany admin & email</div>
+      <div className="text-black dark:text-white"># TODO copmany name</div>
+      <div className="text-black dark:text-white"># TODO company admin & email</div>
 
       <ScoreTable scores={userData[userIndex].scores} userId={userId} />
 

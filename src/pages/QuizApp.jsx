@@ -15,6 +15,7 @@ import {quizData} from "../quizdata.js"
 import { fetchImage } from '../utilities/imageSearch';
 import ProgressBar from '../components/ProgressBar.jsx';
 import MyFooter from '../components/Footer'
+import Navbar from '../components/Navbar'
 
 function QuizApp() {
   const { quizId } = useParams();
@@ -140,9 +141,11 @@ function QuizApp() {
 
   return (
       <div className='h-full z-0'>
+        
       <div className={`flex flex-col h-full overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
+      <Navbar />
       <ProgressBar currentQuestionIndex={currentQuestionIndex } totalQuestions={quizQuestions.length} />
-      <div className="sticky top-0 text-5xl text-slate-300 font-extrabold z-50 p-4 font-sans">{quizData.quizName} ({quizId})</div>
+      <div className="relative top-[30px] text-5xl text-slate-300 font-extrabold p-4 font-sans">{quizData.quizName} ({quizId})</div>
       
       <div className='flex flex-col justify-center h-full '>
       {showRetryPrompt ? (
@@ -186,7 +189,7 @@ function QuizApp() {
       )}
       </div>
     </div>
-    <MyFooter />
+    {/* <MyFooter /> */}
     </div>
   );
 }
