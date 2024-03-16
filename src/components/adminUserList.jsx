@@ -110,13 +110,24 @@ export function AdminUserList() {
               <td className="text-left">{user.name}</td>
               <td className="text-left">{user.email}</td>
               <td className="">
-              <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">
-              
-                <div className="bg-red-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}><Tooltip content="quizes not taken">{calculateScoreTotals(user.scores).nullScorePercentage}%</Tooltip></div>
-              
-                <div className="bg-yellow-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).belowPassingGradePercentage}%` }}><Tooltip content="quizes failed">{calculateScoreTotals(user.scores).belowPassingGradePercentage}%</Tooltip></div>
-              
-                <div className="bg-green-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).abovePassingGradePercentage}%` }}><Tooltip content="quizes passed">{calculateScoreTotals(user.scores).abovePassingGradePercentage}%</Tooltip></div>
+              <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">              
+                {calculateScoreTotals(user.scores).nullScorePercentage > 0 && (
+                  <div className="bg-red-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}>
+                    <Tooltip content="quizzes not taken">{calculateScoreTotals(user.scores).nullScorePercentage}%</Tooltip>
+                  </div>
+                )}
+                
+                {calculateScoreTotals(user.scores).belowPassingGradePercentage > 0 && (
+                  <div className="bg-yellow-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).belowPassingGradePercentage}%` }}>
+                    <Tooltip content="quizzes failed">{calculateScoreTotals(user.scores).belowPassingGradePercentage}%</Tooltip>
+                  </div>
+                )}
+                
+                {calculateScoreTotals(user.scores).abovePassingGradePercentage > 0 && (
+                  <div className="bg-green-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).abovePassingGradePercentage}%` }}>
+                    <Tooltip content="quizzes passed">{calculateScoreTotals(user.scores).abovePassingGradePercentage}%</Tooltip>
+                  </div>
+                )}
               </div>
               </td>
               <td className="text-left">
@@ -142,20 +153,35 @@ export function AdminUserList() {
                       {/* </tr> */}
                     </thead>
                     <tbody>
-                      {user.scores.map((score, index) => (
+                    {user.scores.length === 0 ? (
+                      <tr className="bg-gray-200 dark:bg-gray-700">
+                        <td colSpan="4" className="text-center">No exams assigned</td>
+                      </tr>
+                    ) : (
+                      user.scores.map((score, index) => (
                         <tr key={index} className="bg-gray-200 dark:bg-gray-700">
                           <td className="pr-4">{score.quizId}</td>
                           <td className="text-center">
-                            <div className={`text-center rounded-full  p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
-                            {score.score !== null ? score.score : '--'}
+                            <div className={`text-center rounded-full p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
+                              {score.score !== null ? score.score : '--'}
                             </div>
                           </td>
-
                           <td>{score.dateTested}</td>
-                          <td><div className="flex flex-row p-2"><Tooltip content="reset quiz to not started"><RxReset className="w-6 h-6 ml-2 mr-2"/></Tooltip> <Tooltip content="delete quiz from user"><BsFillTrashFill  className="w-6 h-6"/></Tooltip></div></td>
+                          <td>
+                            <div className="flex flex-row p-2">
+                              <Tooltip content="reset quiz to not started">
+                                <RxReset className="w-6 h-6 ml-2 mr-2"/>
+                              </Tooltip>
+                              <Tooltip content="delete quiz from user">
+                                <BsFillTrashFill  className="w-6 h-6"/>
+                              </Tooltip>
+                            </div>
+                          </td>
                         </tr>
-                      ))}
-                    </tbody>
+                      ))
+                    )}
+                  </tbody>
+
                   </table>
                   </div>
                 </td>
