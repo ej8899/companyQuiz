@@ -2,19 +2,42 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
 
 @tailwind base;
+
+:root {
+  --primary: rgb(16, 124, 160);
+  --secondary: rgb(183, 192, 210);
+}
+
+* {
+  font-family: 'Noto Sans', sans-serif;
+  scrollbar-color: var(--primary) var(--secondary);
+}
+
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 3px solid var(--primary);
+}
+
 @tailwind components;
 @tailwind utilities;
 
 
 
-* {
-  font-family: 'Noto Sans', sans-serif;
 
-}
 
 body {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
+
+
+
 
 
 

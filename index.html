@@ -52,6 +52,22 @@
         darkMode: "class"
       };
     </script>
+
+    <style>
+      /* Light mode */
+:root {
+  --scrollbar-track-color: #f1f1f1; /* Light mode track color */
+  --scrollbar-thumb-color: #888; /* Light mode thumb color */
+  --scrollbar-thumb-hover-color: #555; /* Light mode thumb color on hover */
+}
+
+/* Dark mode */
+.dark {
+  --scrollbar-track-color: #333; /* Dark mode track color */
+  --scrollbar-thumb-color: #666; /* Dark mode thumb color */
+  --scrollbar-thumb-hover-color: #999; /* Dark mode thumb color on hover */
+}
+    </style>
   </head>
   <body class="bg-slate-300 dark:bg-slate-900">
     <div id="root"></div>
