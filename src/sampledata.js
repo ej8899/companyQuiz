@@ -5,7 +5,7 @@ export const companyData = [
     administratorEmail: 'admin@acmecorp.com',
     industry: 'Manufacturing',
     companyLogoURL: '',
-    copmanyBGImageURL: '',
+    companyBGImageURL: '',
     quizList: ['1aaf4c7b-dc7b-4a4f-b9e0-27968a9a8874',],
   },
   {
