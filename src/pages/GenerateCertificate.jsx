@@ -14,24 +14,29 @@ const GenerateCertificate = () => {
   setPageTitle(data.state.userId + ' Certificate of Achievement in ' + data.state.quizId);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+    <div className="flex flex-col items-center justify-center h-full w-screen bg-white p-8">
+      <div className="border-8 border-gray-700 rounded-lg p-8 w-full h-full m-8">
+      <div className="bg-white rounded-lg p-8 w-full h-full flex flex-col justify-center">
         <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold">Certificate of Achievement</h1>
-          <p className="text-gray-500">This is to certify that</p>
+        <p className="text-gray-500 text-4xl mt-12">[company logo]</p>
+          <h1 className="text-6xl font-bold">Certificate of Achievement</h1>
+          <p className="text-gray-500 text-4xl mt-12">This is to certify that</p>
         </div>
         <div className="mb-4">
-          <p className="text-lg font-bold">[User Name]</p>
-          <p className="text-gray-500">has successfully completed</p>
-          <p className="text-lg font-bold">[quiz Name]</p>
-          <p className="text-gray-500">with a score of</p>
-          <p className="text-lg font-bold">{data.state.quizScore}%</p>
-          <p className="text-gray-500">on {data.state.quizDateTested}</p>
-        </div>
-        <div className="mt-8">
-          <p className="text-lg">Issued by:</p>
-          <p className="text-lg font-bold">[Company Name], {todayLong()}</p>
-        </div>
+          <p className="text-xl font-bold text-center">[User Name]</p>
+          <p className="text-gray-500 text-center">has successfully completed</p>
+          <p className="text-xl font-bold text-center">[quiz Name]</p>
+          <p className="text-xl font-bold text-center">from [company name]</p>
+          <p className="text-gray-500 text-center">with a score of</p>
+          <p className="text-xl font-bold text-center">{data.state.quizScore}%</p>
+          <p className="text-gray-500 text-center">on {data.state.quizDateTested}</p>
+        
+          <p className="text-2xl text-center mt-12">Issued by:</p>
+          <p className="text-2xl font-bold text-center">[Company Name],</p>
+          <p className="text-2xl font-bold text-center">{todayLong()}</p>
+          <p className="text-lg font-bold text-center">verify here: [verify link]</p>
+        </div>  
+      </div>
       </div>
     </div>
   );
