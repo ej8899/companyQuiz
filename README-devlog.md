@@ -91,3 +91,6 @@ Don the Developer March 2024 Hackathon
 - add quiz image search middleware for unsplash (access key protection)
 - remove footer and return to header nav on quiz displays
 - tweak certification display to 'full screen'
+- tweak admin display (bug fixes)
+- api->users: get specific user
+- api->users: get all by company id
