@@ -6,13 +6,22 @@ import Navbar from '../components/Navbar'
 import { setPageTitle } from '../utilities/helpers.js';
 import ImageSearch from '../components/ImageSearch'; // Import the ImageSearch component
 import { ToggleSwitch } from 'flowbite-react';
-
+import { useParams } from 'react-router-dom';
+import { generateUUID } from '../utilities/helpers.js'
 import { GiCheckMark } from "react-icons/gi";
 
 const QuizBuilder = () => {
+  const { quizId } = useParams();
+  console.log('quizId', quizId);
+  if(quizId === 'new') {
+    quizData.quizID=generateUUID();
+    quizData.quizName='New Quiz';
+    quizData.passingGrade=80;
+    quizData.qna=[];
+  }
   const [formData, setFormData] = useState(quizData);
-  const [switch2, setSwitch2] = useState(false);
-  setPageTitle('Quiz Builde: ' +  formData.quizName);
+  const [switch2, setSwitch2] = useState(true);
+  setPageTitle('Quiz Builder: ' +  formData.quizName);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -102,6 +111,7 @@ const QuizBuilder = () => {
       <h1 className="px-6 py-3 text-center text-2xl font-bold font-sans text-gray-500 uppercase tracking-wider">Quiz Builder</h1>
       <form className="w-full border-2 font-sans p-2">
         <label className="text-black dark:text-gray-200 text-lg font-sans">
+          Quiz ID: {formData.quizID} <br/>
           Quiz Name:
           <input
             type="text"
