@@ -4,7 +4,7 @@
 @tailwind base;
 
 :root {
-  --primary: rgb(16, 124, 160);
+  --primary: #0d7490;
   --secondary: rgb(183, 192, 210);
 }
 
