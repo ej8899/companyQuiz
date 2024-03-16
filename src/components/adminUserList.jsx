@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { RxReset } from "react-icons/rx";
-
+import { PiDownloadSimpleBold } from "react-icons/pi";
 
 import {userData} from "../sampledata.js"
 import {quizData} from "../quizdata.js"
@@ -46,19 +46,45 @@ export function AdminUserList() {
 
   const sortedUserData = [...userData].sort((a, b) => a.name.localeCompare(b.name));
 
+  //
+  // downloadCSV (of test results for all users)
+  //
+  const downloadCSV = () => {
+    // Define the CSV content
+    let csvContent = "User Name,Quiz Name,Score,pass/fail/not taken,Date Tested\n";
+
+    sortedUserData.forEach(user => {
+      user.scores.forEach(score => {
+        const row = `${user.name},${score.quizId},${parseInt(score.score)},${score.passFailNotTaken},${score.dateTested}\n`;
+        csvContent += row;
+      });
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'userData.csv');
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+  
 
   return (
     <>
     
-    <section className="flex flex-col items-center bg-gray-50 dark:bg-gray-900 w-full">
+    <section className="flex flex-col items-center w-full">
   
-    # TODO - need add a user button
-    # TODO - add quiz to individual User (displays list of available copmany quizes)
-  
-    <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full">
+ 
+    <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-50 dark:bg-gray-800">
     <table className="min-w-full divide-y divide-gray-200 w-full table-auto">
       <thead className="bg-gray-50 border-0">
-        <tr className="border-0 p-4">
+        <tr className="p-0">
           <th scope="col" className="text-right px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
             User ID
           </th>
@@ -71,8 +97,8 @@ export function AdminUserList() {
           <th scope="col" className="text-left px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
             Status
           </th>
-          <th scope="col" className="text-left px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
-            Actions
+          <th scope="col" className="text-left px-6 py-3 text-end text-s font-medium text-gray-500 uppercase tracking-wider  flex flex-row justify-center align-bottom">
+            Actions <Tooltip content="download CSV of all users' results"><Button size="xs" onClick={downloadCSV} className="ml-4"><PiDownloadSimpleBold className="w-4 h-4"/></Button></Tooltip>
           </th>
         </tr>
       </thead>
@@ -94,7 +120,7 @@ export function AdminUserList() {
               </div>
               </td>
               <td className="text-left">
-                <div className="flex flex-row">
+                <div className="flex flex-row justify-center">
                   <Tooltip content="edit user details"><FaEdit className="mr-4 h-6 w-6"/></Tooltip>
                   <Tooltip content="delete this user from company"><BsFillTrashFill className="mr-4 h-6 w-6"/></Tooltip>
                   <button onClick={() => toggleRow(user.userId)}> {openRows[user.userId] ? "Hide Details" : "Show Details"}</button>
@@ -144,4 +170,6 @@ export function AdminUserList() {
   </>
   );
 }
+
+
 
