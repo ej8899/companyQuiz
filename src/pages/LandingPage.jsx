@@ -4,6 +4,7 @@ import { Button, Banner } from 'flowbite-react';
 // import { HiX } from 'react-icons/hi';
 // import { MdAnnouncement } from 'react-icons/md';
 
+import { useRef } from 'react';
 
 import { CheckMark } from '../assets/CheckMark';
 import SignUp from '../pages/SignUp';
@@ -16,6 +17,15 @@ import { setPageTitle } from '../utilities/helpers';
 function LandingPage() {
   const logoImage = "./public/android-chrome-192x192.png";
   setPageTitle();
+
+  const getstarted = useRef(null)
+  const scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: "smooth",
+     });
+    };
+
   return (
     <>
     <Navbar/>
@@ -79,7 +89,7 @@ function LandingPage() {
                       <span>Free updates: <span className="font-semibold">6 months</span></span>
                   </li>
               </ul>
-              <Button href="#" className="text-white  hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">Get started</Button>
+              <Button onClick={() => scrollToSection(getstarted)}  className="text-white  hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">Get started</Button>
           </div>
           
           <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white hover:scale-105 duration-500">
@@ -117,7 +127,7 @@ function LandingPage() {
                       <span>Free updates: <span className="font-semibold">forever</span></span>
                   </li>
               </ul>
-              <Button href="#" className="text-white hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">Get started</Button>
+              <Button  onClick={() => scrollToSection(getstarted)} className="text-white hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">Get started</Button>
           </div>
 
           <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-white rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white  hover:scale-105 duration-500">
@@ -154,10 +164,11 @@ function LandingPage() {
                       <span>Free updates: <span className="font-semibold">forever</span></span>
                   </li>
               </ul>
-              <Button href="#" className="text-white  hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">Get started</Button>
+              <Button onClick={() => scrollToSection(getstarted)} className="text-white  hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">Get started</Button>
           </div>
       </div>
       <Newsletter />
+      <section ref={getstarted}></section>
       <SignUp />
   </div>
 

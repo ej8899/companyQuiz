@@ -26,7 +26,7 @@ export default function Ournavbar() {
   const [navId, setNavId] = useState(null);
   const [isAdmin, setIsAdmin] = useState(null);
 
-  const aboutImage = "./public/android-chrome-192x192.png"
+  const aboutImage = "./android-chrome-192x192.png"
   const navigate = useNavigate();
 
   let cId = 0;
@@ -107,7 +107,7 @@ export default function Ournavbar() {
       {/* Left-justified content */}
       <div className="flex items-center w-auto justify-between z-50">
         <Navbar.Brand href="https://erniejohnson.ca/companyquiz/">
-          <img src="./public/favicon-32x32.png" className="mr-3 h-6 sm:h-9" alt="ErnieJohnson.ca Logo" />
+          <img src="./favicon-32x32.png" className="mr-3 h-6 sm:h-9" alt="ErnieJohnson.ca Logo" />
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Company Quiz</span>
         </Navbar.Brand>
       </div>
