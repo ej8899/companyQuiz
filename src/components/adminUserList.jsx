@@ -1,4 +1,4 @@
-import { Button,  Tooltip} from 'flowbite-react';
+import { Button,  Tooltip, Modal} from 'flowbite-react';
 
 
 import { useState } from 'react';
@@ -7,11 +7,14 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { RxReset } from "react-icons/rx";
 import { PiDownloadSimpleBold } from "react-icons/pi";
+import { MdOutlinePersonAddAlt } from "react-icons/md";
+
+import AddUser from './adminAddUser';
 
 import {userData} from "../sampledata.js"
 import {quizData} from "../quizdata.js"
 
-export function AdminUserList() {
+export function AdminUserList({companyIdent}) {
   const [openRows, setOpenRows] = useState({});
 
   const toggleRow = (userId) => {
@@ -73,6 +76,16 @@ export function AdminUserList() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   
 
   return (
@@ -80,7 +93,7 @@ export function AdminUserList() {
     
     <section className="flex flex-col items-center w-full">
   
- 
+
     <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-50 dark:bg-gray-800">
     <table className="min-w-full divide-y divide-gray-200 w-full table-auto">
       <thead className="bg-gray-50 border-0">
@@ -99,6 +112,8 @@ export function AdminUserList() {
           </th>
           <th scope="col" className="text-left px-6 py-3 text-end text-s font-medium text-gray-500 uppercase tracking-wider  flex flex-row justify-center align-bottom">
             Actions <Tooltip content="download CSV of all users' results"><Button size="xs" onClick={downloadCSV} className="ml-4"><PiDownloadSimpleBold className="w-4 h-4"/></Button></Tooltip>
+            <Tooltip content="add a new employee"><Button onClick={openModal} size="xs"  className="ml-4"><MdOutlinePersonAddAlt className="w-4 h-4"/></Button></Tooltip>
+            <AddUser isOpen={isModalOpen} onClose={closeModal} companyIdent={companyIdent} />
           </th>
         </tr>
       </thead>
@@ -112,19 +127,19 @@ export function AdminUserList() {
               <td className="">
               <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">              
                 {calculateScoreTotals(user.scores).nullScorePercentage > 0 && (
-                  <div className="bg-red-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}>
+                  <div key="pbar1" className="bg-red-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}>
                     <Tooltip content="quizzes not taken">{calculateScoreTotals(user.scores).nullScorePercentage}%</Tooltip>
                   </div>
                 )}
                 
                 {calculateScoreTotals(user.scores).belowPassingGradePercentage > 0 && (
-                  <div className="bg-yellow-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).belowPassingGradePercentage}%` }}>
+                  <div key="pbar2" className="bg-yellow-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).belowPassingGradePercentage}%` }}>
                     <Tooltip content="quizzes failed">{calculateScoreTotals(user.scores).belowPassingGradePercentage}%</Tooltip>
                   </div>
                 )}
                 
                 {calculateScoreTotals(user.scores).abovePassingGradePercentage > 0 && (
-                  <div className="bg-green-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).abovePassingGradePercentage}%` }}>
+                  <div key="pbar3" className="bg-green-500 pl-2" style={{ width: `${calculateScoreTotals(user.scores).abovePassingGradePercentage}%` }}>
                     <Tooltip content="quizzes passed">{calculateScoreTotals(user.scores).abovePassingGradePercentage}%</Tooltip>
                   </div>
                 )}
@@ -135,7 +150,7 @@ export function AdminUserList() {
                   <Tooltip content="edit user details"><FaEdit className="mr-4 h-6 w-6"/></Tooltip>
                   <Tooltip content="delete this user from company"><BsFillTrashFill className="mr-4 h-6 w-6"/></Tooltip>
                   <button onClick={() => toggleRow(user.userId)}> {openRows[user.userId] ? "Hide Details" : "Show Details"}</button>
-                   
+
                 </div>
               </td>
             </tr>
