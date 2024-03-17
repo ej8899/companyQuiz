@@ -162,8 +162,52 @@ function getUsersByCID($cid) {
   }
 }
 
+
+// Function to add a new user to the database
+function addUser($data) {
+    global $servername, $username, $password, $database;
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $database);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Extract data from JSON
+    $username = $data['username'];
+    $email = $data['email'];
+    $cid = $data['cid'];
+    $uid = generateUUID();
+
+    // SQL query to insert new user
+    $sql = "INSERT INTO users (name, email, cid, uid) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssss", $username, $email, $cid, $uid);
+
+    // Execute the query
+    if ($stmt->execute() === TRUE) {
+        // Close statement and connection
+        $stmt->close();
+        $conn->close();
+        return true;
+    } else {
+        // Close statement and connection
+        $stmt->close();
+        $conn->close();
+        return false;
+    }
+}
+
+
+
 //
 // Main code
+//
+
+//
+// Handle GET requests
 //
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   // If the request method is GET
@@ -190,10 +234,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
       header('Content-Type: application/json');
       echo json_encode($users);
   }
+} 
+
+// Handle POST requests
+elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // If the request method is POST
+  $json = file_get_contents('php://input');
+  $data = json_decode($json, true);
+
+  // Check if required fields are present in JSON
+  if (isset($data['username'], $data['email'], $data['cid'])) {
+      // Attempt to add the user
+      if (addUser($data)) {
+          http_response_code(201); // Created
+          echo json_encode(array("message" => "User added successfully"));
+      } else {
+          http_response_code(500); // Internal Server Error
+          echo json_encode(array("error" => "Failed to add user"));
+      }
   } else {
-    // If the request method is not GET, return an error
-    http_response_code(405);
-    echo json_encode(array("error" => "Method not allowed"));
+      http_response_code(400); // Bad Request
+      echo json_encode(array("error" => "Missing required fields"));
   }
+}
+
+else {
+  // If the request method is not GET or POST, return an error
+  http_response_code(405);
+  echo json_encode(array("error" => "Method not allowed"));
+}
 
 ?>
