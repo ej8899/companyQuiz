@@ -94,3 +94,4 @@ Don the Developer March 2024 Hackathon
 - tweak admin display (bug fixes)
 - api->users: get specific user
 - api->users: get all by company id
+- api->users: add new users
