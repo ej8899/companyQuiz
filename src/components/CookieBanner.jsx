@@ -1,14 +1,45 @@
-import { Button, Banner, Modal } from 'flowbite-react';
+import { Button, Banner, Modal,  } from 'flowbite-react';
 import { PiCookieFill } from "react-icons/pi";
 import { BsCookie } from "react-icons/bs";
 import { BsXLg } from "react-icons/bs";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function CookieBanner() {
   const [openModal, setOpenModal] = useState(false);
+  const managementModal = false;
+
+   // accept all cookies
+   const handleAcceptAll = () => {  
+    localStorage.setItem('cookieBannerTimestamp', Date.now());
+    console.log("accept all cookies");
+  };
+
+  useEffect(() => {
+    // Check if data exists in localStorage
+    const storedTimestamp = localStorage.getItem('cookieBannerTimestamp');
+    if (storedTimestamp) {
+      // Calculate the difference in hours between stored time and current time
+      const diffInHours = (Date.now() - parseInt(storedTimestamp)) / (1000 * 60 * 60);
+      // If less than 24 hours, hide the banner
+      if (diffInHours < 24) {
+        setOpenModal(false);
+      } else {
+        // If greater than or equal to 24 hours, show the banner & reset date stamp
+        setOpenModal(true);
+        localStorage.setItem('cookieBannerTimestamp', Date.now());
+      }
+    } else {
+      // If no data exists in localStorage, show the banner
+      setOpenModal(true);
+      // TODO make this work as it should - we're defaulting to accepting cookies no matter what
+      localStorage.setItem('cookieBannerTimestamp', Date.now());
+    }
+  }, []);
+
   return (
     <>
+    {openModal && (
     <Banner>
     <div className="z-50 flex fixed bottom-0 left-0 w-full flex-row justify-between border-t-2 border-gray-200 bg-gray-50 p-4 dark:border-gray-600 dark:bg-gray-700">
       <div className="mx-auto flex items-center">
@@ -23,6 +54,7 @@ export function CookieBanner() {
       </div>
       <div className="flex flex-shrink-0 space-x-4 justify-center items-center ml-8 mr-8">
         {/* <Button onClick={() => setOpenModal(true)}>Manage Settings</Button> */}
+        {/* <Banner.CollapseButton onClick={handleAcceptAll}>Accept All</Banner.CollapseButton> */}
         <Banner.CollapseButton>Accept All</Banner.CollapseButton>
         {/* <Banner.CollapseButton color="gray" className="border-0 bg-transparent text-gray-500 dark:text-gray-400">
           <BsXLg className="h-4 w-4"/>
@@ -30,8 +62,8 @@ export function CookieBanner() {
       </div>
     </div>
     </Banner>
-
-    <Modal show={openModal} onClose={() => setOpenModal(false)}>
+    )}
+    <Modal show={managementModal} onClose={() => setOpenModal(false)}>
       <Modal.Header>Cookies Management</Modal.Header>
       <Modal.Body>
         <div className="space-y-6">
