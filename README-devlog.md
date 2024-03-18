@@ -95,3 +95,12 @@ Don the Developer March 2024 Hackathon
 - api->users: get specific user
 - api->users: get all by company id
 - api->users: add new users
+
+3/17/23 - companyquiz
+- read users from db into front end
+- set timer in cookies info banner (24hours)
+- assign quiz id's to users (sample data only)
+- misc UI work in admin section
+
+3/18/23 - companyquiz
+- 
