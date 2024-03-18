@@ -5,7 +5,7 @@ import { Alert } from 'flowbite-react';
 
 import { HiInformationCircle } from 'react-icons/hi';
 import { PiExport } from "react-icons/pi";
-import { IoMdPersonAdd } from "react-icons/io";
+
 import { LuImport } from "react-icons/lu";
 import { BiExport } from "react-icons/bi";
 import { FaFileImport } from "react-icons/fa6";
@@ -34,7 +34,7 @@ function AdminPage() {
     <>
     <Navbar />
     
-    <section className="bg-gray-400 dark:bg-gray-900 items-center justify-start flex flex-col w-full h-full border-0 pt-24">
+    <section className=" items-center justify-start flex flex-col w-full h-screen border-0 pt-24">
         <Alert className="warning-message mb-6 lg:hidden" color="failure" icon={HiInformationCircle}>
           This website is best viewed on larger screens. Please use a larger device for a better experience.
         </Alert>
@@ -42,16 +42,13 @@ function AdminPage() {
         <div className="mx-auto   text-center text-slate-400 w-full border-0">
           {company ? (
             <div className=" p-4">
+              <div className="font-sans text-2xl text-gray-800 dark:text-gray-400">company logo</div>
               <div className="font-sans text-2xl text-gray-800 dark:text-gray-400">Admin page for {company.name}</div>
               <div className="font-sans text-lg text-gray-800 dark:text-gray-400">Administrator email: {company.administratorEmail}</div>
               <div className="font-sans text-lg text-gray-800 dark:text-gray-400">Industry: {company.industry}</div>
               <div className="p-2 flex flex-row justify-center">
-                <Button><FaFileExport className="h-6 w-6 mr-2"/>export user summary (csv)</Button>&nbsp;
                 <Button><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>&nbsp;
-                <Button><IoMdPersonAdd className="h-6 w-6 mr-2" />add employee</Button>&nbsp;
-                
                 <Button><FaEdit className="h-6 w-6 mr-2"/>edit company info</Button>&nbsp;
-                
               </div>
               <AdminUserList companyIdent={adminId}/>
               <AdminQuizList companyIdent={adminId}/>

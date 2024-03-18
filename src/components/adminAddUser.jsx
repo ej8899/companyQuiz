@@ -8,11 +8,14 @@ export default function AddUser({ isOpen, onClose, companyIdent }) {
 
   useEffect(() => {
     setOpenModal(isOpen);
+    setEmail('');
+    setUserName('');
   }, [isOpen]);
 
   function handleCloseModal() {
     setOpenModal(false);
     setEmail('');
+    setUserName('');
   }
 
   function handleAddUser() {
@@ -45,7 +48,8 @@ export default function AddUser({ isOpen, onClose, companyIdent }) {
   }
 
   return (
-    <Modal show={openModal} size="md" onClose={onClose || handleCloseModal} popup>
+    // <Modal show={openModal} size="md" onClose={onClose || handleCloseModal} popup>
+    <Modal show={openModal} size="md" onClose={onClose} popup>
       <Modal.Header />
       <Modal.Body>
         <div className="space-y-6">
@@ -71,6 +75,7 @@ export default function AddUser({ isOpen, onClose, companyIdent }) {
               placeholder="name@company.com"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              type='email'
               required
             />
           </div>
