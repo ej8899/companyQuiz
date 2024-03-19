@@ -26,7 +26,8 @@ export const quizData = {
   // TODO - make allow Retry option to work
   allowRetry: true, // allow retaking quiz after failing (or false to deny)
 
-  backgroundImage : 'http://www.tcmd.com/lhl/final1.jpeg',
+  // backgroundImage : 'http://www.tcmd.com/lhl/final1.jpeg',
+  backgroundImage: 'https://images.unsplash.com/photo-1590065707046-4fde65275b2e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDM5Mzh8MHwxfHNlYXJjaHw2fHxjeWJlcnNlY3VyaXR5fGVufDB8MHx8fDE3MTA3NzA2MzB8MA&ixlib=rb-4.0.3&q=80&w=2048',
 
   // TODO below if not null searches unsplash for the bg image
   backgroundImageSearch: '',
