@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { redirect } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
-import React from 'react';
 import { Button, Tooltip } from 'flowbite-react';
 
 import Navbar from '../components/Navbar'
@@ -32,7 +32,16 @@ const sortScores = (scores) => {
 
 export default function UserMain() {
   const { userId } = useParams();
-  
+  const [companyName, setCompanyName] = useState('');
+  const [companyEmail, setCompanyEmail] = useState('');
+
+  useEffect(() => {
+    // Retrieve company name from localStorage
+    const companyName = JSON.parse(localStorage.getItem('companyData')).name;
+    setCompanyName(companyName);
+    const companyEmail = JSON.parse(localStorage.getItem('companyData')).email;
+    setCompanyEmail(companyEmail);
+  }, []);
 
 //  const userIndex = userData.findIndex(user => user.userId === userId);
   const userIndex = userData.findIndex(user => parseInt(user.userId) === parseInt(userId));
@@ -45,9 +54,9 @@ export default function UserMain() {
     <Navbar/>
     
     <section className="bg-white dark:bg-gray-900 h-full items-center flex flex-col pt-24">
-      <div className="px-6 py-3 text-left text-xl font-bold font-sans text-gray-500 uppercase tracking-wider">{userData[userIndex].name}</div>
-      <div className="text-black dark:text-white"># TODO copmany name</div>
-      <div className="text-black dark:text-white"># TODO company admin & email</div>
+      <div className="px-6 py-3 text-left text-2xl font-bold font-sans text-gray-500 uppercase tracking-wider">{userData[userIndex].name}</div>
+      <div className="text-black dark:text-white text-xl font-sans">{companyName}</div>
+      <div className="text-black dark:text-white">{companyEmail}</div>
 
       <ScoreTable scores={userData[userIndex].scores} userId={userId} />
 
