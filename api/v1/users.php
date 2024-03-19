@@ -8,6 +8,42 @@
   require('config.php');
   require('helpers.php');
 
+
+// Function to get user by email from the database
+function getUserByEmail($email) {
+  global $servername, $username, $password, $database;
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $database);
+
+  // Check connection
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+
+  // SQL query to retrieve user by email
+  $sql = "SELECT * FROM users WHERE email = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("s", $email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  // Check if user found
+  if ($result->num_rows > 0) {
+      // Fetch user record
+      $user = $result->fetch_assoc();
+
+      // Close statement and connection
+      $stmt->close();
+      $conn->close();
+
+      return $user;
+  } else {
+      // If user not found
+      return null;
+  }
+}
+
  // Function to get all users from the database
 function getAllUsers($cid = null) {
   global $servername, $username, $password, $database;
@@ -27,8 +63,12 @@ function getAllUsers($cid = null) {
 
   // If CID is provided, add a condition to filter users by CID
   if ($cid !== null) {
-      $sql .= " WHERE users.cid = ?";
+      $sql .= " WHERE users.cid = ? AND users.admin !='1'";
   }
+  // if ($cid !== null) {
+  //   // Add an additional condition to exclude records where UID matches CID
+  //   $sql .= " WHERE users.cid = ? AND users.uid != ?";
+  // }
 
   // Prepare the SQL statement
   $stmt = $conn->prepare($sql);
@@ -55,8 +95,12 @@ function getAllUsers($cid = null) {
           if (!isset($users[$uid])) {
               $users[$uid] = array(
                   'uid' => $uid,
-                  'name' => $row['name'], // Assuming 'name' is a field in the users table
-                  'email' => $row['email'], // Assuming 'email' is a field in the users table
+                  'name' => $row['name'],
+                  'email' => $row['email'],
+                  'admin' => $row['admin'],
+                  'logo' => $row['logo'],
+                  'bgimage' => $row['bgimage'],
+                  'industry' => $row['industry'],
                   'scores' => array() // Initialize scores array for the user
               );
           }
@@ -245,6 +289,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $users = getAllUsers($cid);
     header('Content-Type: application/json');
     echo json_encode($users);
+  } elseif (isset($_GET['email']) && !empty($_GET['email'])) {
+    // If email is specified in the URL, retrieve the user by email
+    $email = $_GET['email'];
+    $user = getUserByEmail($email);
+    if ($user) {
+        header('Content-Type: application/json');
+        echo json_encode($user);
+    } else {
+        http_response_code(404);
+        echo json_encode(array("error" => "User not found"));
+    } 
   } else {
       // If neither UID nor CID is specified, return all users
       $users = getAllUsers();
