@@ -36,7 +36,7 @@ export function AdminUserList({companyIdent}) {
       setIsLoading(false); // Set loading state to false even if there's an error
     }
   };
-  
+
   useEffect(() => {
     fetchUserData(); // Call the fetchUserData function when the component mounts
   }, []);
@@ -101,8 +101,8 @@ export function AdminUserList({companyIdent}) {
     URL.revokeObjectURL(url);
   };
 
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => {
     setIsModalOpen(true);
   };
