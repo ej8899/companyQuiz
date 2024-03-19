@@ -103,4 +103,12 @@ Don the Developer March 2024 Hackathon
 - misc UI work in admin section
 
 3/18/23 - companyquiz
+- minor landing page adjustments
+- retrieve companies data API
+- add companies sample data to live server
+- API to find user by email
+- user login now also retrieves 'owner/company' info for user admin page branding
+
+3/19/23 - companyquiz
+- drop companies table - merged w users table
 - 
