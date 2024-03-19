@@ -143,20 +143,24 @@ function QuizApp() {
       <div className='h-full z-0'>
         
       <div className={`flex flex-col h-full overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
+      <div className="dark flex flex-col items-center justify-center h-screen w-screen bg-black bg-opacity-40">
       <Navbar />
       <ProgressBar currentQuestionIndex={currentQuestionIndex } totalQuestions={quizQuestions.length} />
-      <div className="relative top-[30px] text-5xl text-slate-300 font-extrabold p-4 font-sans">{quizData.quizName} ({quizId})</div>
+      <div className="relative top-[45px] text-5xl text-slate-300 font-extrabold p-4 font-sans">{quizData.quizName} ({quizId})</div>
       
-      <div className='flex flex-col justify-center h-full '>
+      <div className='flex flex-col items-center justify-center h-full w-full'>
       {showRetryPrompt ? (
         <div className="bg-black bg-opacity-20 rounded-xl w-1/2 flex flex-col items-center">
           <h2 className="text-4xl text-slate-300 font-bold ">Quiz Complete!</h2>
           <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
           <p className="text-2xl text-slate-400">Would you like to try the test again?</p>
-          <Button onClick={handleRetryClick}>Retry</Button>
+          <span className="flex flex-row justify-center mt-4">
+          <Button className="mr-8" onClick={handleRetryClick}>Retry</Button>
+          <Button color="light" onClick={handleRetryClick}>Quit</Button>
+          </span>
         </div>
       ) : currentQuestionIndex < quizQuestions.length ? (
-        <div className={`quiz-container flex flex-col bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
+        <div className={`quiz-container flex flex-col w-full ml-12 bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
           {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
           <div className="quiz-content w-4/5">
             <h2 className="text-2xl text-slate-300">Question {currentQuestionIndex + 1} of {quizQuestions.length} :</h2>
@@ -188,6 +192,7 @@ function QuizApp() {
         </div>
       )}
       </div>
+    </div>
     </div>
     {/* <MyFooter /> */}
     </div>

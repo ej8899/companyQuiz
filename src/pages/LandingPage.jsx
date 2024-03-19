@@ -15,7 +15,7 @@ import { setPageTitle } from '../utilities/helpers';
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
 function LandingPage() {
-  const logoImage = "./public/android-chrome-192x192.png";
+  const logoImage = "./android-chrome-192x192.png";
   setPageTitle();
 
   const getstarted = useRef(null)
@@ -197,10 +197,10 @@ function LandingPage() {
                     <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Follow us</h2>
                     <ul className="text-gray-600 dark:text-gray-400">
                         <li className="mb-4">
-                            <a href="https://github.com/themesberg/flowbite" className="hover:underline ">Github</a>
+                            <a href="https://github.com/ej8899/companyQuiz" className="hover:underline ">Github</a>
                         </li>
                         <li>
-                            <a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Discord</a>
+                            <a href="https://www.linkedin.com/in/ernie-johnson/" className="hover:underline">LinkedIn</a>
                         </li>
                     </ul>
                 </div>
