@@ -17,7 +17,22 @@ function Login() {
   const navigate = useNavigate();
   const logoImage = "./public/android-chrome-192x192.png";
 
-  const handleLogin = () => {
+  const fetchUserDataFromAPI = async (userId) => {
+    try {
+      const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?uid=${userId}`);
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('companyData', JSON.stringify(data));
+        console.log('User data from API:', data);
+      } else {
+        throw new Error('Failed to fetch user data from API');
+      }
+    } catch (error) {
+      console.error('Error fetching user data from API:', error);
+    }
+  };
+
+  const handleLogin = async () => {
     console.log('email', email);
     // Check if the email exists in companyData
     const isAdmin = companyData.some(company => company.administratorEmail === email);
@@ -40,9 +55,10 @@ function Login() {
       localStorage.setItem('companyId', null);
       localStorage.setItem('isAdmin', false);
       const userId = userData.find(user => user.email === email).userId;
+      const companyId = userData.find(user => user.email === email).companyId;
       localStorage.setItem('userId',userId);
       // Redirect to user dashboard
-      
+      await fetchUserDataFromAPI(companyId);
       navigate(`/usermain/${userId}`);
       return;
     }
