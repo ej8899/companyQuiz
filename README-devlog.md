@@ -111,4 +111,10 @@ Don the Developer March 2024 Hackathon
 
 3/19/23 - companyquiz
 - drop companies table - merged w users table
+- additional API work
+- all user and company admins operate from live db - hardcoded sample data removed
+- implement user and company branding (admin, user and certificate pages)
+- retrieve quiz names throughout admin & user sections
+
+3/20/23 - companyquiz
 - 
