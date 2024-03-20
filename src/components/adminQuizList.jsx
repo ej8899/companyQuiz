@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Banner, Tooltip } from 'flowbite-react';
 import React from 'react';
 
-import {companyData} from "../sampledata.js"
+// import {companyData} from "../sampledata.js"
 import {quizData} from "../quizdata.js"
 import { HiSparkles } from "react-icons/hi2";
 import { VscNewFile } from "react-icons/vsc";
@@ -13,16 +13,17 @@ import { FaEdit } from "react-icons/fa";
 
 export function AdminQuizList({companyIdent}) {
   
-  const company = companyData.find(company => company.companyId === parseInt(companyIdent));
-
+  //const company = companyData.find(company => company.companyId === parseInt(companyIdent));
+  const company = JSON.parse(localStorage.getItem('companyData'));
+  console.log('company:', company);
   const renderQuizList = () => {
     if (!company) return null; // Return null if company not found
-    return company.quizList.map((quizId, index) => (
+    return company.quizList.map((quiz, index) => (
       <tr key={index}>
         {/* Render columns for each quiz */}
-        <td>{quizId}</td>
+        <td>{quiz.quizName}</td>
         <td className="flex flex-row justify-center">
-        <Link to={`/quizbuilder/${quizId}`}><Tooltip content="edit quiz"><FaEdit className="mr-4 h-6 w-6"/></Tooltip></Link>
+        <Link to={`/quizbuilder/${quiz.qid}`}><Tooltip content="edit quiz"><FaEdit className="mr-4 h-6 w-6"/></Tooltip></Link>
         <Tooltip content="delete this quiz"><BsFillTrashFill className="mr-4 h-6 w-6"/></Tooltip>
         </td>
       </tr>

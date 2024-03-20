@@ -1,5 +1,5 @@
 
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Button, } from 'flowbite-react';
 import { Alert } from 'flowbite-react';
 
@@ -15,7 +15,7 @@ import { FaEdit } from "react-icons/fa";
 import { Link, useParams } from 'react-router-dom';
 
 import Navbar from '../components/Navbar'
-import {companyData} from "../sampledata.js"
+// import {companyData} from "../sampledata.js"
 import {quizData} from "../quizdata.js"
 
 import { AdminUserList } from '../components/adminUserList';
@@ -25,9 +25,19 @@ import { setPageTitle } from '../utilities/helpers.js';
 
 function AdminPage() {
   const { adminId } = useParams();
+  const [company, setCompanyData] = useState('');
   
+
+  useEffect(() => {
+    // Retrieve company name from localStorage
+    const companyData = JSON.parse(localStorage.getItem('companyData'));
+    setCompanyData(companyData);
+    console.log('adminpage company:')
+  }, []);
   // Find the company record that matches the adminId
-  const company = companyData.find(company => company.companyId === Number(adminId));
+  //const company = companyData.find(company => company.companyId === Number(adminId));
+  
+
   setPageTitle(company.name + ': Quiz Admin');
 
   return (
@@ -42,15 +52,15 @@ function AdminPage() {
         <div className="mx-auto   text-center text-slate-400 w-full border-0">
           {company ? (
             <div className=" p-4">
-              <div className="font-sans text-2xl text-gray-800 dark:text-gray-400">company logo</div>
+              <div className="font-sans text-2xl text-gray-800 dark:text-gray-400  flex flex-row justify-center"><img src={company.logo} className=" h-auto w-auto"></img></div>
               <div className="font-sans text-2xl text-gray-800 dark:text-gray-400">Admin page for {company.name}</div>
-              <div className="font-sans text-lg text-gray-800 dark:text-gray-400">Administrator email: {company.administratorEmail}</div>
+              <div className="font-sans text-lg text-gray-800 dark:text-gray-400">Administrator email: {company.email}</div>
               <div className="font-sans text-lg text-gray-800 dark:text-gray-400">Industry: {company.industry}</div>
               <div className="p-2 flex flex-row justify-center">
                 <Button><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>&nbsp;
                 <Button><FaEdit className="h-6 w-6 mr-2"/>edit company info</Button>&nbsp;
               </div>
-              <AdminUserList companyIdent={adminId}/>
+              <AdminUserList companyIdent={adminId} company={company}/>
               <AdminQuizList companyIdent={adminId}/>
               <AdminPublicQuizList companyIdent={adminId}/>
             </div>

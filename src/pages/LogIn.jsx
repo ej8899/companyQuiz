@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import {quizData} from "../quizdata.js";
-import {companyData, userData } from "../sampledata.js";
+// import {companyData, userData } from "../sampledata.js";
 
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
@@ -15,15 +15,57 @@ import {companyData, userData } from "../sampledata.js";
 function Login() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
-  const logoImage = "./public/android-chrome-192x192.png";
+  const logoImage = "./android-chrome-192x192.png";
 
-  const fetchUserDataFromAPI = async (userId) => {
+  const fetchCompanyDataFromAPI = async (userId) => {
     try {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?uid=${userId}`);
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('companyData', JSON.stringify(data));
+        console.log('Company data from API:', data);
+      } else {
+        throw new Error('Failed to fetch company data from API');
+      }
+    } catch (error) {
+      console.error('Error fetching company data from API:', error);
+    }
+  };
+  const fetchUserDataFromAPI = async (email) => {
+    try {
+      const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?email=${email}`);
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('userData', JSON.stringify(data));
+        const isAdmin = data.admin;
+        console.log('isAdmin', isAdmin);
         console.log('User data from API:', data);
+        fetchCompanyDataFromAPI(data.cid);
+
+        // process admin or user settings here:
+        if (isAdmin === 1) {
+          // Find the companyId for the matching administratorEmail
+          //const companyId = companyData.find(company => company.administratorEmail === email).companyId;
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('userId', null);
+          localStorage.setItem('isAdmin', true);
+          console.log('company id',data.uid)
+          localStorage.setItem('companyId',data.uid);
+          navigate(`/admin/${data.uid}`);
+          return;
+        } 
+        if (isAdmin === 0) {
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('companyId', null);
+          localStorage.setItem('isAdmin', false);
+          // const userId = userData.find(user => user.email === email).userId;
+          // const companyId = userData.find(user => user.email === email).companyId;
+          localStorage.setItem('userId',data.uid);
+
+          // Redirect to user dashboard
+          navigate(`/usermain/${data.uid}`);
+          return;
+        }
       } else {
         throw new Error('Failed to fetch user data from API');
       }
@@ -34,37 +76,40 @@ function Login() {
 
   const handleLogin = async () => {
     console.log('email', email);
-    // Check if the email exists in companyData
-    const isAdmin = companyData.some(company => company.administratorEmail === email);
-    if (isAdmin) {
-      // Find the companyId for the matching administratorEmail
-      const companyId = companyData.find(company => company.administratorEmail === email).companyId;
-      localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('userId', null);
-      localStorage.setItem('isAdmin', true);
-      console.log('company id',companyId)
-      localStorage.setItem('companyId',companyId);
-      navigate(`/admin/${companyId}`);
-      return;
-    }
+    await fetchUserDataFromAPI(email);
 
-    // Check if the email exists in userData
-    const isUser = userData.some(user => user.email === email);
-    if (isUser) {
-      localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('companyId', null);
-      localStorage.setItem('isAdmin', false);
-      const userId = userData.find(user => user.email === email).userId;
-      const companyId = userData.find(user => user.email === email).companyId;
-      localStorage.setItem('userId',userId);
-      // Redirect to user dashboard
-      await fetchUserDataFromAPI(companyId);
-      navigate(`/usermain/${userId}`);
-      return;
-    }
+    // // Check if the email exists in companyData
+    // const isAdmin = companyData.some(company => company.administratorEmail === email);
+    
+    // if (isAdmin) {
+    //   // Find the companyId for the matching administratorEmail
+    //   const companyId = companyData.find(company => company.administratorEmail === email).companyId;
+    //   localStorage.setItem('loggedIn', 'true');
+    //   localStorage.setItem('userId', null);
+    //   localStorage.setItem('isAdmin', true);
+    //   console.log('company id',companyId)
+    //   localStorage.setItem('companyId',companyId);
+    //   navigate(`/admin/${companyId}`);
+    //   return;
+    // }
 
-    // Handle invalid email
-    console.log('Invalid email address. Please try again.');
+    // // Check if the email exists in userData
+    // const isUser = userData.some(user => user.email === email);
+    // if (isUser) {
+    //   localStorage.setItem('loggedIn', 'true');
+    //   localStorage.setItem('companyId', null);
+    //   localStorage.setItem('isAdmin', false);
+    //   const userId = userData.find(user => user.email === email).userId;
+    //   const companyId = userData.find(user => user.email === email).companyId;
+    //   localStorage.setItem('userId',userId);
+    //   // Redirect to user dashboard
+    //   await fetchUserDataFromAPI(companyId);
+    //   navigate(`/usermain/${userId}`);
+    //   return;
+    // }
+
+    // // Handle invalid email
+    // console.log('Invalid email address. Please try again.');
   };
 
   const handleEmailChange = (e) => {

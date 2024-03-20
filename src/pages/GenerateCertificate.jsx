@@ -1,15 +1,30 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import {todayLong} from '../utilities/helpers.js'
+// import {todayLong} from '../utilities/helpers.js'
 import { setPageTitle } from '../utilities/helpers.js';
 
 const GenerateCertificate = () => {
   const location = useLocation();
   const data = location;
+
+  const [company, setCompanyData] = useState('');
+  const [userData, setUserData] = useState('');
+
+  useEffect(() => {
+    // Retrieve company name from localStorage
+    const companyData = JSON.parse(localStorage.getItem('companyData'));
+    setCompanyData(companyData);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    setUserData(userData);
+  console.log('companyData',companyData)
+  }, []);
+
+
+  
   //const { quizId, userId, quizScore, quizDateTested } = location.state;
   //const stateData = location.state ? location.state : null;
   console.log('data', data);
-  const today = new Date();
+  // const today = new Date();
 
   setPageTitle(data.state.userId + ' Certificate of Achievement in ' + data.state.quizId);
 
@@ -18,23 +33,26 @@ const GenerateCertificate = () => {
       <div className="border-8 border-gray-700 rounded-lg p-8 w-full h-full m-8">
       <div className="bg-white rounded-lg p-8 w-full h-full flex flex-col justify-center">
         <div className="text-center mb-4">
-        <p className="text-gray-500 text-4xl mt-12">[company logo]</p>
+        <div className="font-sans text-2xl text-gray-800 dark:text-gray-400  flex flex-row justify-center"><img src={company.logo} className=" h-auto w-auto pb-8"></img></div>
           <h1 className="text-6xl font-bold">Certificate of Achievement</h1>
           <p className="text-gray-500 text-4xl mt-12">This is to certify that</p>
-        </div>
-        <div className="mb-4">
-          <p className="text-xl font-bold text-center">[User Name]</p>
-          <p className="text-gray-500 text-center">has successfully completed</p>
-          <p className="text-xl font-bold text-center">[quiz Name]</p>
-          <p className="text-xl font-bold text-center">from [company name]</p>
-          <p className="text-gray-500 text-center">with a score of</p>
-          <p className="text-xl font-bold text-center">{data.state.quizScore}%</p>
-          <p className="text-gray-500 text-center">on {data.state.quizDateTested}</p>
         
-          <p className="text-2xl text-center mt-12">Issued by:</p>
-          <p className="text-2xl font-bold text-center">[Company Name],</p>
-          <p className="text-2xl font-bold text-center">{todayLong()}</p>
-          <p className="text-lg font-bold text-center">verify here: [verify link]</p>
+          <p className="text-4xl font-bold text-center pb-4 pt-2">{userData.name}</p>
+          <p className="text-xl text-gray-500 text-center">has successfully completed</p>
+          <p className="text-3xl font-bold text-center">
+            <QuizNameCell scoreQid={data.state.quizId} quizList={data.state.company.quizList}/>
+            {/* <QuizNameCell scoreQid={score.qid} quizList={company.quizList} /> */}
+          </p>
+          
+          <p className="text-gray-500 text-center text-xl">with a score of</p>
+          <p className="font-bold text-center text-3xl">{data.state.quizScore}%</p>
+          
+        
+          <p className="text-2xl text-center mt-12 text-gray-500">Issued by:</p>
+          <p className="text-2xl font-bold text-center">{company.name},</p>
+          <p className="text-2xl font-bold text-center">{data.state.quizDateTested}</p>
+          {/* TODO put on bottom edge*/}
+          <p className="text-lg font-bold text-center ">verify here: [verify link]</p>
         </div>  
       </div>
       </div>
@@ -43,3 +61,14 @@ const GenerateCertificate = () => {
 };
 
 export default GenerateCertificate;
+
+
+
+const QuizNameCell = ({ scoreQid, quizList }) => {
+  // Find the corresponding quiz name based on score.qid
+  console.log('quizList in cert:',quizList)
+  const quizName = quizList.find(quiz => quiz.qid === scoreQid)?.quizName;
+
+  // Render the quiz name
+  return <>{quizName}</>;
+};

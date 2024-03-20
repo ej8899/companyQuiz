@@ -15,7 +15,7 @@ import AddUser from './adminAddUser';
 // import {userData} from "../sampledata.js"
 import {quizData} from "../quizdata.js"
 
-export function AdminUserList({companyIdent}) {
+export function AdminUserList({companyIdent, company}) {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openRows, setOpenRows] = useState({});
@@ -55,11 +55,11 @@ export function AdminUserList({companyIdent}) {
     let abovePassingGradeScores = 0;
 
     scores.forEach(score => {
-      if (score.score === null) {
+      if (score.score === null || score.score === 0) {
         nullScores++;
       } else if (score.score < quizData.passingGrade) {
         belowPassingGradeScores++;
-      } else {
+      } else if (score.score >quizData.passingGrade) {
         abovePassingGradeScores++;
       }
     });
@@ -101,7 +101,7 @@ export function AdminUserList({companyIdent}) {
     URL.revokeObjectURL(url);
   };
 
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -166,7 +166,7 @@ export function AdminUserList({companyIdent}) {
             {/* <tr key={user.uid} className="text-gray-500 border-0 p-8 hover:bg-gray-300"> */}
             <tr key={user.uid} className={`text-gray-500 p-8 hover:bg-gray-300 ${openRows[user.uid] ? 'rounded-xl  bg-slate-300 overflow-hidden ' : ''}`}>
               {/* <td className="p-4 text-right">{user.uid}</td> */}
-              <td className="p-0 rounded-tl-xl text-left p-2">{user.name}</td>
+              <td className="p-0 rounded-tl-xl text-left p-2 pl-2">{user.name}</td>
               <td className="text-left">{user.email}</td>
               <td className="">
               <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">              
@@ -205,7 +205,7 @@ export function AdminUserList({companyIdent}) {
                   <table className="w-full shadow-md m-0 p-0 table-auto">
                     <thead className="p-0 m-0 bg-slate-300 border-0 border-gray-400 ">
                       {/* <tr className="bg-gray-300 border-2 border-gray-200 rounded-xl border"> */}
-                        <th className="text-s font-medium text-right uppercase tracking-wider">Quiz ID</th>
+                        <th className="text-s font-medium text-left pl-8 uppercase tracking-wider">Quiz name</th>
                         <th className="text-s font-medium text-center uppercase tracking-wider">Score</th>
                         <th className="text-s font-medium uppercase tracking-wider">Date Tested</th>
                         <th className="text-s font-medium text-left uppercase tracking-wider">Actions</th>
@@ -220,13 +220,15 @@ export function AdminUserList({companyIdent}) {
                     ) : (
                       user.scores.map((score, index) => (
                         <tr key={index} className="bg-gray-200 dark:bg-gray-700">
-                          <td className="pr-4">{score.qid}</td>
+                          <td className="pr-4 pl-8"><QuizNameCell scoreQid={score.qid} quizList={company.quizList} /></td>
                           <td className="text-center">
                             <div className={`text-center rounded-full p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
                               {score.score !== null ? score.score : '--'}
                             </div>
                           </td>
-                          <td>{score.dateTested}</td>
+                          <td>
+                            {score.date === '0000-00-00' ? 'NOT STARTED' : score.date}
+                          </td>
                           <td>
                             <div className="flex flex-row p-2">
                               <Tooltip content="reset quiz to not started">
@@ -268,3 +270,10 @@ export function AdminUserList({companyIdent}) {
 
 
 
+const QuizNameCell = ({ scoreQid, quizList }) => {
+  // Find the corresponding quiz name based on score.qid
+  const quizName = quizList.find(quiz => quiz.qid === scoreQid)?.quizName;
+
+  // Render the quiz name
+  return <td className="pr-4">{quizName}</td>;
+};
