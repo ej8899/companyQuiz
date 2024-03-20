@@ -32,9 +32,33 @@ function getUserByEmail($email) {
   if ($result->num_rows > 0) {
       // Fetch user record
       $user = $result->fetch_assoc();
+      $uid = $user['uid'];
+
+      // Get scores associated with the user
+      $sql_scores = "SELECT qid, score, date FROM scores WHERE uid = ?";
+      $stmt_scores = $conn->prepare($sql_scores);
+      $stmt_scores->bind_param("i", $uid);
+      $stmt_scores->execute();
+      $result_scores = $stmt_scores->get_result();
+
+      // Check if scores found
+      if ($result_scores->num_rows > 0) {
+          // Initialize scores array
+          $user['scores'] = array();
+
+          // Fetch each score and add it to the scores array
+          while ($row = $result_scores->fetch_assoc()) {
+              $user['scores'][] = array(
+                  "qid" => $row['qid'],
+                  "score" => $row['score'],
+                  "date" => $row['date']
+              );
+          }
+      }
 
       // Close statement and connection
       $stmt->close();
+      $stmt_scores->close();
       $conn->close();
 
       return $user;
@@ -43,6 +67,7 @@ function getUserByEmail($email) {
       return null;
   }
 }
+
 
  // Function to get all users from the database
 function getAllUsers($cid = null) {
@@ -146,7 +171,7 @@ function getUserByUID($uid) {
   // SQL query to retrieve user by UID
   $sql = "SELECT * FROM users WHERE uid = ?";
   $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $uid);
+  $stmt->bind_param("s", $uid);
   $stmt->execute();
   $result = $stmt->get_result();
 
@@ -154,6 +179,28 @@ function getUserByUID($uid) {
   if ($result->num_rows > 0) {
       // Fetch user record
       $user = $result->fetch_assoc();
+
+      // Check if the user is an admin
+      if ($user['admin'] == 1) {
+          // If the user is an admin, retrieve quizList
+          $quizList = array();
+          $sql_quizlist = "SELECT qid, quizName FROM quizlist WHERE cid = ?";
+          $stmt_quizlist = $conn->prepare($sql_quizlist);
+          $stmt_quizlist->bind_param("s", $uid);
+          $stmt_quizlist->execute();
+          $result_quizlist = $stmt_quizlist->get_result();
+
+          // Fetch each row and add it to the quizList array as an object
+          while ($row_quizlist = $result_quizlist->fetch_assoc()) {
+              $quizList[] = array(
+                  "qid" => $row_quizlist['qid'],
+                  "quizName" => $row_quizlist['quizName']
+              );
+          }
+
+          // Add quizList to the user data
+          $user['quizList'] = $quizList;
+      }
 
       // Close statement and connection
       $stmt->close();
@@ -165,6 +212,8 @@ function getUserByUID($uid) {
       return null;
   }
 }
+
+
 
 // Function to get users by CID from the database
 function getUsersByCID($cid) {
