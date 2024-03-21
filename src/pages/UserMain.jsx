@@ -8,7 +8,7 @@ import { Button, Tooltip } from 'flowbite-react';
 import Navbar from '../components/Navbar'
 
 // import {userData} from "../sampledata.js"
-import {quizData} from "../quizdata.js"
+// import {quizData} from "../quizdata.js"
 
 import { RxReset } from "react-icons/rx";
 import { HiOutlineMailOpen } from "react-icons/hi";
@@ -58,7 +58,7 @@ export default function UserMain() {
     
     <section className="bg-white dark:bg-gray-900 h-full items-center flex flex-col pt-24">
       <div className="px-6 py-3 text-left text-2xl font-bold font-sans text-gray-500 uppercase tracking-wider">{userData.name}</div>
-      <div className="font-sans text-2xl text-gray-800 dark:text-gray-400  flex flex-row justify-center"><img src={company.logo} className=" h-auto w-auto"></img></div>
+      <div className="font-sans text-2xl text-gray-800 dark:text-gray-400  bg-white flex flex-row justify-center rounded-xl"><img src={company.logo} className=" h-auto w-auto"></img></div>
       <div className="text-black dark:text-white text-xl font-sans">{companyName}</div>
       <div className="text-black dark:text-white">{companyEmail}</div>
 
@@ -88,9 +88,9 @@ const ScoreTable = ({ scores,userId,company }) => {
   const navigate = useNavigate();
 
   return (
-    <div className='rounded-xl border-2 overflow-hidden'>
-    <table className="divide-y divide-gray-200">
-      <thead className="bg-gray-50">
+    <div className='rounded-xl border-2 overflow-hidden border-gray-300 dark:border-gray-600'>
+    <table className="divide-y divide-gray-200 ">
+      <thead className="bg-gray-300 dark:bg-gray-800">
         <tr>
           <th scope="col" className="px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
             Quiz Name
@@ -117,9 +117,9 @@ const ScoreTable = ({ scores,userId,company }) => {
                             {score.score !== null ? score.score : '--'}
               </div>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">{score.date}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{score.date === '0000-00-00' ? 'NOT STARTED' : score.date}</td>
             <td className="px-6 py-4 whitespace-nowrap flex flex-row">
-            {score.date ? (
+            {score.date !== '0000-00-00' ? (
                 <div onClick={() => navigate(`/quiz/${score.qid}`)}><Tooltip content="retake quiz"><RxReset  className="w-6 h-6 mr-4"/></Tooltip></div>
               ) : (
                 <div onClick={() => navigate(`/quiz/${score.qid}`)}><Tooltip content="start quiz"><FaPlay  className="w-6 h-6 mr-4"/></Tooltip></div>

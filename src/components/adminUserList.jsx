@@ -13,7 +13,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import AddUser from './adminAddUser';
 
 // import {userData} from "../sampledata.js"
-import {quizData} from "../quizdata.js"
+// import {quizData} from "../quizdata.js"
 
 export function AdminUserList({companyIdent, company}) {
   const [userData, setUserData] = useState([]);
@@ -57,9 +57,9 @@ export function AdminUserList({companyIdent, company}) {
     scores.forEach(score => {
       if (score.score === null || score.score === 0) {
         nullScores++;
-      } else if (score.score < quizData.passingGrade) {
+      } else if (score.score < score.passingGrade) {
         belowPassingGradeScores++;
-      } else if (score.score >quizData.passingGrade) {
+      } else if (score.score >= score.passingGrade) {
         abovePassingGradeScores++;
       }
     });

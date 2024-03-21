@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import  { useState, useEffect } from 'react';
 import { Button } from 'flowbite-react';
 
-import { quizData } from '../quizdata.js';
+// import { quizData } from '../quizdata.js';
 import Navbar from '../components/Navbar'
 import { setPageTitle } from '../utilities/helpers.js';
 import ImageSearch from '../components/ImageSearch'; // Import the ImageSearch component
@@ -12,16 +12,41 @@ import { GiCheckMark } from "react-icons/gi";
 
 const QuizBuilder = () => {
   const { quizId } = useParams();
-  console.log('quizId', quizId);
-  if(quizId === 'new') {
-    quizData.quizID=generateUUID();
-    quizData.quizName='New Quiz';
-    quizData.passingGrade=80;
-    quizData.qna=[];
-  }
-  const [formData, setFormData] = useState(quizData);
+  const [formData, setFormData] = useState({
+    quizID: '',
+    quizName: '',
+    passingGrade: 0,
+    qna: []
+  });
   const [switch2, setSwitch2] = useState(true);
-  setPageTitle('Quiz Builder: ' +  formData.quizName);
+
+  useEffect(() => {
+    if (quizId !== 'new' && quizId !== null) {
+      const fetchQuizData = async () => {
+        try {
+          const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?qid=${quizId}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch quiz data');
+          }
+          const data = await response.json();
+          console.log('Quiz data:', data);
+          setFormData(data);
+        } catch (error) {
+          console.error('Error fetching quiz data:', error);
+        }
+      };
+      fetchQuizData();
+    } else if (quizId === 'new') {
+      const newQuizData = {
+        quizID: generateUUID(),
+        quizName: 'New Quiz',
+        passingGrade: 80,
+        qna: []
+      };
+      setFormData(newQuizData);
+      setPageTitle('Quiz Builder: New Quiz');
+    }
+  }, [quizId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

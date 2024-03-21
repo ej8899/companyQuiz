@@ -16,7 +16,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import Navbar from '../components/Navbar'
 // import {companyData} from "../sampledata.js"
-import {quizData} from "../quizdata.js"
+// import {quizData} from "../quizdata.js"
 
 import { AdminUserList } from '../components/adminUserList';
 import { AdminPublicQuizList } from '../components/adminPublicQuizList.jsx';
@@ -32,7 +32,7 @@ function AdminPage() {
     // Retrieve company name from localStorage
     const companyData = JSON.parse(localStorage.getItem('companyData'));
     setCompanyData(companyData);
-    console.log('adminpage company:')
+    console.log('adminpage company:',company);
   }, []);
   // Find the company record that matches the adminId
   //const company = companyData.find(company => company.companyId === Number(adminId));
@@ -62,7 +62,7 @@ function AdminPage() {
               </div>
               <AdminUserList companyIdent={adminId} company={company}/>
               <AdminQuizList companyIdent={adminId}/>
-              <AdminPublicQuizList companyIdent={adminId}/>
+              <AdminPublicQuizList companyIdent={adminId} company={company}/>
             </div>
           ) : (
             <div>No company found for admin ID: {adminId}</div>

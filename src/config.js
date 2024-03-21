@@ -4,10 +4,8 @@ export const globalconfig = {
   // CONFIG for company deploying CompanyQuiz! app
   //
   companyName: "EJ Devs",
-  quizName: "Cyber Security Review",
-  passingGrade: 70,
-  numQuestions: 10,
-
+  //quizName: "Cyber Security Review",
+  
   
   socialMediaLinks: {
     website: "https://www.erniejohnson.ca",

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import {quizData} from "../quizdata.js";
+// import {quizData} from "../quizdata.js";
 // import {companyData, userData } from "../sampledata.js";
 
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
@@ -78,38 +78,7 @@ function Login() {
     console.log('email', email);
     await fetchUserDataFromAPI(email);
 
-    // // Check if the email exists in companyData
-    // const isAdmin = companyData.some(company => company.administratorEmail === email);
-    
-    // if (isAdmin) {
-    //   // Find the companyId for the matching administratorEmail
-    //   const companyId = companyData.find(company => company.administratorEmail === email).companyId;
-    //   localStorage.setItem('loggedIn', 'true');
-    //   localStorage.setItem('userId', null);
-    //   localStorage.setItem('isAdmin', true);
-    //   console.log('company id',companyId)
-    //   localStorage.setItem('companyId',companyId);
-    //   navigate(`/admin/${companyId}`);
-    //   return;
-    // }
-
-    // // Check if the email exists in userData
-    // const isUser = userData.some(user => user.email === email);
-    // if (isUser) {
-    //   localStorage.setItem('loggedIn', 'true');
-    //   localStorage.setItem('companyId', null);
-    //   localStorage.setItem('isAdmin', false);
-    //   const userId = userData.find(user => user.email === email).userId;
-    //   const companyId = userData.find(user => user.email === email).companyId;
-    //   localStorage.setItem('userId',userId);
-    //   // Redirect to user dashboard
-    //   await fetchUserDataFromAPI(companyId);
-    //   navigate(`/usermain/${userId}`);
-    //   return;
-    // }
-
-    // // Handle invalid email
-    // console.log('Invalid email address. Please try again.');
+   
   };
 
   const handleEmailChange = (e) => {

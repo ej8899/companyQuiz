@@ -2,14 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { Button, Banner, Tooltip } from 'flowbite-react';
-import React from 'react';
+
 
 // import {companyData} from "../sampledata.js"
-import {quizData} from "../quizdata.js"
+// import {quizData} from "../quizdata.js"
 import { HiSparkles } from "react-icons/hi2";
 import { VscNewFile } from "react-icons/vsc";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
+
+import { useState, useEffect } from 'react';
 
 export function AdminQuizList({companyIdent}) {
   

@@ -2,21 +2,22 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { Button, Banner } from 'flowbite-react';
-import React from 'react';
 
+import { useState, useEffect } from 'react';
 
-import {quizList} from "../quizdata.js"
+// import {quizList} from "../quizdata.js"
 
-export function AdminPublicQuizList({companyIdent}) {
+export function AdminPublicQuizList({companyIdent,company}) {
 
   const renderQuizList = () => {
-    const publicQuizzes = quizList.filter(quiz => quiz.quizType === 'public');
+    console.log('company in adminpublicquizlist',company)
+    const publicQuizzes = company.quizList.filter(quiz => quiz.quizType === 'public');
     if (publicQuizzes.length === 0) return null; // Return null if no public quizzes found
   
     return publicQuizzes.map((quiz, index) => (
       <tr key={index}>
         <td>{quiz.quizName}</td>
-        <td>view | <Link to={`/quizbuilder/${quiz.quizId}`}>copy to company</Link></td>
+        <td>view | <Link to={`/quizbuilder/${quiz.qid}`}>copy to company</Link></td>
       </tr>
     ));
   };
