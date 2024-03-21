@@ -7,6 +7,7 @@
 
   require('config.php');
   require('helpers.php');
+  require('quiz.php');
 
 
 // Function to get user by email from the database
@@ -35,7 +36,7 @@ function getUserByEmail($email) {
       $uid = $user['uid'];
 
       // Get scores associated with the user
-      $sql_scores = "SELECT qid, score, date FROM scores WHERE uid = ?";
+      $sql_scores = "SELECT qid, score, passingGrade, date FROM scores WHERE uid = ?";
       $stmt_scores = $conn->prepare($sql_scores);
       $stmt_scores->bind_param("i", $uid);
       $stmt_scores->execute();
@@ -51,6 +52,7 @@ function getUserByEmail($email) {
               $user['scores'][] = array(
                   "qid" => $row['qid'],
                   "score" => $row['score'],
+                  "passingGrade" => $row['passingGrade'],
                   "date" => $row['date']
               );
           }
@@ -82,7 +84,7 @@ function getAllUsers($cid = null) {
   }
 
   // SQL query to retrieve records from the users table
-  $sql = "SELECT users.*, scores.qid, scores.score, scores.date 
+  $sql = "SELECT users.*, scores.qid, scores.score, scores.passingGrade, scores.date 
           FROM users 
           LEFT JOIN scores ON users.uid = scores.uid";
 
@@ -135,6 +137,7 @@ function getAllUsers($cid = null) {
               $users[$uid]['scores'][] = array(
                   "qid" => $row['qid'],
                   "score" => $row['score'],
+                  "passingGrade" => $row['passingGrade'],
                   "date" => $row['date']
               );
           }
@@ -184,7 +187,7 @@ function getUserByUID($uid) {
       if ($user['admin'] == 1) {
           // If the user is an admin, retrieve quizList
           $quizList = array();
-          $sql_quizlist = "SELECT qid, quizName FROM quizlist WHERE cid = ?";
+          $sql_quizlist = "SELECT qid, quizName, quizType FROM quizlist WHERE cid = ?";
           $stmt_quizlist = $conn->prepare($sql_quizlist);
           $stmt_quizlist->bind_param("s", $uid);
           $stmt_quizlist->execute();
@@ -194,7 +197,8 @@ function getUserByUID($uid) {
           while ($row_quizlist = $result_quizlist->fetch_assoc()) {
               $quizList[] = array(
                   "qid" => $row_quizlist['qid'],
-                  "quizName" => $row_quizlist['quizName']
+                  "quizName" => $row_quizlist['quizName'],
+                  "quizType" => $row_quizlist['quizType']
               );
           }
 
@@ -338,6 +342,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $users = getAllUsers($cid);
     header('Content-Type: application/json');
     echo json_encode($users);
+  } elseif (isset($_GET['qid']) && !empty($_GET['qid'])) {
+    // If QID is specified in the URL, retrieve QUIZ by QID
+    $qid = $_GET['qid'];
+    $quiz = getQuizByQuizID($qid);
+    if($quiz) {
+      header('Content-Type: application/json');
+      echo json_encode($quiz);
+    } else {
+      http_response_code(404);
+      echo json_encode(array("error" => "Quiz not found"));
+    }
   } elseif (isset($_GET['email']) && !empty($_GET['email'])) {
     // If email is specified in the URL, retrieve the user by email
     $email = $_GET['email'];
