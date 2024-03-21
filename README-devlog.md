@@ -117,4 +117,7 @@ Don the Developer March 2024 Hackathon
 - retrieve quiz names throughout admin & user sections
 
 3/20/23 - companyquiz
-- 
+- setup quizDB with JSON column for quiz qna's
+- build out API code to assemble quiz data
+- front end pulls quiz data (for users & admins)
+- quiz builder now loads from db
