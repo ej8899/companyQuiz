@@ -22,7 +22,7 @@ export function AdminUserList({companyIdent, company}) {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch('https://erniejohnson.ca/apps/cquiz-api/users.php?cid=1');
+      const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${companyIdent}`);
       if (response.ok || (response.status >= 200 && response.status < 300)) {
         const data = await response.json();
         console.log('User data:', data);
@@ -78,11 +78,26 @@ export function AdminUserList({companyIdent, company}) {
   //
   const downloadCSV = () => {
     // Define the CSV content
-    let csvContent = "User Name,Quiz Name,Score,pass/fail/not taken,Date Tested\n";
+    let csvContent = "User Name,Quiz Name,Score,Status,Date Tested\n";
+    
 
     sortedUserData.forEach(user => {
       user.scores.forEach(score => {
-        const row = `${user.name},${score.quizId},${parseInt(score.score)},${score.passFailNotTaken},${score.dateTested}\n`;
+        // prep date output
+        const outputDate = score.date === '0000-00-00' ? 'NA' : score.date;
+        
+        // prep result output
+        const result = score.score === null || score.score === undefined || score.score === 0 || score.passingGrade === null || score.passingGrade === undefined 
+    ? 'NOT ATTEMPTED'
+    : score.score < score.passingGrade ? 'FAIL' : 'PASS';
+
+        // prep quizname output
+        const matchingQuizName = company.quizList.find(
+          (quiz) => quiz.qid === score.qid
+        )?.quizName;
+    
+
+        const row = `${user.name},${matchingQuizName},${parseInt(score.score)},${result},${outputDate}\n`;
         csvContent += row;
       });
     });
@@ -92,7 +107,9 @@ export function AdminUserList({companyIdent, company}) {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', 'userData.csv');
+    // TODO - put date of today in the file name
+    const today = new Date().toISOString().slice(0, 10);
+    link.setAttribute('download', `all-company-quiz-results-${today}.csv`);
 
     document.body.appendChild(link);
     link.click();
@@ -138,22 +155,26 @@ export function AdminUserList({companyIdent, company}) {
   
 
     <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-50 dark:bg-gray-800">
+    <div className=" bg-gray-300 dark:bg-gray-300">
+          <h5 className="mr-3 text-2xl font-semibold dark:text-black text-black">User Management</h5>
+          <p className="text-gray-500 dark:text-gray-500">Manage all company members (taking quizzes) here</p>
+        </div>
     <table className="min-w-full divide-y divide-gray-200 w-full table-auto border border-separate border-spacing-0">
       <thead className="bg-gray-50 border-2">
         <tr className="p-0 ">
           {/* <th scope="col" className="text-right px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
             User ID
           </th> */}
-          <th scope="col" className="border-2 border-gray-300 p-0 rounded-tl-xl text-left px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider bg-gray-300">
+          <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400">
             Name
           </th>
-          <th scope="col" className="border-2 border-gray-300 bg-gray-300 p-0 m-0 text-left px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400">
             Email
           </th>
-          <th scope="col" className="border-2 border-gray-300 bg-gray-300 text-left px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400">
             Status
           </th>
-          <th scope="col" className="border-2 border-gray-300  bg-gray-300 rounded-tr-xl text-left px-6 py-3 text-end text-s font-medium text-gray-500 uppercase tracking-wider  flex flex-row justify-center align-bottom">
+          <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400 text-end text-s font-medium text-gray-500 uppercase tracking-wider  flex flex-row justify-center align-bottom">
             Actions <Tooltip content="download CSV of all users' results"><Button size="xs" onClick={downloadCSV} className="ml-4"><PiDownloadSimpleBold className="w-4 h-4"/></Button></Tooltip>
             <Tooltip content="add a new employee"><Button onClick={openModal} size="xs"  className="ml-4"><IoMdPersonAdd className="w-4 h-4"/></Button></Tooltip>
             <AddUser isOpen={isModalOpen} onClose={closeModal} companyIdent={companyIdent} />
@@ -169,7 +190,9 @@ export function AdminUserList({companyIdent, company}) {
               <td className="p-0 rounded-tl-xl text-left p-2 pl-2">{user.name}</td>
               <td className="text-left">{user.email}</td>
               <td className="">
-              <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">              
+              <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">    
+              {user.scores ? (
+                <>
                 {calculateScoreTotals(user.scores).nullScorePercentage > 0 && (
                   <div key="pbar1" className="bg-red-500 pl-2 flex flex-row justify-center" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}>
                     <Tooltip content="quizzes not taken">{calculateScoreTotals(user.scores).nullScorePercentage}%</Tooltip>
@@ -187,6 +210,10 @@ export function AdminUserList({companyIdent, company}) {
                     <Tooltip content="quizzes passed">{calculateScoreTotals(user.scores).abovePassingGradePercentage}%</Tooltip>
                   </div>
                 )}
+                </>
+              ) : (
+                <div className="text-center p-2">NO EXAMS</div>
+              )}
               </div>
               </td>
               <td className={`text-left border-0 rounded-tr-xl  overflow-hidden p-2 ${openRows[user.uid] ? 'border-red-300 ' : ''}`}>
@@ -223,7 +250,7 @@ export function AdminUserList({companyIdent, company}) {
                           <td className="pr-4 pl-8"><QuizNameCell scoreQid={score.qid} quizList={company.quizList} /></td>
                           <td className="text-center">
                             <div className={`text-center rounded-full p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
-                              {score.score !== null ? score.score : '--'}
+                              {score.score !== null ? score.score : '--'}%
                             </div>
                           </td>
                           <td>

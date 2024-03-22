@@ -15,9 +15,9 @@ export function AdminPublicQuizList({companyIdent,company}) {
     if (publicQuizzes.length === 0) return null; // Return null if no public quizzes found
   
     return publicQuizzes.map((quiz, index) => (
-      <tr key={index}>
-        <td>{quiz.quizName}</td>
-        <td>view | <Link to={`/quizbuilder/${quiz.qid}`}>copy to company</Link></td>
+      <tr key={index}  className="hover:bg-gray-300">
+        <td className="mt-2 pt-2 text-gray-500">{quiz.quizName}</td>
+        <td className="mt-2 pt-2 text-gray-500">view | <Link to={`/quizbuilder/${quiz.qid}`}>copy to company</Link></td>
       </tr>
     ));
   };
@@ -26,23 +26,20 @@ export function AdminPublicQuizList({companyIdent,company}) {
   return (
 <section className="flex flex-col items-center w-full pt-4">
   
-  <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-400 bg-gray-50 dark:bg-gray-800">
-{/* <section className="flex items-center  bg-gray-50 dark:bg-gray-900 pt-8">
-  <div className="w-full max-w-screen-xl px-4 mx-auto lg:px-12"> */}
-    
+  <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-400 bg-gray-50 dark:bg-gray-800">    
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-      <div className="flex-row items-center justify-center p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4 ">
+      <div className="flex-row items-center justify-center p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4 bg-gray-300 dark:bg-gray-300">
         <div>
-          <h5 className="mr-3 font-semibold dark:text-white">Public Quiz List</h5>
-          <p className="text-gray-500 dark:text-gray-400">Various pre-built quizzes you can assign to your users, or copy to your account and edit specifics!</p>
+          <h5 className="mr-3 text-2xl font-semibold text-black">Public Quiz List</h5>
+          <p className="text-gray-500 dark:text-gray-500">Various pre-built &apos;public&apos; quizzes. Copy to your account to get started!</p>
         </div>
       </div>
       <div className="overflow-x-auto">
             <table className="min-w-full">
               <thead>
                 <tr>
-                  <th>Quiz Name</th>
-                  <th>Actions</th>
+                  <th className="text-gray-500 bg-gray-400 text-black">Quiz Name</th>
+                  <th className="text-gray-500 bg-gray-400 text-black">Actions</th>
                 </tr>
               </thead>
               <tbody>
