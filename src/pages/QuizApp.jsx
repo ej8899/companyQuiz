@@ -69,24 +69,48 @@ function QuizApp() {
     }
   
     // Slide out the current question
-    setSlideOut(true);
+    
+    // setSlideOut(true);
   
-    // Wait for a brief pause before moving to the next question
-    setTimeout(() => {
-      // Add the current question to the list of asked questions
-      if (!askedQuestions.includes(currentQuestion)) {
-        setAskedQuestions([...askedQuestions, currentQuestion]);
-      }
+    // // Wait for a brief pause before moving to the next question
+    // setTimeout(() => {
+    //   // Add the current question to the list of asked questions
+    //   if (!askedQuestions.includes(currentQuestion)) {
+    //     setAskedQuestions([...askedQuestions, currentQuestion]);
+    //   }
       
-      // Reset slide out state
-      setSlideOut(false);
+    //   // Reset slide out state
+    //   setSlideOut(false);
   
-      // Move to the next question after the pause
+    //   // Move to the next question after the pause
+    //   setTimeout(() => {
+    //     setCurrentQuestionIndex(currentQuestionIndex + 1);
+    //   }, 500); // Adjust the duration of the pause before moving to the next question
+  
+    //   // End of the quiz (check if all questions have been asked)
+    //   if (askedQuestions.length === quizQuestions.length) {
+    //     if (score >= globalconfig.passingGrade / globalconfig.numQuestions) {
+    //       setShowPassMessage(true);
+    //       setShowRetryPrompt(false);
+    //     } else {
+    //       setShowRetryPrompt(true); // Show the retry prompt
+    //       setShowPassMessage(false); // Hide pass message
+    //     }
+    //   }
+    // }, 900); // Wait for the brief pause before starting the slide out animation
+
+    const slideOutDelay = new Promise((resolve) => setTimeout(resolve, 800));
+    
+    slideOutDelay.then(() => {
+      setSlideOut(true);  
+
+      // Rest of the logic within handleAnswerClick...
+      if (!askedQuestions.includes(currentQuestion)) {
+          setAskedQuestions([...askedQuestions, currentQuestion]);
+      }
       setTimeout(() => {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      }, 500); // Adjust the duration of the pause before moving to the next question
-  
-      // End of the quiz (check if all questions have been asked)
+        setSlideOut(false);
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       if (askedQuestions.length === quizQuestions.length) {
         if (score >= globalconfig.passingGrade / globalconfig.numQuestions) {
           setShowPassMessage(true);
@@ -96,8 +120,9 @@ function QuizApp() {
           setShowPassMessage(false); // Hide pass message
         }
       }
-    }, 900); // Wait for the brief pause before starting the slide out animation
-  };
+      }, 500);
+  });
+};
 
   const handleRetryClick = () => {
     // Reset state variables
@@ -120,7 +145,7 @@ function QuizApp() {
             <div className='flex flex-col items-center justify-center h-full w-full'>
               {showRetryPrompt ? (
                 <div className="bg-black bg-opacity-20 rounded-xl w-1/2 flex flex-col items-center">
-                  <h2 className="text-4xl text-slate-300 font-bold ">Quiz Complete!</h2>
+                  <h2 className="text-4xl text-slate-300 font-bold ">Quiz Complete!!</h2>
                   <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length}</p>
                   <p className="text-2xl text-slate-400">Would you like to try the test again?</p>
                   <span className="flex flex-row justify-center mt-4">
@@ -132,7 +157,7 @@ function QuizApp() {
                 <div className={`quiz-container flex flex-col w-full ml-12 bg-black bg-opacity-20 rounded-xl p-4 m-2 z-0 ${slideOut ? 'slide-out' : 'slide-in'}`}>
                   {/* {image && <img src={image} alt="Quiz" className="quiz-image" />} */}
                   <div className="quiz-content w-4/5">
-                    <h2 className="text-2xl text-slate-300">Question {currentQuestionIndex + 1} of {quizQuestions.length} :</h2>
+                    <h2 className="text-2xl text-slate-400">Question {currentQuestionIndex + 1} of {quizQuestions.length} :</h2>
                     <Question question={quizQuestions[currentQuestionIndex].question} />
                     <div className="flex flex-col">
                       <div className="flex flex-col">
@@ -142,12 +167,12 @@ function QuizApp() {
                           correctAnswer={quizQuestions[currentQuestionIndex].correctAnswer}
                         />
                       </div>
-                      <p className="text-2xl text-slate-400">Your Score: {score} / {quizQuestions.length} (hint)</p>
+                      <p className="text-2xl text-slate-400">Your current score: {score} / {quizQuestions.length}</p>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="quiz-container">
+                <div className="quiz-container rounded-xl p-8 m-8">
                   {showPassMessage ? (
                     <div>
                       <h2>Congratulations, you passed!</h2>
@@ -155,7 +180,7 @@ function QuizApp() {
                       <Button>select a new exam</Button>
                     </div>
                   ) : (
-                    <Result score={score} totalQuestions={quizQuestions.length} />
+                    <Result score={score} totalQuestions={quizQuestions.length} handleRetryClick={handleRetryClick} />
                   )}
                 </div>
               )}
