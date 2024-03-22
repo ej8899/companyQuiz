@@ -121,3 +121,11 @@ Don the Developer March 2024 Hackathon
 - build out API code to assemble quiz data
 - front end pulls quiz data (for users & admins)
 - quiz builder now loads from db
+
+3/21/23 - companyquiz
+- minor UI/UX tweaks
+- fix 'timing/flow' bug on quiz display section
+- fix csv output based on live DB data
+
+3/22/23 - companyquiz
+- 
