@@ -10,7 +10,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 // import aboutImage from './assets/smartmarkups.png';
 
-export default function Ournavbar() {
+export default function Ournavbar({home}) {
   const [openAboutModal, setOpenAboutModal] = useState(false);
   const [openContactModal, setOpenContactModal] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false); // State to track login status
@@ -118,7 +118,9 @@ export default function Ournavbar() {
 
         <Navbar.Collapse>
           {/* <Link to={`/usermain/${navId}`}> */}
-          <Link to={isAdmin ? `/admin/1` : `/usermain/${navId}`}>
+          {/* <Link to={isAdmin ? `/admin/1` : `/usermain/${navId}`}> */}
+          <Link to={home ? `${home}` : '/'}>
+
           {/* <Link to={isAdmin ? `/admin/${cId || ''}` : `/user/${uId || ''}`}> */}
           {/* <Link to={isAdmin ? `/admin/${cId}` : `/usermain/${uId}`}> */}
           {/* <Link to={isAdmin === true ? `/admin/${cId}` : isAdmin === false ? `/user/${uId}` : null}> */}
