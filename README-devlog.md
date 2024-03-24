@@ -128,4 +128,13 @@ Don the Developer March 2024 Hackathon
 - fix csv output based on live DB data
 
 3/22/23 - companyquiz
+- add admin summary component w data
+- add csv uploader modal
+- update quiz scores into live db
+
+3/23/23 - companyquiz
+- style loading quiz screen
+- fix navbar home flow in admin and user sections
+- fix misc state flow issues
+- misc UI/UX fixes and cleanups
 - 
