@@ -6,11 +6,11 @@ import Navbar from '../components/Navbar'
 import { setPageTitle } from '../utilities/helpers.js';
 import ImageSearch from '../components/ImageSearch'; // Import the ImageSearch component
 import { ToggleSwitch } from 'flowbite-react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { generateUUID } from '../utilities/helpers.js'
 import { GiCheckMark } from "react-icons/gi";
 
-const QuizBuilder = () => {
+const QuizBuilder = ({adminId}) => {
   const { quizId } = useParams();
   const [formData, setFormData] = useState({
     quizID: '',
@@ -19,6 +19,10 @@ const QuizBuilder = () => {
     qna: []
   });
   const [switch2, setSwitch2] = useState(true);
+
+  const location = useLocation();
+  const data = location;
+  console.log('userId in qbuilder:',data.state.userId)
 
   useEffect(() => {
     if (quizId !== 'new' && quizId !== null) {
@@ -131,7 +135,8 @@ const QuizBuilder = () => {
 
   return (
     <>
-    <Navbar />
+    
+    <Navbar home={`/admin/${data.state.userId}`}/>
     <div className="mt-40 ml-8 pb-40">
       <h1 className="px-6 py-3 text-center text-2xl font-bold font-sans text-gray-500 uppercase tracking-wider">Quiz Builder</h1>
       <form className="w-full border-2 font-sans p-2">

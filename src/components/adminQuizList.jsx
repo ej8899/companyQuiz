@@ -12,12 +12,16 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 
 import { useState, useEffect } from 'react';
+import QuizBuilder from "../pages/QuizBuilder";
+
 
 export function AdminQuizList({companyIdent}) {
-  
+  const navigate = useNavigate();
+
   //const company = companyData.find(company => company.companyId === parseInt(companyIdent));
   const company = JSON.parse(localStorage.getItem('companyData'));
   console.log('company:', company);
+  console.log('companyIdent in quizbuilder:',companyIdent)
 
   const renderQuizList = () => {
     if (!company) return null; // Return null if company not found
@@ -26,8 +30,12 @@ export function AdminQuizList({companyIdent}) {
         {/* Render columns for each quiz */}
         <td className="p-0  text-left p-2 pl-2 text-gray-500 pt-2">{quiz.quizName}</td>
         <td className="flex flex-row justify-center pt-2">
-        <Link to={`/quizbuilder/${quiz.qid}`}><Tooltip content="edit quiz"><FaEdit className="mr-4 h-6 w-6"/></Tooltip></Link>
-        <Tooltip content="delete this quiz"><BsFillTrashFill className="mr-4 h-6 w-6"/></Tooltip>
+        {/* <Link to={`/quizbuilder/${quiz.qid}`}></Link> */}
+        <div onClick={() => navigate(`/quizbuilder/${quiz.qid}`,{state:{
+                  quizId: quiz.qid,
+                  userId: companyIdent,
+                }})}><Tooltip content="edit quiz"><FaEdit className="mr-4 h-6 w-6 text-gray-500"/></Tooltip></div>
+        <Tooltip content="delete this quiz"><BsFillTrashFill className="mr-4 h-6 w-6 text-gray-500"/></Tooltip>
         </td>
       </tr>
     ));
@@ -41,7 +49,7 @@ export function AdminQuizList({companyIdent}) {
   <div className="w-full max-w-screen-xl px-4 mx-auto lg:px-12"> */}
     
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg pb-4">
-      <div className="flex-row items-center justify-center p-4 space-y-3 sm:flex sm:space-y-0 sm:space-x-4 bg-gray-300 dark:bg-gray-300">
+      <div className="flex-row items-center justify-center p-2 space-y-3 sm:flex sm:space-y-0 sm:space-x-4 bg-gray-300 dark:bg-gray-300">
         <div className="">
           <h5 className="mr-3 text-2xl font-semibold dark:text-black text-black">Company Managed Quiz List</h5>
           <p className="text-gray-500 dark:text-gray-500">Manage all your existing quiz and exams here</p>
@@ -61,13 +69,17 @@ export function AdminQuizList({companyIdent}) {
               <tfoot>
                 <tr>
                   <td></td>
-                  <td className="flex justify-end  pr-4">
-                    <Link to={`/quizbuilder/new`}>
+                  <td className="flex justify-end  pr-4 pt-4">
+                    {/* <Link to={`/quizbuilder/new`}> */}
                     <Button type="button"
-                            className="mr-2">
-                      <VscNewFile className="mr-2 h-6 w-6 mr-2" /> Build new quiz
-                    </Button></Link>
-                    <Button><HiSparkles className="h-6 w-6 mr-2"/>AI generated quiz</Button>
+                            className="mr-2"
+                            onClick={() => navigate(`/quizbuilder/new`,{state:{
+                              userId: companyIdent,
+                            }})}
+                            >
+                      <VscNewFile className="mr-2 h-6 w-6 mr-2 " /> New Quiz
+                    </Button>
+                    <Button><HiSparkles className="h-6 w-6 mr-2"/>AI Quiz</Button>
                   </td>
                 </tr>
               </tfoot>

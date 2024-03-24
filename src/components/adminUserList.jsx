@@ -1,3 +1,5 @@
+
+'use client' ;
 import { Button,  Tooltip, Modal, Dropdown} from 'flowbite-react';
 
 
@@ -7,19 +9,22 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { RxReset } from "react-icons/rx";
 import { PiDownloadSimpleBold } from "react-icons/pi";
-
+import { FaFileImport } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
+
+import { FileInput, Label, } from 'flowbite-react';
 
 import AddUser from './adminAddUser';
 
 // import {userData} from "../sampledata.js"
 // import {quizData} from "../quizdata.js"
 
-export function AdminUserList({companyIdent, company}) {
+export function AdminUserList({companyIdent, company,}) {
   const [userData, setUserData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openRows, setOpenRows] = useState({});
-
+  const [openUploadModal, setOpenUploadModal] = useState(false);
+console.log('adminUserList company state:',company)
   const fetchUserData = async () => {
     try {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${companyIdent}`);
@@ -140,6 +145,9 @@ export function AdminUserList({companyIdent, company}) {
           dateTested: null // Initial date for the new quiz
         });
       }
+      // TODO - update the database, 
+      // TODO - update localstorage
+      
       return user;
     });
   
@@ -155,7 +163,7 @@ export function AdminUserList({companyIdent, company}) {
   
 
     <div className="border-1 border border-separate rounded-xl border-gray-200 shadow-md overflow-hidden w-full bg-gray-50 dark:bg-gray-800">
-    <div className=" bg-gray-300 dark:bg-gray-300">
+    <div className=" bg-gray-300 dark:bg-gray-300 p-2">
           <h5 className="mr-3 text-2xl font-semibold dark:text-black text-black">User Management</h5>
           <p className="text-gray-500 dark:text-gray-500">Manage all company members (taking quizzes) here</p>
         </div>
@@ -182,7 +190,7 @@ export function AdminUserList({companyIdent, company}) {
         </tr>
       </thead>
       <tbody className="rounded-xl bg-gray-50 dark:bg-gray-800 ">
-      {sortedUserData.map((user) => (
+      {sortedUserData.map((user,userIndex) => (
           <>
             {/* <tr key={user.uid} className="text-gray-500 border-0 p-8 hover:bg-gray-300"> */}
             <tr key={user.uid} className={`text-gray-500 p-8 hover:bg-gray-300 ${openRows[user.uid] ? 'rounded-xl  bg-slate-300 overflow-hidden ' : ''}`}>
@@ -194,19 +202,19 @@ export function AdminUserList({companyIdent, company}) {
               {user.scores ? (
                 <>
                 {calculateScoreTotals(user.scores).nullScorePercentage > 0 && (
-                  <div key="pbar1" className="bg-red-500 pl-2 flex flex-row justify-center" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}>
+                  <div key="pbar1" className="bg-red-500 pl-2 flex flex-row justify-center text-gray-300" style={{ width: `${calculateScoreTotals(user.scores).nullScorePercentage}%` }}>
                     <Tooltip content="quizzes not taken">{calculateScoreTotals(user.scores).nullScorePercentage}%</Tooltip>
                   </div>
                 )}
                 
                 {calculateScoreTotals(user.scores).belowPassingGradePercentage > 0 && (
-                  <div key="pbar2" className="bg-yellow-500 pl-2 flex flex-row justify-center" style={{ width: `${calculateScoreTotals(user.scores).belowPassingGradePercentage}%` }}>
+                  <div key="pbar2" className="bg-yellow-500 pl-2 flex flex-row justify-center text-black" style={{ width: `${calculateScoreTotals(user.scores).belowPassingGradePercentage}%` }}>
                     <Tooltip content="quizzes failed">{calculateScoreTotals(user.scores).belowPassingGradePercentage}%</Tooltip>
                   </div>
                 )}
                 
                 {calculateScoreTotals(user.scores).abovePassingGradePercentage > 0 && (
-                  <div key="pbar3" className="bg-green-500 pl-2 text-center flex flex-row justify-center" style={{ width: `${calculateScoreTotals(user.scores).abovePassingGradePercentage}%` }}>
+                  <div key="pbar3" className="bg-green-500 pl-2 text-center flex flex-row justify-center text-black" style={{ width: `${calculateScoreTotals(user.scores).abovePassingGradePercentage}%` }}>
                     <Tooltip content="quizzes passed">{calculateScoreTotals(user.scores).abovePassingGradePercentage}%</Tooltip>
                   </div>
                 )}
@@ -249,7 +257,7 @@ export function AdminUserList({companyIdent, company}) {
                         <tr key={index} className="bg-gray-200 dark:bg-gray-700">
                           <td className="pr-4 pl-8"><QuizNameCell scoreQid={score.qid} quizList={company.quizList} /></td>
                           <td className="text-center">
-                            <div className={`text-center rounded-full p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < 70 ? 'bg-yellow-500' : 'bg-green-500'}`}>
+                            <div className={`text-center rounded-full p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < score.passingGrade ? 'bg-yellow-500' : 'bg-green-500'}`}>
                               {score.score !== null ? score.score : '--'}%
                             </div>
                           </td>
@@ -272,10 +280,36 @@ export function AdminUserList({companyIdent, company}) {
                     <tr>
                       <td colSpan="4" className="text-center justify-center  items-center bg-gray-200 dark:bg-gray-700">
                        <div className="w-full  flex flex-row justify-end pr-4 pb-2">
-                        <Dropdown label="assign quiz" className="text-center bg-gray-300 border-2 border-gray-600 rounded-xl border overflow-hidden">
-                          <Dropdown.Item onClick={() => handleAddQuiz(user.uid, 'quiz1')}>quiz 1</Dropdown.Item>
-                          <Dropdown.Item onClick={() => handleAddQuiz(user.uid, 'quiz2')}>quiz 2</Dropdown.Item>          
-                        </Dropdown></div>
+                        {/* <Dropdown label="assign quiz" className="text-center bg-gray-300 border-2 border-gray-600 rounded-xl border overflow-hidden">
+                        {company.quizList.map((quiz, index) => (
+                          <Dropdown.Item key={index} onClick={() => handleAddQuiz(user.uid, quiz.qid)}>
+                            {quiz.quizName}
+                          </Dropdown.Item>
+                        ))}
+                        </Dropdown> */}
+
+
+  <Dropdown label="assign quiz" className="text-center bg-gray-300 border-2 border-gray-600 rounded-xl border overflow-hidden">
+    {company.quizList.map((quiz, index) => {
+      // Check if the quiz is already taken by the user
+      const isTaken = sortedUserData[userIndex].scores.some(score => score.qid === quiz.qid);
+      // Render the dropdown item only if the quiz is not already assigned or taken
+      if (!isTaken) {
+        return (
+          <Dropdown.Item key={index} onClick={() => handleAddQuiz(user.uid, quiz.qid)}>
+            {quiz.quizName}
+          </Dropdown.Item>
+        );
+      } else {
+        return null; // Skip rendering if the quiz is already assigned or taken
+      }
+    })}
+  </Dropdown>
+
+
+
+
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -288,9 +322,41 @@ export function AdminUserList({companyIdent, company}) {
           </>
         ))}
       </tbody>
+      <tfoot >
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        <td className="text-right justify-end p-4 flex w-full flex-row"><Button onClick={() => setOpenUploadModal(true)}><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>
+        </td>
+        </tr>
+      </tfoot>
     </table>
     </div>
   </section>
+
+  <Modal show={openUploadModal} onClose={() => setOpenUploadModal(false)}>
+        <Modal.Header>Import Users by CSV</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              Mass import your company users with a simple CSV formatted file.  Your CSV file should be without headers and simply be full name, email. We&apos;ll handle the rest!
+            </p>
+          </div>
+          <div id="fileUpload" className="max-w-md mt-4">
+            <div className="mb-2 block">
+              <Label htmlFor="file" value="Upload file" />
+            </div>
+            <FileInput id="file" helperText="(limited to enterprise users only)" />
+          </div>
+          
+     
+
+          
+          </Modal.Body>
+          
+      </Modal>
+
   </>
   );
 }
