@@ -8,7 +8,7 @@ function ProgressBar({ totalQuestions, currentQuestionIndex }) {
 // console.log(totalQuestions);
 // console.log(currentQuestionIndex);
   return (
-    <div className="progress-bar-container w-full bg-gray-700 h-6 overflow-hidden opacity-70 relative top-[60px]">
+    <div className="progress-bar-container w-full bg-gray-700 h-6 overflow-hidden opacity-70 relative top-0">
       <div
         className="progress-bar bg-blue-500 h-full transition-width rounded-md opacity-100"
         style={{ width: `${progress}%` }}

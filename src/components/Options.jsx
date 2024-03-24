@@ -6,7 +6,7 @@ function Options({ options, onAnswerClick, correctAnswer }) {
 
   // Shuffle the answer options
   const shuffledOptions = [...options];
-  // TODO how to allow shuffle of items, but not after click? -perhaps shuffle when data is loaded - not now when data is being presented
+  // TODO how to allow shuffle of items, but not after click? -perhaps shuffle when data is loaded - not now when data is being presented - would need to take into account a survey quiz with fixed position options
   // for (let i = shuffledOptions.length - 1; i > 0; i--) {
   //   const j = Math.floor(Math.random() * (i + 1));
   //   [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
@@ -72,6 +72,9 @@ function Options({ options, onAnswerClick, correctAnswer }) {
           tabIndex={0}
         >
           <span className="border-2 border-slate-600 bg-slate-700 border-2 border-slate-600 mr-2 pl-2 pr-2 rounded-lg">{indexToLetter(index)}</span> {option}
+          {/* <br/>
+          {selectedAnswer}<br/>
+          {correctAnswer} */}
         </button>
       ))}
     </div>
