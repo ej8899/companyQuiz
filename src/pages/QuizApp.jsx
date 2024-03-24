@@ -3,15 +3,16 @@ import { useState, useEffect } from 'react';
 import Question from '../components/Question';
 import Options from '../components/Options';
 import Result from '../components/Result';
-import { Button } from 'flowbite-react';
-import { Link, useParams } from 'react-router-dom';
+import { Button, Spinner } from 'flowbite-react';
+import { Link, useParams, useLocation, useNavigate,  } from 'react-router-dom';
 import { globalconfig } from '../config.js';
 import { fetchImage } from '../utilities/imageSearch';
 import ProgressBar from '../components/ProgressBar.jsx';
 import Navbar from '../components/Navbar';
 
+
 function QuizApp() {
-  const { quizId } = useParams();
+  const { quizId, userId } = useParams();
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -22,9 +23,14 @@ function QuizApp() {
   const [slideOut, setSlideOut] = useState(false);
   const [quizData, setQuizData] = useState(null);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const data = location;
+
   useEffect(() => {
     console.log('in useEffect');
-    console.log('qid', quizId);
+    console.log('quizId in quizapp:', quizId);
+    console.log('userId in quizapp:',data.state.userId)
     const fetchQuizData = async () => {
       try {
         const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?qid=${quizId}`);
@@ -32,8 +38,10 @@ function QuizApp() {
           throw new Error('Failed to fetch quiz data');
         }
         const data = await response.json();
-        console.log('Quiz data:', data);
-        setQuizData(data);
+        setTimeout(() => {
+          console.log('Quiz data:', data);
+          setQuizData(data);
+        }, 800);
       } catch (error) {
         console.error('Error fetching quiz data:', error);
       }
@@ -55,6 +63,7 @@ function QuizApp() {
     }
   }, [quizQuestions, currentQuestionIndex]);
 
+
   useEffect(() => {
     if (!quizData) return;
     // Set all questions from quizData.qna
@@ -69,36 +78,6 @@ function QuizApp() {
     }
   
     // Slide out the current question
-    
-    // setSlideOut(true);
-  
-    // // Wait for a brief pause before moving to the next question
-    // setTimeout(() => {
-    //   // Add the current question to the list of asked questions
-    //   if (!askedQuestions.includes(currentQuestion)) {
-    //     setAskedQuestions([...askedQuestions, currentQuestion]);
-    //   }
-      
-    //   // Reset slide out state
-    //   setSlideOut(false);
-  
-    //   // Move to the next question after the pause
-    //   setTimeout(() => {
-    //     setCurrentQuestionIndex(currentQuestionIndex + 1);
-    //   }, 500); // Adjust the duration of the pause before moving to the next question
-  
-    //   // End of the quiz (check if all questions have been asked)
-    //   if (askedQuestions.length === quizQuestions.length) {
-    //     if (score >= globalconfig.passingGrade / globalconfig.numQuestions) {
-    //       setShowPassMessage(true);
-    //       setShowRetryPrompt(false);
-    //     } else {
-    //       setShowRetryPrompt(true); // Show the retry prompt
-    //       setShowPassMessage(false); // Hide pass message
-    //     }
-    //   }
-    // }, 900); // Wait for the brief pause before starting the slide out animation
-
     const slideOutDelay = new Promise((resolve) => setTimeout(resolve, 800));
     
     slideOutDelay.then(() => {
@@ -111,8 +90,12 @@ function QuizApp() {
       setTimeout(() => {
         setSlideOut(false);
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+
       if (askedQuestions.length === quizQuestions.length) {
-        if (score >= globalconfig.passingGrade / globalconfig.numQuestions) {
+        // send score to server regardless of pass or fail
+        console.log('questions all asked')
+        sendScoreData();
+        if (score >= quizData.passingGrade / quizQuestions.length) {
           setShowPassMessage(true);
           setShowRetryPrompt(false);
         } else {
@@ -120,8 +103,11 @@ function QuizApp() {
           setShowPassMessage(false); // Hide pass message
         }
       }
+
       }, 500);
   });
+
+
 };
 
   const handleRetryClick = () => {
@@ -132,15 +118,30 @@ function QuizApp() {
     setShowPassMessage(false);
     setAskedQuestions([]);
   };
+  
+  const handleQuitClick = () => {
+    // navigate to user home
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setShowRetryPrompt(false);
+    setShowPassMessage(false);
+    setAskedQuestions([]);
+
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    navigate(`/usermain/${data.state.userId}`);
+  }
+
+  
 
   return (
     <div className='h-full z-0'>
       {quizData ? (
         <div className={`flex flex-col h-full overflow-hidden bg-[url(${quizData.backgroundImage})]`}>
           <div className="dark flex flex-col items-center justify-center h-screen w-screen bg-black bg-opacity-40">
-            <Navbar />
+            {/* <Navbar /> */}
             <ProgressBar currentQuestionIndex={currentQuestionIndex} totalQuestions={quizQuestions.length} />
-            <div className="relative top-[45px] text-5xl text-slate-300 font-extrabold p-4 font-sans">{quizData.quizName} ({quizId})</div>
+            <div className="relative  text-5xl text-slate-300 font-extrabold p-4 font-sans">{quizData.quizName}</div>
             
             <div className='flex flex-col items-center justify-center h-full w-full'>
               {showRetryPrompt ? (
@@ -180,7 +181,7 @@ function QuizApp() {
                       <Button>select a new exam</Button>
                     </div>
                   ) : (
-                    <Result score={score} totalQuestions={quizQuestions.length} handleRetryClick={handleRetryClick} />
+                    <Result score={score} totalQuestions={quizQuestions.length} allData={data.state} passingGrade={quizData.passingGrade} handleRetryClick={handleRetryClick} handleQuitClick={handleQuitClick}/>
                   )}
                 </div>
               )}
@@ -188,7 +189,18 @@ function QuizApp() {
           </div>
         </div>
       ) : (
-        <div>Loading quiz data...</div>
+        <>
+        <div className="flex flex-col  h-full w-full items-center justify-center">
+          
+          <div className=" p-4 w-full max-w-md h-full md:h-auto">
+          <div className=" p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="text-center pt-4"><Spinner size="xl" /></div>
+            <p className="mb-4 pt-4 text-2xl font-semibold text-gray-900 dark:text-white">Loading quiz...</p>  
+          </div>
+          </div>
+          
+        </div>
+        </>
       )}
     </div>
   );
