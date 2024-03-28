@@ -2,13 +2,15 @@
 
 
 const fetchImage = async (keyword, retryCount = 3) => {
-  return;
+  
   try {
-    const response = await fetch('https://api.unsplash.com/photos/random?query=' + keyword + '&orientation=landscape&w=200&client_id=', {
-      headers: {
-        'Authorization': 'Client-ID 4fRj7AMw1h-PMqQ8NDHBvg7U4_nzSuGISxujk6CKfP0' // Replace with your Unsplash API key
-      }
-    });
+    const response = await fetch('https://erniejohnson.ca/apps/cquiz-api/unsplashproxy.php?query=' + keyword);
+
+    // const response = await fetch('https://api.unsplash.com/photos/random?query=' + keyword + '&orientation=landscape&w=200&client_id=', {
+    //   headers: {
+    //     'Authorization': 'Client-ID 4fRj7AMw1h-PMqQ8NDHBvg7U4_nzSuGISxujk6CKfP0' // Replace with your Unsplash API key
+    //   }
+    // });
 
     if (!response.ok) {
       throw new Error(`Unsplash API returned status code ${response.status}`);
