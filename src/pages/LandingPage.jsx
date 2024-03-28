@@ -1,10 +1,8 @@
+import React, { useRef, useState, useEffect } from 'react';
 
-
-import { Button, Banner } from 'flowbite-react';
+import { Button, Banner, Accordion } from 'flowbite-react';
 // import { HiX } from 'react-icons/hi';
 // import { MdAnnouncement } from 'react-icons/md';
-
-import { useRef } from 'react';
 
 import { CheckMark } from '../assets/CheckMark';
 import SignUp from '../pages/SignUp';
@@ -12,42 +10,48 @@ import Navbar from '../components/Navbar'
 import { Newsletter } from '../components/Newsletter';
 import { setPageTitle } from '../utilities/helpers';
 
+import { useThemeMode } from 'flowbite-react';
+
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
 function LandingPage() {
+  
   const logoImage = "./android-chrome-192x192.png";
   setPageTitle();
+
+  
 
   const getstarted = useRef(null)
   const scrollToSection = (elementRef) => {
     window.scrollTo({
       top: elementRef.current.offsetTop,
       behavior: "smooth",
-     });
+      });
     };
 
   return (
     <>
     <Navbar/>
-      <section className="bg-white dark:bg-gray-900 pt-28">
-        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    
+      <section className="bg-[#222f40] pt-28  w-full z-0 bg-fixed">
+        <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-12 lg:grid-cols-12 z-50">
             <div className="mr-auto place-self-center lg:col-span-7">
-                <h1 className="max-w-2xl mb-4 text-4xl font-sans font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">Easy Quiz Management for your business.</h1>
-                <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Simplify testing of your company policies and proceedures with a simple exam/quiz system - branded and built to your company needs!</p>
+                <h1 className="max-w-2xl mb-4 text-4xl font-sans font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white">Easy Quiz Management for your business.</h1>
+                <p className="max-w-2xl mb-6 font-light  lg:mb-8 md:text-lg lg:text-xl text-gray-400">Simplify testing of your company policies and proceedures with a simple exam/quiz system - branded and built to your company needs!</p>
                 <Button onClick={() => scrollToSection(getstarted)}  className="text-white hover:bg-primary-700 focus:ring-4 focus:ring-primary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:text-white  dark:focus:ring-primary-900 transition-all duration-300 ease-in-out hover:bg-purple-700 hover:dark:bg-purple-700">
                     Get started
                     <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                 </Button>
             </div>
             <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png" alt="mockup" />
-                {/* <img src="landing-person.png" alt="mockup" /> */}
+                <img src="hero-dark.jpeg" alt="mockup image" />
             </div>                
         </div>
+        <div className="skewed"></div>
       </section>
+      
 
-
-  <section className="bg-white dark:bg-gray-900">
+  <section className=" bg-white dark:bg-gray-900 ">
   <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div className="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
           <h2 className="mb-4 text-4xl tracking-tight font-sans font-extrabold text-gray-900 dark:text-white">Designed for business teams like yours</h2>
@@ -168,11 +172,70 @@ function LandingPage() {
           </div>
       </div>
       <Newsletter />
-      <section ref={getstarted}></section>
+
+      <section>
+
+      <h2 className="mb-4 mt-12 text-4xl tracking-tight font-sans font-extrabold text-gray-900 dark:text-white text-center">Frequently asked questions</h2>
+    <Accordion>
+      <Accordion.Panel>
+        <Accordion.Title>What is CompanyQuiz?</Accordion.Title>
+        <Accordion.Content>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          CompanyQuiz is a comprehensive web application designed to streamline the management of quizzes and testing within a company environment. It offers a range of features tailored to both users and company administrators, ensuring smooth operation and efficient monitoring of testing processes.
+          </p>
+        </Accordion.Content>
+      </Accordion.Panel>
+      <Accordion.Panel>
+        <Accordion.Title>Can I customize quiz assignments for different user groups?</Accordion.Title>
+        <Accordion.Content>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          Yes, CompanyQuiz allows administrators to customize quiz assignments based on individual users, user roles or departments. This ensures that each user receives quizzes tailored to their specific job requirements or training needs.
+          </p>
+        </Accordion.Content>
+      </Accordion.Panel>
+      <Accordion.Panel>
+        <Accordion.Title>What options are available for creating new quizzes?</Accordion.Title>
+        <Accordion.Content>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          CompanyQuiz offers an AI generator tool that enables administrators to create new quizzes quickly and efficiently. Administrators can input specific criteria or topics, and the AI generator will automatically generate quiz questions based on the input parameters.  
+          </p>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          At any time, company adminstrators can also create a quiz entirely from scratch by adding questions, answer options, and specifying the correct answers manually. This allows for fully customized quizzes tailored to specific learning objectives or scenarios.
+          </p>
+        </Accordion.Content>
+      </Accordion.Panel>
+
+      <Accordion.Panel>
+        <Accordion.Title>How are quiz results and certificates managed?</Accordion.Title>
+        <Accordion.Content>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          Upon completing a quiz, users receive immediate feedback on their results. CompanyQuiz automatically generates certificates of completion, which users can download and print for their records. Administrators can also access detailed reporting and analytics on quiz results through the admin dashboard.
+          </p>
+        </Accordion.Content>
+      </Accordion.Panel>
+
+      <Accordion.Panel>
+        <Accordion.Title>How can CompanyQuiz help ensure company compliance with testing requirements?</Accordion.Title>
+        <Accordion.Content>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          CompanyQuiz provides administrators with comprehensive reporting and analytics tools to monitor company-wide compliance with testing requirements. By analyzing pass/fail rates and quiz completion rates, administrators can identify areas for improvement and take proactive measures to ensure compliance across the organization.
+          </p>
+          <p className="mb-2 text-gray-500 dark:text-gray-400">
+          Additionally, a quick and simple CSV export option is available to allow administrators to track compliance metrics over time. This helps ensure all necessary testing requirements are being met on an ongoing basis across the entire organization.
+          </p>
+        </Accordion.Content>
+      </Accordion.Panel>
+
+    </Accordion>
+
+
+      </section>
+
+      <section ref={getstarted} className="bg-white"></section>
       <SignUp />
   </div>
-
-  <footer className="p-4 bg-white sm:p-6 dark:bg-gray-800">
+  
+  <footer className="p-4 bg-slate-100 sm:p-6 dark:bg-gray-800">
     <div className="mx-auto max-w-screen-xl">
         <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">
