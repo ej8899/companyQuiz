@@ -160,4 +160,6 @@ Don the Developer March 2024 Hackathon
 - chase down some state issues from initial hard coded data
 
 3/28/24 - companyquiz
+- tweak misc styles
+- update landing page w images, style
 - 
