@@ -5,6 +5,7 @@ import { Button, Banner, } from 'flowbite-react';
 
 import { useState, useEffect } from 'react';
 import { SummaryTeamProgress } from "./adminSummaryTeamProgress";
+import Popover from "./Popover";
 
 
 
@@ -147,42 +148,17 @@ return (
         </div>
         <div className="w-3/4 p-4 relative">
 
-  <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1 text-left">Users in Compliance
-        <button
-          type="button"
-          className="inline-flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-500 transition-opacity duration-300 hover:opacity-100 relative"
-          onMouseEnter={() => setPopoverVisible(true)}
-          onMouseLeave={() => setPopoverVisible(false)}
-        >
-          <svg
-            className="w-4 h-4"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </button></h2>
-        <div
-          className={`absolute z-10 ${
-            popoverVisible ? 'visible opacity-100' : 'invisible opacity-0'
-          }  text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-400 rounded-lg shadow-sm w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400 ml-12`}
-        >
-          <div className="p-3 space-y-2">
-            <h3 className="font-semibold text-gray-900 dark:text-white text-left">Users in Compliance...</h3>
-            <p className="text-left">We calculate users in compliance as a percentage of the number of users who have been assigned quizzes and that have passed all assigned quizzes.  User with multiple quizzes assigned, but have not passed all quizzes are not part of being compliant.</p>
-          </div>
-        </div>       
+  <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1 text-left">Users in Compliance <Popover content="We calculate users in compliance as a percentage of the number of users who have been assigned quizzes and that have passed all assigned quizzes.  User with multiple quizzes assigned, but have not passed all quizzes are not part of being compliant." title="Users in Compliance..." />
+        </h2>
+    
           
           <div className="bg-gray-300 dark:bg-gray-700 p-3 mt-3 rounded-lg">
           <StackedBarGraph pass={overallComplianceRate} fail={100 - overallComplianceRate} />
           </div>
-          <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1 text-left pt-3">Quiz Summary:</h2>
+          
+          <h2 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1 text-left pt-3">Quiz Summary:<Popover content="Quiz summaries represent the quizzes assigned to users and the percentage of these quizzes passed. Ideally you want to see 100% across all your quizzes!" title="Quiz Summary..." />
+          </h2>
+          
           <div className="bg-gray-300 dark:bg-gray-700 p-3 mt-3 rounded-lg">
           <ul>
             {Object.entries(summaryData.quizSummary).map(([qid, summary]) => (
@@ -192,7 +168,7 @@ return (
                 {companyData.quizList.map((quiz, index) => {
                   if (quiz.qid === qid) {
                     return (
-                      <div key={index} className="text-gray-500 pt-2">
+                      <div key={index} className="text-gray-400 pt-2">
                         {quiz.quizName}:
                       </div>
                     );

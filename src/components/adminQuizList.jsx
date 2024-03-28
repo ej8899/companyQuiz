@@ -16,6 +16,8 @@ import { useState, useEffect } from 'react';
 import QuizBuilder from "../pages/QuizBuilder";
 import AiQuiz from "./AiQuiz";
 import PreviewQuiz from "./previewQuiz";
+import Popover from "./Popover";
+import HorizontalBarGraph from "./HorizontalGraph";
 
 export function AdminQuizList({companyIdent, company}) {
   const navigate = useNavigate();
@@ -39,21 +41,24 @@ export function AdminQuizList({companyIdent, company}) {
 
   const renderQuizList = () => {
     if (!company) return null; // Return null if company not found
+    function passPercent() {
+      return Math.floor(Math.random() * (90 - 75 + 1)) + 75;
+    }
+    
     return company.quizList.map((quiz, index) => (
       <tr key={index} className="hover:bg-gray-300">
         {/* Render columns for each quiz */}
         <td className="p-2  text-left p-2 pl-2 text-gray-500 pt-2">{quiz.quizName}</td>
-        <td className="flex flex-row justify-center pt-2">
-        {/* <Link to={`/quizbuilder/${quiz.qid}`}></Link> */}
+        <td>
+
+        <HorizontalBarGraph passPercent={passPercent()} />
+        {/* <div key="pbar1" className="bg-red-500 pl-2 flex flex-row justify-center text-gray-300 w-32" style={{ width: `15` }}>
+                    <Tooltip content="quizzes not taken">15%</Tooltip>
+                  </div> */}
+        </td>
+        <td className="flex flex-row justify-center pt-2 text-center">
         <div onClick={() => handleEditQuizClick(quiz.qid)}>
-        {/* <div onClick={() => navigate(`/quizbuilder/${quiz.qid}`,{
-                state:{
-                  quizId: quiz.qid,
-                  userId: companyIdent,
-                  industry: 'fishing',
-                  company: company,
-                }
-                })}> */}
+        
                 <Tooltip content="edit quiz"><FaEdit className="mr-4 h-6 w-6 text-gray-500 hover:text-sky-700 hover:cursor-pointer"/></Tooltip></div>
         <Tooltip content="delete this quiz"><BsFillTrashFill className="mr-4 h-6 w-6 text-gray-500 hover:text-sky-700"/></Tooltip>
         
@@ -85,7 +90,8 @@ export function AdminQuizList({companyIdent, company}) {
             <table className="min-w-full">
               <thead>
                 <tr>
-                  <th className="text-gray-500 bg-slate-400 text-slate-900 uppercase tracking-wider text-left pl-2 pt-2 pb-2">Quiz Name</th>
+                  <th className="text-gray-500 bg-slate-400 text-slate-900 uppercase tracking-wider text-left pl-2 pt-2 pb-2 ">Quiz Name</th>
+                  <th className=" text-center bg-slate-400 text-slate-900 w-32 whitespace-nowrap"><span className="uppercase tracking-wider">pass/fail rate</span><span className="whitespace-normal text-left"><Popover title="Pass/Fail Rate..." content="This is the ratio of pass to fails for this quiz.  If too many are failing this quiz, perhaps consider your quiz questions or you may need to look into your training program(s)."/></span></th>
                   <th className="text-gray-500 bg-gray-400 text-black uppercase tracking-wider pt-2 pb-2">Actions</th>
                 </tr>
               </thead>
@@ -95,7 +101,8 @@ export function AdminQuizList({companyIdent, company}) {
               <tfoot>
                 <tr>
                   <td></td>
-                  <td className="flex justify-end  pr-4 pt-4">
+                  <td></td>
+                  <td className="flex justify-end pr-4 pt-4 w-full">
                     {/* <Link to={`/quizbuilder/new`}> */}
                     <Button type="button"
                             className="mr-2 uppercase"

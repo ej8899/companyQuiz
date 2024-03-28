@@ -22,7 +22,7 @@ import SignUp from './pages/SignUp';
 function App() {
 
   return (
-    <Flowbite >
+    <Flowbite>
       <div className='h-screen'>
       <HashRouter>
       <Routes>

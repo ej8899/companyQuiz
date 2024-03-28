@@ -20,6 +20,7 @@ import { FileInput, Label, TextInput } from 'flowbite-react';
 
 import AddUser from './adminAddUser';
 import DeleteUserModal from './adminDeleteUser';
+import Popover from './Popover';
 
 // import {userData} from "../sampledata.js"
 // import {quizData} from "../quizdata.js"
@@ -191,7 +192,7 @@ export function AdminUserList({companyIdent, company,}) {
           <h5 className="mr-3 text-2xl font-semibold dark:text-black text-black">User Management</h5>
           <p className="text-gray-500 dark:text-gray-500">Manage all company members (taking quizzes) here</p>
         </div>
-    <table className="min-w-full divide-y divide-gray-200 w-full table-auto border border-separate border-spacing-0">
+    <table className="min-w-full divide-y divide-gray-200 w-full table-auto border-0 border-separate border-spacing-0">
       <thead className="bg-gray-50 border-2">
         <tr className="p-0 ">
           {/* <th scope="col" className="text-right px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
@@ -204,7 +205,7 @@ export function AdminUserList({companyIdent, company,}) {
             Email
           </th>
           <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400 text-center">
-            Status
+            Status<span className="whitespace-normal text-left normal-case tracking-normal"><Popover title="Quiz Satus..." content="Red is the percentage of quizzes assigned but not taken, yellow is the percentage of quizzes failed and green are the percentage of quizzes passed. All by this team member."/></span>
           </th>
           <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400 text-end text-s font-medium text-gray-500 uppercase tracking-wider  flex flex-row justify-center align-bottom">
             Actions <Tooltip content="download CSV of all users' results"><Button size="xs" onClick={downloadCSV} className="ml-4"><PiDownloadSimpleBold className="w-4 h-4"/></Button></Tooltip>
@@ -359,7 +360,7 @@ export function AdminUserList({companyIdent, company,}) {
         ))}
       </tbody>
     </table>
-    <div className="flex flex-row w-full justify-end pr-4 pb-2">
+    <div className="flex flex-row w-full justify-end pr-4 pb-2 pt-4">
       <Button className="mr-2 uppercase" onClick={() => setOpenReminderModal(true)}><BiMailSend  className="h-6 w-6 mr-2"/>remind users</Button>
       
       <Button className="uppercase" onClick={() => setOpenUploadModal(true)}><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>
