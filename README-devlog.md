@@ -137,4 +137,27 @@ Don the Developer March 2024 Hackathon
 - fix navbar home flow in admin and user sections
 - fix misc state flow issues
 - misc UI/UX fixes and cleanups
+- fixed quiz assignment list bug -might hold actually assigning quizzes from being 'live' for demo purposes
+
+3/24/24 - companyquiz
+- minor UI/UX tweaks
+- temporary fix to login issues (delayed login to ensure data loads)
+- work on AI quiz generator (in test environment only)
+
+3/25/24 - companyquiz
+- middleware and tie into front end for ai quiz builder
+
+3/26/24 - companyquiz
+- build popover component and add 'popover' notes as required
+- misc UI tweaks
+- build quiz preview mode for admins
+
+3/27/24 - companyquiz
+- assemble post-hackathon timeline to app deployment
+- work on quizbuilder - increase functionality
+- quizbuilder images now auto search unsplash based on quiz name, industry, etc.
+- lockout a few areas for demo
+- chase down some state issues from initial hard coded data
+
+3/28/24 - companyquiz
 - 
