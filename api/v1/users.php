@@ -93,6 +93,130 @@ function addScores($data)
 }
 
 
+//
+// Function to handle OpenAI API request for AI quizbuilder
+//
+function handleOpenAIRequest($numQuestions, $numOptions, $subject) {
+  global $openai_api_key, $openai_url;
+  
+  $jsonTemplate = '{
+    "qna": [
+        {
+            "question": "",
+            "options": [
+                {
+                    "option": "",
+                    "isCorrect": "(true/false)"
+                }
+            ]
+        }
+    ]
+}';
+
+  // Create payload data
+  $data = array(
+      "model" => "gpt-3.5-turbo",
+      "stream" => false,
+      "messages" => array(
+          array(
+              "role" => "user",
+              "content" => "create $numQuestions multiple choice questions with $numOptions options each asking about $subject. write the answer as a JSON with the structure of $jsonTemplate"
+          )
+      )
+  );
+
+  // Initialize curl
+  $ch = curl_init();
+
+  // Set curl options
+  curl_setopt($ch, CURLOPT_URL, $openai_url);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+      "Content-Type: application/json",
+      "Authorization: Bearer " . urlencode($openai_api_key) // URL encode the API key
+  ));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+  // Execute curl request
+  $response = curl_exec($ch);
+
+  // Check for cURL errors
+  if ($response === false) {
+      $error = curl_error($ch);
+      curl_close($ch);
+      return json_encode(array("error" => "cURL error: $error"));
+  }
+
+  // Close curl
+  curl_close($ch);
+
+
+  // Decode the entire response JSON string
+  $responseArray = json_decode($response, true);
+
+  // Extract the content value as a string
+  $contentString = $responseArray['choices'][0]['message']['content'];
+    
+  $responseArray = json_decode($contentString, true);
+  //return json_decode($response);
+
+  // Initialize an empty array to store the modified data
+  $newData = array();
+
+  // Iterate over each item in the array
+
+foreach ($responseArray as $item) {
+  // Check if the "options" key exists in the item
+  if (isset($item['options'])) {
+      // Remove the "options" key from the item
+      unset($item['options']);
+  }
+  // Append the modified item to the new data array
+  $newData[] = $item;
+}
+  //$json = json_encode($newData);
+
+  // echo "contentString|";
+//  echo json_encode($contentString);
+  // echo $json;
+  // echo "|end of test";
+  return ($newData);
+  // Decode the content string to get the array of objects
+  
+  // Return the response 
+//return json_encode($contentString);
+
+  // $contentArray = json_decode($contentString, true); // Decode the JSON string into an associative array
+  // $newArray = array('qna' => $contentArray); // Create a new array with the key 'qna' and assign $contentArray to it
+  // $newJson = json_encode($newArray); // Encode the new array as JSON
+  // return $newJson;
+
+  // $qna = array();
+
+  // // Iterate through each question-answer pair
+  // foreach ($contentString as $item) {
+  //   echo $item;
+  //     $questionObj = array(
+  //         "question" => $item["question"],
+  //         "options" => $item["options"],
+  //         "correctAnswer" => $item["answer"]
+  //     );
+  //     // Append the formatted question-answer pair to the $qna array
+  //     $qna[] = $questionObj;
+  // }
+  
+  // // Encode the formatted data as JSON
+  // $jsonOutput = json_encode(array("qna" => $qna), JSON_PRETTY_PRINT);
+  
+  // // Output the JSON
+  // echo $jsonOutput;
+
+}
+
+
+
+
 
 //
 // Main code
@@ -159,6 +283,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         http_response_code(404);
         echo json_encode(array("error" => "User not found"));
     } 
+  } elseif (isset($_GET["numQuestions"], $_GET["numOptions"], $_GET["subject"])) {
+    //  AI QUIZ BUILDER
+    $numQuestions = $_GET["numQuestions"];
+    $numOptions = $_GET["numOptions"];
+    $subject = $_GET["subject"];
+
+    // Handle OpenAI API request
+    $openai_response = handleOpenAIRequest($numQuestions, $numOptions, $subject);
+
+    // Output the response
+    echo json_encode($openai_response);
   } else {
       // If neither UID nor CID is specified, return all users
       $users = getAllUsers();
