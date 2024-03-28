@@ -1,5 +1,6 @@
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import { useState, useEffect } from 'react';
+import { IoMdPersonAdd } from "react-icons/io";
 
 export default function AddUser({ isOpen, onClose, companyIdent }) {
   const [openModal, setOpenModal] = useState(isOpen);
@@ -49,11 +50,13 @@ export default function AddUser({ isOpen, onClose, companyIdent }) {
 
   return (
     // <Modal show={openModal} size="md" onClose={onClose || handleCloseModal} popup>
-    <Modal show={openModal} size="md" onClose={onClose} popup>
-      <Modal.Header />
+    <Modal show={openModal} size="lg" onClose={onClose} popup>
+      <Modal.Header>
+      <h3 className="m-3 text-xl font-medium text-gray-900 dark:text-white flex flex-row"><IoMdPersonAdd className="w-6 h-6 mr-2"/>Add employee to company account...</h3>
+      </Modal.Header>
       <Modal.Body>
         <div className="space-y-6">
-          <h3 className="text-xl font-medium text-gray-900 dark:text-white">Add employee to company account:</h3>
+          
           <div>
             <div className="mb-2 block">
               <Label htmlFor="email" value="Users&apos; Name" />

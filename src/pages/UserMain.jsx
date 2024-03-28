@@ -89,16 +89,16 @@ const ScoreTable = ({ scores,userId,company }) => {
 
   return (
     <div className='rounded-xl border-2 overflow-hidden border-gray-300 dark:border-gray-600 mt-4'>
-    <table className="divide-y divide-gray-200 ">
+    <table className="divide-y divide-gray-200 border-gray-400">
       <thead className="bg-gray-300 dark:bg-gray-800">
         <tr>
           <th scope="col" className="px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
             Quiz Name
           </th>
-          <th scope="col" className="px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" className="px-6 py-3 text-center text-s font-medium text-gray-500 uppercase tracking-wider">
             Score
           </th>
-          <th scope="col" className="px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" className="px-6 py-3 text-center text-s font-medium text-gray-500 uppercase tracking-wider">
             Date Tested
           </th>
           <th scope="col" className="px-6 py-3 text-left text-s font-medium text-gray-500 uppercase tracking-wider">
@@ -106,19 +106,24 @@ const ScoreTable = ({ scores,userId,company }) => {
           </th>
         </tr>
       </thead>
-      <tbody className="bg-white divide-y divide-gray-200">
+      <tbody className="bg-slate-200 dark:bg-slate-300 divide-y divide-gray-400">
         {sortedScores.map((score, index) => (
           <tr key={index}>
             <td className="px-6 py-4 whitespace-nowrap">
             <QuizNameCell scoreQid={score.qid} quizList={company.quizList}/>
-            <div className="pl-4 font-sans font-xs text-slate-500">(passing score required: {score.passingGrade}%)</div>
+            {/* <div className="pl-4 font-sans font-xs text-slate-500">(passing score required: {score.passingGrade}%)</div> */}
+            <div className={`pl-4 font-sans font-xs ${score.score < score.passingGrade ? 'text-red-500' : 'text-slate-500'}`}>
+              (passing score required: {score.passingGrade}%)
+            </div>
+
             </td>
             <td className="px-6 py-4 whitespace-nowrap align-top">
-              <div className={`text-center rounded-full border-1 border-white p-0 m-2 pl-4 pr-4 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < score.passingGrade ? 'bg-yellow-500' : 'bg-green-500'}`}>
+              <Tooltip content={score.score < score.passingGrade ? 'fail' : 'pass'}>
+                <div className={`text-center rounded-full border-1 border-white p-0 m-2 pl-4 pr-4 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < score.passingGrade ? 'bg-yellow-500' : 'bg-green-500'}`}>
                             {score.score !== null ? score.score : '--'}
-              %</div>
+              %</div></Tooltip>
             </td>
-            <td className="px-6 py-4 whitespace-nowrap align-top">{score.date === '0000-00-00' ? 'NOT STARTED' : score.date}</td>
+            <td className="px-6 py-4 whitespace-nowrap align-top text-center">{score.date === '0000-00-00' ? 'NOT STARTED' : score.date}</td>
             <td className="px-6 py-4 whitespace-nowrap flex flex-row align-top">
             <div onClick={() => navigate(`/quiz/${score.qid}`,{state:{
                   quizId: score.qid,
@@ -131,7 +136,7 @@ const ScoreTable = ({ scores,userId,company }) => {
               )}
               </div>
               {' '}
-              {score.score > 70 ? (
+              {score.score >= score.passingGrade ? (
                 <>
                   <div onClick={() => {
                     navigate(`/certificate/`,{state:{

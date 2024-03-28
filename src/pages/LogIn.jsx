@@ -1,4 +1,4 @@
-import { Button } from 'flowbite-react';
+import { Button, Spinner } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -16,8 +16,12 @@ function Login() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const logoImage = "./android-chrome-192x192.png";
-
+  const [isLoading, setIsLoading] = useState(false); // State variable for loading
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [userData, setUserData] = useState(null); // State variable for user data
+  
   const fetchCompanyDataFromAPI = async (userId) => {
+    setIsLoading(true);
     try {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?uid=${userId}`);
       if (response.ok) {
@@ -36,6 +40,7 @@ function Login() {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?email=${email}`);
       if (response.ok) {
         const data = await response.json();
+        
         localStorage.setItem('userData', JSON.stringify(data));
         const isAdmin = data.admin;
         console.log('isAdmin', isAdmin);
@@ -51,7 +56,11 @@ function Login() {
           localStorage.setItem('isAdmin', true);
           console.log('company id',data.uid)
           localStorage.setItem('companyId',data.uid);
-          navigate(`/admin/${data.uid}`);
+          // navigate(`/admin/${data.uid}`);
+          setTimeout(() => {
+            setIsLoading(false);
+            navigate(`/admin/${data.uid}`);
+          }, 2000);
           return;
         } 
         if (isAdmin === 0) {
@@ -63,7 +72,11 @@ function Login() {
           localStorage.setItem('userId',data.uid);
 
           // Redirect to user dashboard
-          navigate(`/usermain/${data.uid}`);
+          // navigate(`/usermain/${data.uid}`);
+          setTimeout(() => {
+            setIsLoading(false);
+            navigate(`/usermain/${data.uid}`);
+          }, 2000);
           return;
         }
       } else {
@@ -75,18 +88,31 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    console.log('email', email);
+    setIsLoading(true); // Set loading state to true
     await fetchUserDataFromAPI(email);
-
-   
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
+  
   return (
     <>
+    {isLoading ? (
+        <>
+        <div className="flex flex-col  h-full w-full items-center justify-center">
+          
+          <div className=" p-4 w-full max-w-md h-full md:h-auto">
+          <div className=" p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="text-center pt-4"><Spinner size="xl" /></div>
+            <p className="mb-4 pt-4 text-2xl font-semibold text-gray-900 dark:text-white">Loading Data...</p>  
+          </div>
+          </div>
+          
+        </div>
+        </>
+      ) : (
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a href="#" className="flex items-center mb-6 text-3xl font-semibold text-gray-900 dark:text-white font-sans font-extrabold">
@@ -127,6 +153,7 @@ function Login() {
             </div>
         </div>
       </section>   
+      )}
     </>
   );
 }

@@ -5,16 +5,21 @@ import { Button,  Tooltip, Modal, Dropdown} from 'flowbite-react';
 
 import { useState, useEffect } from 'react';
 
+import { BiMailSend } from "react-icons/bi";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 import { RxReset } from "react-icons/rx";
 import { PiDownloadSimpleBold } from "react-icons/pi";
 import { FaFileImport } from "react-icons/fa6";
+import { FaCaretDown } from "react-icons/fa6";
+import { FaCaretUp } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
 
-import { FileInput, Label, } from 'flowbite-react';
+
+import { FileInput, Label, TextInput } from 'flowbite-react';
 
 import AddUser from './adminAddUser';
+import DeleteUserModal from './adminDeleteUser';
 
 // import {userData} from "../sampledata.js"
 // import {quizData} from "../quizdata.js"
@@ -24,13 +29,16 @@ export function AdminUserList({companyIdent, company,}) {
   const [isLoading, setIsLoading] = useState(true);
   const [openRows, setOpenRows] = useState({});
   const [openUploadModal, setOpenUploadModal] = useState(false);
-console.log('adminUserList company state:',company)
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openReminderModal, setOpenReminderModal] = useState(false);
+
+  // console.log('adminUserList company state:',company)
   const fetchUserData = async () => {
     try {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${companyIdent}`);
       if (response.ok || (response.status >= 200 && response.status < 300)) {
         const data = await response.json();
-        console.log('User data:', data);
+        // console.log('User data:', data);
         setUserData(data); // Update user data state with fetched data
         setIsLoading(false); // Set loading state to false
       } else {
@@ -134,6 +142,22 @@ console.log('adminUserList company state:',company)
     fetchUserData();
   };
 
+  const [deleteModalOpenMap, setDeleteModalOpenMap] = useState({});
+
+  const deleteModalOpen = (userId) => {
+    setDeleteModalOpenMap(prevState => ({
+      ...prevState,
+      [userId]: true
+    }));
+  };
+  
+  const deleteModalClose = (userId) => {
+    setDeleteModalOpenMap(prevState => ({
+      ...prevState,
+      [userId]: false
+    }));
+  };
+
   const handleAddQuiz = (userId, quizId) => {
     const updatedUserData = userData.map(user => {
       console.log('user', user)
@@ -179,7 +203,7 @@ console.log('adminUserList company state:',company)
           <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400">
             Email
           </th>
-          <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400">
+          <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400 text-center">
             Status
           </th>
           <th scope="col" className="p-0 border-0 text-left px-6 py-3 text-left text-s font-medium text-black uppercase tracking-wider bg-gray-400 text-end text-s font-medium text-gray-500 uppercase tracking-wider  flex flex-row justify-center align-bottom">
@@ -198,7 +222,7 @@ console.log('adminUserList company state:',company)
               <td className="p-0 rounded-tl-xl text-left p-2 pl-2">{user.name}</td>
               <td className="text-left">{user.email}</td>
               <td className="">
-              <div className="flex mr-4 border-0 border-gray-200 rounded-lg overflow-hidden">    
+              <div className="flex border-0 border-gray-200 rounded-lg overflow-hidden">    
               {user.scores ? (
                 <>
                 {calculateScoreTotals(user.scores).nullScorePercentage > 0 && (
@@ -225,10 +249,17 @@ console.log('adminUserList company state:',company)
               </div>
               </td>
               <td className={`text-left border-0 rounded-tr-xl  overflow-hidden p-2 ${openRows[user.uid] ? 'border-red-300 ' : ''}`}>
-                <div className="flex flex-row justify-center">
-                  <Tooltip content="edit user details"><FaEdit className="mr-4 h-6 w-6"/></Tooltip>
-                  <Tooltip content="delete this user from company"><BsFillTrashFill className="mr-4 h-6 w-6"/></Tooltip>
-                  <button onClick={() => toggleRow(user.uid)}> {openRows[user.uid] ? "Hide Details" : "Show Details"}</button>
+                <div className="flex flex-row justify-center items-center">
+                  <Tooltip content="edit user details (disabled for demo)"><FaEdit className="mr-4 h-6 w-6 hover:text-sky-700"/></Tooltip>
+                  
+                  <Tooltip content="remove user from company">
+                  <button onClick={() => deleteModalOpen(user.uid)}>
+                    <BsFillTrashFill className="mr-4 h-6 w-6 hover:text-sky-700" />
+                  </button>
+                  </Tooltip>
+                  <DeleteUserModal isOpen={deleteModalOpenMap[user.uid]} onClose={() => deleteModalClose(user.uid)} userName={user.name} />
+                  
+                  <button onClick={() => toggleRow(user.uid)}> {openRows[user.uid] ? <Tooltip content="hide user details"><FaCaretUp className="h-6 w-6 text-red-500  hover:text-sky-700"/></Tooltip> : <Tooltip content="show user details"><FaCaretDown  className="h-6 w-6  hover:text-sky-700"/></Tooltip>}</button>
 
                 </div>
               </td>
@@ -237,14 +268,14 @@ console.log('adminUserList company state:',company)
               <tr key={`${user.uid}-scores`} className="text-gray-500 p-0 m-0">
                 <td colSpan="5" className="w-full justify-end overflow-hidden text-right m-0 p-0">
                   <div className="w-full justify-end flex flex-col">
-                  <table className="w-full shadow-md m-0 p-0 table-auto">
-                    <thead className="p-0 m-0 bg-slate-300 border-0 border-gray-400 ">
-                      {/* <tr className="bg-gray-300 border-2 border-gray-200 rounded-xl border"> */}
-                        <th className="text-s font-medium text-left pl-8 uppercase tracking-wider">Quiz name</th>
+                  <table className="w-full shadow-md m-0 p-0 table-auto mb-0 pb-0 border-b-0">
+                    <thead className="p-0 m-0 bg-slate-300 border-0 border-gray-400 pt-0 mt-0 ">
+                      <tr className="bg-gray-300 border-2 border-gray-200 rounded-xl border">
+                        <th className="text-s font-medium text-left pl-8 uppercase tracking-wider w-1/2">Quiz name</th>
                         <th className="text-s font-medium text-center uppercase tracking-wider">Score</th>
-                        <th className="text-s font-medium uppercase tracking-wider">Date Tested</th>
+                        <th className="text-s text-center font-medium uppercase tracking-wider">Date Tested</th>
                         <th className="text-s font-medium text-left uppercase tracking-wider">Actions</th>
-                      {/* </tr> */}
+                      </tr>
                     </thead>
                     <tbody>
                     {user.scores.length === 0 ? (
@@ -257,21 +288,26 @@ console.log('adminUserList company state:',company)
                         <tr key={index} className="bg-gray-200 dark:bg-gray-700">
                           <td className="pr-4 pl-8"><QuizNameCell scoreQid={score.qid} quizList={company.quizList} /></td>
                           <td className="text-center">
-                            <div className={`text-center rounded-full p-0 m-2 ${isNaN(score.score) || !score.score ? 'bg-red-500' : score.score < score.passingGrade ? 'bg-yellow-500' : 'bg-green-500'}`}>
+                            <div className={`text-center rounded-lg p-0 m-0 w-full ${isNaN(score.score) || !score.score ? 'bg-red-500 text-gray-200' : score.score < score.passingGrade ? 'bg-yellow-500 text-gray-800' : 'bg-green-500 text-gray-800'}`}>
                               {score.score !== null ? score.score : '--'}%
                             </div>
                           </td>
-                          <td>
+                          <td className="text-center">
                             {score.date === '0000-00-00' ? 'NOT STARTED' : score.date}
                           </td>
                           <td>
-                            <div className="flex flex-row p-2">
+                            <div className="flex flex-row p-2 text-center items-center">
                               <Tooltip content="reset quiz to not started">
-                                <RxReset className="w-6 h-6 ml-2 mr-2"/>
+                                <RxReset className="w-6 h-6 ml-2 mr-2  hover:text-sky-700"/>
                               </Tooltip>
                               <Tooltip content="delete quiz from user">
-                                <BsFillTrashFill  className="w-6 h-6"/>
+                                <button><BsFillTrashFill  className="w-6 h-6 mr-2  hover:text-sky-700"/></button>
                               </Tooltip>
+                              {score.score < score.passingGrade && (
+                                <Tooltip content="send reminder email">
+                                  <BiMailSend className="w-7 h-7 hover:text-sky-700" />
+                                </Tooltip>
+                              )}
                             </div>
                           </td>
                         </tr>
@@ -279,7 +315,7 @@ console.log('adminUserList company state:',company)
                     )}
                     <tr>
                       <td colSpan="4" className="text-center justify-center  items-center bg-gray-200 dark:bg-gray-700">
-                       <div className="w-full  flex flex-row justify-end pr-4 pb-2">
+                        <div className="w-full  flex flex-row justify-end pr-4 pb-2">
                         {/* <Dropdown label="assign quiz" className="text-center bg-gray-300 border-2 border-gray-600 rounded-xl border overflow-hidden">
                         {company.quizList.map((quiz, index) => (
                           <Dropdown.Item key={index} onClick={() => handleAddQuiz(user.uid, quiz.qid)}>
@@ -289,7 +325,7 @@ console.log('adminUserList company state:',company)
                         </Dropdown> */}
 
 
-  <Dropdown label="assign quiz" className="text-center bg-gray-300 border-2 border-gray-600 rounded-xl border overflow-hidden">
+  <Dropdown label="ASSIGN QUIZ" className="uppercase text-center bg-gray-300 border-2 border-gray-600 rounded-xl border overflow-hidden">
     {company.quizList.map((quiz, index) => {
       // Check if the quiz is already taken by the user
       const isTaken = sortedUserData[userIndex].scores.some(score => score.qid === quiz.qid);
@@ -322,21 +358,17 @@ console.log('adminUserList company state:',company)
           </>
         ))}
       </tbody>
-      <tfoot >
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        <td className="text-right justify-end p-4 flex w-full flex-row"><Button onClick={() => setOpenUploadModal(true)}><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>
-        </td>
-        </tr>
-      </tfoot>
     </table>
+    <div className="flex flex-row w-full justify-end pr-4 pb-2">
+      <Button className="mr-2 uppercase" onClick={() => setOpenReminderModal(true)}><BiMailSend  className="h-6 w-6 mr-2"/>remind users</Button>
+      
+      <Button className="uppercase" onClick={() => setOpenUploadModal(true)}><FaFileImport  className="h-6 w-6 mr-2"/>import users (csv)</Button>
+    </div>
     </div>
   </section>
 
-  <Modal show={openUploadModal} onClose={() => setOpenUploadModal(false)}>
-        <Modal.Header>Import Users by CSV</Modal.Header>
+      <Modal show={openUploadModal} onClose={() => setOpenUploadModal(false)}>
+        <Modal.Header><span className="flex flex-row items-center"><FaFileImport  className="h-6 w-6 mr-2"/> Import Users by CSV...</span></Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
@@ -349,13 +381,45 @@ console.log('adminUserList company state:',company)
             </div>
             <FileInput id="file" helperText="(limited to enterprise users only)" />
           </div>
-          
-     
-
-          
-          </Modal.Body>
-          
+        </Modal.Body>         
       </Modal>
+
+      <Modal show={openReminderModal} onClose={() => setOpenReminderModal(false)}>
+        <Modal.Header ><span className="flex flex-row items-center font-bold text-2xl"><BiMailSend  className="h-8 w-8 mr-2"/> Remind Users...</span></Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+              We&apos;ll help encourage your team members to get their assigned quizzes started, and ultimately passed.  Just add a friendly reminder message below and click send!
+            </p>
+            <div className="m-0 block">
+              <Label htmlFor="large" value="Your reminder message:" />
+            
+              <TextInput id="large" type="text" sizing="lg" />
+              <Tooltip content="enterprise users only"><Button className="mt-2">SEND EMAIL</Button></Tooltip>
+            </div>
+            
+          </div>
+        </Modal.Body>         
+      </Modal>
+
+      {/* <Modal show={openDeleteModal} size="md" onClose={() => setOpenDeleteModal(false)} userName={userName}>
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to remove {userName}?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={() => setOpenDeleteModal(false)}>
+                {"Yes, I'm sure"}
+              </Button>
+              <Button color="gray" onClick={() => setOpenDeleteModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal> */}
 
   </>
   );

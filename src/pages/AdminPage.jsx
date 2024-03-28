@@ -87,7 +87,7 @@ function AdminPage() {
               </div>
               <AdminSummary companyIdent={adminId} companyData={company}  />
               <AdminUserList companyIdent={adminId} company={company}/>
-              <AdminQuizList companyIdent={adminId}/>
+              <AdminQuizList companyIdent={adminId} company={company}/>
               <AdminPublicQuizList companyIdent={adminId} company={company}/>
             </div>
           ) : (

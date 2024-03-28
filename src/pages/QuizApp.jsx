@@ -127,8 +127,6 @@ function QuizApp() {
     setShowPassMessage(false);
     setAskedQuestions([]);
 
-    const userData = JSON.parse(localStorage.getItem('userData'));
-
     navigate(`/usermain/${data.state.userId}`);
   }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // import {todayLong} from '../utilities/helpers.js'
 import { setPageTitle } from '../utilities/helpers.js';
+import { FaPrint } from "react-icons/fa6";
 
 const GenerateCertificate = () => {
   const location = useLocation();
@@ -52,10 +53,12 @@ const GenerateCertificate = () => {
           <p className="text-2xl font-bold text-center">{company.name},</p>
           <p className="text-2xl font-bold text-center">{data.state.quizDateTested}</p>
           {/* TODO put on bottom edge*/}
-          <p className="text-lg font-bold text-center ">verify here: [verify link]</p>
+          {/* <p className="text-lg font-bold text-center ">verify here: [verify link]</p> */}
         </div>  
       </div>
       </div>
+      <button onClick={() => window.print()} className="print:hidden fixed bottom-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow font-sans uppercase flex justify-center items-center "><FaPrint className="mr-2 h-6 w-6"/>Print Certificate</button>
+
     </div>
   );
 };

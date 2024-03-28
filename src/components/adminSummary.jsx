@@ -32,7 +32,7 @@ export function AdminSummary({companyIdent, companyData,}) {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${companyIdent}`);
       if (response.ok || (response.status >= 200 && response.status < 300)) {
         const data = await response.json();
-        console.log('User data in summary:', data);
+        // console.log('User data in summary:', data);
         setUserData(data); // Update user data state with fetched data
         setIsLoading(false); // Set loading state to false
       } else {
@@ -112,7 +112,7 @@ export function AdminSummary({companyIdent, companyData,}) {
     }
   }, [userData]);
 
-  console.log('summaryData',summaryData)
+  // console.log('summaryData',summaryData)
   const totalUsersWithQuizzes = summaryData.userCountWithQuiz;
   const totalUsersInCompliance = userData.filter(user => {
     // Check if the user has been assigned quizzes
@@ -124,8 +124,8 @@ export function AdminSummary({companyIdent, companyData,}) {
     const allQuizzesPassed = user.scores.every(score => score.score >= score.passingGrade);
     return allQuizzesPassed;
   }).length;
-  console.log('totalUsersInCompliance',totalUsersInCompliance)
-  console.log('totalUsersWithQuizzes',totalUsersWithQuizzes)
+  // console.log('totalUsersInCompliance',totalUsersInCompliance)
+  // console.log('totalUsersWithQuizzes',totalUsersWithQuizzes)
   // Calculate overall compliance rate
   const overallComplianceRate = (totalUsersInCompliance / totalUsersWithQuizzes) * 100 || 0;
 
