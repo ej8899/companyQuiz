@@ -7,7 +7,7 @@
   <h1 align="center">CompanyQuiz!</h1>
 
   <p align="center">
-    Test your Employees on their knowledge of company policy and received detailed and summary reports!
+    Test your Employees on their knowledge of company policy and received detailed and summary reports! CompanyQuiz! is built as a full SaaS application demo with landing page, admin pages and user pages.
     <br/>
     <br/>
     <a href="https://github.com/ej8899/companyQuiz"><strong>Explore the docs »</strong></a>
@@ -29,9 +29,7 @@
 
 * [About the Project](#about-the-project)
 * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
+* [Installation](#installation)
 * [Usage](#usage)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
@@ -41,35 +39,33 @@
 
 ## About The Project
 
-![Screen Shots](images/screenshot.png)
-(coming soon)
+![Sample quiz](design/scr-quiz.png)
+
 
 CompanyQuiz! is intended to allow your company to deploy simple quizzes and exams to your staff to test their knowledge on various company policy and proeedures.
 
+![End User Admin](design/scr-user.png)
 A simple end user interface allows your staff to select the policy or area of testing.
 
-A more robust backend allows administrators to review all users quiz results and status, create new quizzes, and add new users for testing.
+
+![Sample quiz](design/scr-admin.png)
+A more robust backend allows administrators to review all users quiz results and status, create new quizzes, and add new users for testing.  A summary is also displayed so you can see your company compliance stats at a glance.
+
+
 
 ## Built With
 
 Built with React, MySQL and PHP.
 
-## Getting Started
-
--- coming soon --
-
-### Prerequisites
-
--- coming soon --
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. You'll need a couple of API keys if rolling your own deployment.  You'll need a key for UnSplash images and for OpenAI..
 
 2. Clone the repo
 
 ```sh
-git clone https://github.com/your_username_/Project-Name.git
+git clone git@github.com:ej8899/companyQuiz.git
 ```
 
 3. Install NPM packages
@@ -78,17 +74,26 @@ git clone https://github.com/your_username_/Project-Name.git
 npm install
 ```
 
-4. Enter your API in `config.js`
+4. Enter your database and api keys in `config.php`
 
-```JS
-const API_KEY = 'ENTER YOUR API';
+```php
+<?php
+  $servername = "localhost";
+  $username = "";
+  $password = "";
+  $database = "";
+
+  $unsplashkey= "-";
+
+  $openai_api_key = "sk-";
+  $openai_url = "https://api.openai.com/v1/chat/completions";
+  $openai_model = "gpt-3.5-turbo";
+?>
 ```
 
 ## Usage
 
--- coming soon --
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+If using the existing live demo site, you can login under admin@acmecorp.com for the company administrator and wcabot@example.com as an end user/company employee. No password is required for either of those demo accounts as destructive features are disabled for the demo accounts.
 
 ## Roadmap
 
