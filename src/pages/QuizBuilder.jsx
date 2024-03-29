@@ -24,10 +24,10 @@ const QuizBuilder = ({adminId}) => {
   const location = useLocation();
   const data = location;
 
-  console.log('data (state) in qbuilder:', data.state);
-  console.log('userId in qbuilder (state):',data.state.userId)
-console.log('company in quizbuilder (state):',data.state.company)
-console.log('industry in quizbuilder: (state)',data.state.industry)
+//   console.log('data (state) in qbuilder:', data.state);
+//   console.log('userId in qbuilder (state):',data.state.userId)
+// console.log('company in quizbuilder (state):',data.state.company)
+// console.log('industry in quizbuilder: (state)',data.state.industry)
 
 
   useEffect(() => {
@@ -50,7 +50,7 @@ console.log('industry in quizbuilder: (state)',data.state.industry)
             setLoading(false);
           }, 500);
           
-          console.log('Quiz data:', data);
+          // console.log('Quiz data:', data);
           setFormData(data);
         } catch (error) {
           console.error('Error fetching quiz data:', error);
@@ -162,7 +162,7 @@ console.log('industry in quizbuilder: (state)',data.state.industry)
   const handleImageSelect = (imageUrl) => {
     // Set the selected image URL to the current question
     // You can implement this according to your data structure
-    console.log('Selected image:', imageUrl);
+    // console.log('Selected image:', imageUrl);
   };
 
   return (

@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-// import {quizData} from "../quizdata.js";
-// import {companyData, userData } from "../sampledata.js";
+
 
 // TODO this will need to render logo, background image, other branding, etc depending on route being supplied for the company 'owner'
 
@@ -27,7 +26,7 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('companyData', JSON.stringify(data));
-        console.log('Company data from API:', data);
+        // console.log('Company data from API:', data);
       } else {
         throw new Error('Failed to fetch company data from API');
       }
@@ -43,8 +42,8 @@ function Login() {
         
         localStorage.setItem('userData', JSON.stringify(data));
         const isAdmin = data.admin;
-        console.log('isAdmin', isAdmin);
-        console.log('User data from API:', data);
+        // console.log('isAdmin', isAdmin);
+        // console.log('User data from API:', data);
         fetchCompanyDataFromAPI(data.cid);
 
         // process admin or user settings here:
@@ -54,9 +53,9 @@ function Login() {
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('userId', null);
           localStorage.setItem('isAdmin', true);
-          console.log('company id',data.uid)
+          // console.log('company id',data.uid)
           localStorage.setItem('companyId',data.uid);
-          // navigate(`/admin/${data.uid}`);
+          
           setTimeout(() => {
             setIsLoading(false);
             navigate(`/admin/${data.uid}`);
@@ -72,7 +71,6 @@ function Login() {
           localStorage.setItem('userId',data.uid);
 
           // Redirect to user dashboard
-          // navigate(`/usermain/${data.uid}`);
           setTimeout(() => {
             setIsLoading(false);
             navigate(`/usermain/${data.uid}`);

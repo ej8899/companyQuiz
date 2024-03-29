@@ -161,7 +161,7 @@ export function AdminUserList({companyIdent, company,}) {
 
   const handleAddQuiz = (userId, quizId) => {
     const updatedUserData = userData.map(user => {
-      console.log('user', user)
+      // console.log('user', user)
       if (user.uid === userId) {
         // Add the quiz to the user's scores array
         user.scores.push({

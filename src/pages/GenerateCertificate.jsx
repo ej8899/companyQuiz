@@ -17,14 +17,14 @@ const GenerateCertificate = () => {
     setCompanyData(companyData);
     const userData = JSON.parse(localStorage.getItem('userData'));
     setUserData(userData);
-  console.log('companyData',companyData)
+  // console.log('companyData',companyData)
   }, []);
 
 
   
   //const { quizId, userId, quizScore, quizDateTested } = location.state;
   //const stateData = location.state ? location.state : null;
-  console.log('data', data);
+  // console.log('data', data);
   // const today = new Date();
 
   setPageTitle(data.state.userId + ' Certificate of Achievement in ' + data.state.quizId);
@@ -69,7 +69,7 @@ export default GenerateCertificate;
 
 const QuizNameCell = ({ scoreQid, quizList }) => {
   // Find the corresponding quiz name based on score.qid
-  console.log('quizList in cert:',quizList)
+  // console.log('quizList in cert:',quizList)
   const quizName = quizList.find(quiz => quiz.qid === scoreQid)?.quizName;
 
   // Render the quiz name

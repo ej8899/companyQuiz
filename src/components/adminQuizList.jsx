@@ -26,8 +26,8 @@ export function AdminQuizList({companyIdent, company}) {
 
   //const company = companyData.find(company => company.companyId === parseInt(companyIdent));
   //const company = JSON.parse(localStorage.getItem('companyData'));
-  console.log('company in adminquizlist (state):', company);
-  console.log('companyIdent in adminquizlist (sate):',companyIdent)
+  // console.log('company in adminquizlist (state):', company);
+  // console.log('companyIdent in adminquizlist (sate):',companyIdent)
 
   const handleEditQuizClick = (quizId) => {
     const myState = {
@@ -44,17 +44,15 @@ export function AdminQuizList({companyIdent, company}) {
     function passPercent() {
       return Math.floor(Math.random() * (90 - 75 + 1)) + 75;
     }
-    
+
     return company.quizList.map((quiz, index) => (
       <tr key={index} className="hover:bg-gray-300">
-        {/* Render columns for each quiz */}
+        
         <td className="p-2  text-left p-2 pl-2 text-gray-500 pt-2">{quiz.quizName}</td>
         <td>
 
         <HorizontalBarGraph passPercent={passPercent()} />
-        {/* <div key="pbar1" className="bg-red-500 pl-2 flex flex-row justify-center text-gray-300 w-32" style={{ width: `15` }}>
-                    <Tooltip content="quizzes not taken">15%</Tooltip>
-                  </div> */}
+        
         </td>
         <td className="flex flex-row justify-center pt-2 text-center">
         <div onClick={() => handleEditQuizClick(quiz.qid)}>

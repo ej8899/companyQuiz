@@ -39,11 +39,11 @@ export default function Ournavbar({home}) {
       setLoggedIn(true);
       const cId = localStorage.getItem('companyId');
       const uId = localStorage.getItem('userId');
-      console.log(cId,uId)
+      // console.log(cId,uId)
       if(cId) setNavId(cId);
       if(uId) setNavId(uId);
       setIsAdmin(localStorage.getItem('isAdmin'));
-      console.log("cid:"+cId + '\nuid:' + uId + '\nisadmin:'+isAdmin + '\nnavid:'+navId)
+      // console.log("cid:"+cId + '\nuid:' + uId + '\nisadmin:'+isAdmin + '\nnavid:'+navId)
     }
   }, []);
 

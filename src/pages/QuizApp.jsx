@@ -8,7 +8,7 @@ import { Link, useParams, useLocation, useNavigate,  } from 'react-router-dom';
 import { globalconfig } from '../config.js';
 import { fetchImage } from '../utilities/imageSearch';
 import ProgressBar from '../components/ProgressBar.jsx';
-import Navbar from '../components/Navbar';
+
 
 
 function QuizApp() {
@@ -28,9 +28,9 @@ function QuizApp() {
   const data = location;
 
   useEffect(() => {
-    console.log('in useEffect');
-    console.log('quizId in quizapp:', quizId);
-    console.log('userId in quizapp:',data.state.userId)
+    // console.log('in useEffect');
+    // console.log('quizId in quizapp:', quizId);
+    // console.log('userId in quizapp:',data.state.userId)
     const fetchQuizData = async () => {
       try {
         const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?qid=${quizId}`);
@@ -39,7 +39,7 @@ function QuizApp() {
         }
         const data = await response.json();
         setTimeout(() => {
-          console.log('Quiz data:', data);
+          // console.log('Quiz data:', data);
           setQuizData(data);
         }, 800);
       } catch (error) {
@@ -93,7 +93,7 @@ function QuizApp() {
 
       if (askedQuestions.length === quizQuestions.length) {
         // send score to server regardless of pass or fail
-        console.log('questions all asked')
+        // console.log('questions all asked')
         sendScoreData();
         if (score >= quizData.passingGrade / quizQuestions.length) {
           setShowPassMessage(true);

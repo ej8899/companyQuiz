@@ -35,7 +35,7 @@ function AiQuiz({ show, onClose }) {
   };
 
   useEffect(() => {
-    console.log('Quiz data changed:', quizData);
+    // console.log('Quiz data changed:', quizData);
   }, [quizData]);
 
   const handleNumQuestionsChange = (event) => {

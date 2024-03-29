@@ -17,8 +17,8 @@ function PreviewQuiz({ show, onClose, qid, qname }) {
   useEffect(() => {
     if(!show) return;
     setLoading(true);
-    console.log('in useEffect');
-    console.log('quizId in previewQuiz:', qid);
+    // console.log('in useEffect');
+    // console.log('quizId in previewQuiz:', qid);
     
     const fetchQuizData = async () => {
       try {
@@ -28,7 +28,7 @@ function PreviewQuiz({ show, onClose, qid, qname }) {
         }
         const data = await response.json();
         setTimeout(() => {
-          console.log('Quiz data for preview:', data.qna);
+          // console.log('Quiz data for preview:', data.qna);
           setQuizData(data.qna);
           setLoading(false);
         }, 800);

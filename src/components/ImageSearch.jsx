@@ -9,7 +9,7 @@ import { MdGradient } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 
 const ImageSearch = ({ onImageSelect, company, quizname }) => {
-  console.log('company props in imagesearch:',company)
+  // console.log('company props in imagesearch:',company)
   const [searchTerm, setSearchTerm] = useState(quizname || company.industry || 'computer quiz');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedItemId, setSelectedItemId] = useState(null); // Track selected item ID (image or color)
@@ -20,14 +20,14 @@ const ImageSearch = ({ onImageSelect, company, quizname }) => {
   }, []);
 
   const handleImageSearch = async () => {
-    console.log('in image search')
+    // console.log('in image search')
     try {
       const response = await fetch(`https://www.erniejohnson.ca/apps/cquiz-api/unsplashproxy.php?query=${searchTerm}`);
       if (!response.ok) {
         throw new Error('Failed to fetch images');
       }
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setSearchResults(data.results);
     } catch (error) {
       console.error('Error fetching images:', error);

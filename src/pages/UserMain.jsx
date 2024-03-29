@@ -45,7 +45,7 @@ export default function UserMain() {
     setCompanyEmail(companyEmail);
     const userData = JSON.parse(localStorage.getItem('userData'));
     setUserData(userData);
-    console.log('userData:',userData)
+    // console.log('userData:',userData)
     const companyData = JSON.parse(localStorage.getItem('companyData'));
     setCompanyData(companyData);
   }, []);
@@ -165,7 +165,7 @@ const ScoreTable = ({ scores,userId,company }) => {
 
 const QuizNameCell = ({ scoreQid, quizList }) => {
   // Find the corresponding quiz name based on score.qid
-  console.log('quizlist',quizList)
+  // console.log('quizlist',quizList)
   const quizName = quizList.find(quiz => quiz.qid === scoreQid)?.quizName;
 
   // Render the quiz name

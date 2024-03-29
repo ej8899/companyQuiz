@@ -37,7 +37,7 @@ function AdminPage() {
       const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${companyIdent}`);
       if (response.ok || (response.status >= 200 && response.status < 300)) {
         const data = await response.json();
-        console.log('User data:', data);
+        // console.log('User data:', data);
         setUserData(data); // Update user data state with fetched data
         //setIsLoading(false); // Set loading state to false
       } else {
@@ -58,7 +58,7 @@ function AdminPage() {
     // Retrieve company name from localStorage
     const companyData = JSON.parse(localStorage.getItem('companyData'));
     setCompanyData(companyData);
-    console.log('adminpage company:',company);
+    // console.log('adminpage company:',company);
   }, []);
   // Find the company record that matches the adminId
   //const company = companyData.find(company => company.companyId === Number(adminId));
