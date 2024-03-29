@@ -1,4 +1,4 @@
-import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
+import { Button, Checkbox, Label, Modal, TextInput, Tooltip } from 'flowbite-react';
 import { useState, useEffect } from 'react';
 import { IoMdPersonAdd } from "react-icons/io";
 
@@ -84,7 +84,9 @@ export default function AddUser({ isOpen, onClose, companyIdent }) {
           </div>
           
           <div className="w-full">
-          <Button onClick={handleAddUser}>Add User</Button>
+          {/* <Button onClick={handleAddUser}>Add User</Button> */}
+          <Tooltip content="disabled for demo"><Button >Add User</Button></Tooltip>
+
           </div>
         </div>
       </Modal.Body>
