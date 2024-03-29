@@ -13,7 +13,7 @@
     <a href="https://github.com/ej8899/companyQuiz"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
-    <a href="https://github.com/ej8899/companyQuiz">View Demo</a>
+    <a href="https://company-quiz.vercel.app/">View Live Demo</a>
     .
     <a href="https://github.com/ej8899/companyQuiz/issues">Report Bug</a>
     .
