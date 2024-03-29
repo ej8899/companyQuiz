@@ -47,13 +47,16 @@ function SignUp() {
                       </div>
                   </div>
                   <Button type="submit" className="w-full">Create an account</Button>
-                  <p className="text-sm font-light text-gray-800 dark:text-gray-400">
-                      Already have an account? <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500 underline">Login here</Link>
-                  </p>
+                  
               </form>
           </div>
+          
           </div>
+          
       </div>
+      <p className="text-xl font-bold text-gray-800 dark:text-gray-400">
+          Already have an account? <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500 underline">Login here</Link>
+      </p>
   </div>
 
 </section>
