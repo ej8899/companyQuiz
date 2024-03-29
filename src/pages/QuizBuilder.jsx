@@ -280,6 +280,7 @@ const QuizBuilder = ({adminId}) => {
     )}
     </Button>
     <Button
+      disabled={question.options?.length < 3} 
       className="ml-4 whitespace-nowrap"
       size="sm"
       type="Button"
