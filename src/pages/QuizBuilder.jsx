@@ -176,13 +176,13 @@ console.log('industry in quizbuilder: (state)',data.state.industry)
           <p className="mb-4 pt-4 text-xl font-semibold text-gray-900 dark:text-white">Loading Quiz Builder</p>  
         </div>
         ) : (
-      <div className="w-full border-2 font-sans p-2">
+      <div className="w-full  font-sans p-2">
         
         <table className="table-auto w-full border-spacing-2 border-separate">
   <tbody>
     <tr>
       <td className="text-black dark:text-gray-200 text-lg font-sans whitespace-nowrap ">Quiz ID:</td>
-      <td className="w-full">{formData.quizID}</td>
+      <td className="w-full dark:text-gray-300">{formData.quizID}</td>
     </tr>
     <tr>
       <td className="text-black dark:text-gray-200 text-lg font-sans whitespace-nowrap">Quiz Name:</td>
@@ -299,11 +299,11 @@ console.log('industry in quizbuilder: (state)',data.state.industry)
             </span>
           </div>
         ))}
-        <div className="w-full flex flex-col items-center justify-center border-2">
+        <div className="w-full flex flex-col items-center justify-center border-0">
         <Button type="Button" onClick={addQuestion}>Add New Question</Button>
         <br />
         <span className="flex flex-row"><Button  className="mr-4">Save this Quiz</Button> <Button  color="failure">Abort Changes</Button></span>
-        (disabled for demo)
+        <span className="dark:text-white">(disabled for demo)</span>
         </div>
         </div>
         )}
