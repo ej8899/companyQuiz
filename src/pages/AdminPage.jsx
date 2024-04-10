@@ -29,12 +29,14 @@ function AdminPage() {
   const [company, setCompanyData] = useState('');
   const [userData, setUserData] = useState([]);
 
+  const companyIdent = localStorage.getItem('companyId');
   //
   // fetch all users for this company
   //
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${companyIdent}`);
+      localStorage.setItem('companyId',adminId);
+      const response = await fetch(`https://erniejohnson.ca/apps/cquiz-api/users.php?cid=${adminId}`);
       if (response.ok || (response.status >= 200 && response.status < 300)) {
         const data = await response.json();
         // console.log('User data:', data);

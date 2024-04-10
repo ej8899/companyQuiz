@@ -102,7 +102,7 @@ function LandingPage() {
           </div>
           
           <div className="flex flex-col p-6 mx-auto max-w-lg text-center text-gray-900 bg-slate-200 rounded-lg border-2 border-gray-300 shadow dark:border-gray-600 xl:p-8 dark:bg-gray-800 dark:text-white hover:bg-slate-200 hover:dark:bg-slate-700 hover:scale-105 duration-500">
-              <h3 className="mb-4 text-3xl font-bold font-sans">Company</h3>
+              <h3 className="mb-4 text-3xl font-bold font-sans">Small Business</h3>
               <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">Relevant for multiple users, extended & premium support.</p>
               <div className="flex justify-center items-baseline my-8">
                   <span className="mr-2 text-5xl font-extrabold font-sans">$29</span>
