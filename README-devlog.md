@@ -162,4 +162,10 @@ Don the Developer March 2024 Hackathon
 3/28/24 - companyquiz
 - tweak misc styles
 - update landing page w images, style
+- bug hunts
+
+3/29/24
+- misc bug fixes, state tracking
+
+3/30/24
 - 
