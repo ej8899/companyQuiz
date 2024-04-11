@@ -8,6 +8,8 @@ import { FaUnsplash } from "react-icons/fa";
 import { MdGradient } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 
+import ImageUpload from './ImageUploader';
+
 const ImageSearch = ({ onImageSelect, company, quizname }) => {
   // console.log('company props in imagesearch:',company)
   const [searchTerm, setSearchTerm] = useState(quizname || company.industry || 'computer quiz');
@@ -197,7 +199,8 @@ const ImageSearch = ({ onImageSelect, company, quizname }) => {
           Upload your favorite image or photo and we&apos;ll try to use it for your quiz background!
           </div>
           
-          <Button><HiMiniPhoto className="mr-2 h-5 w-5" />Select image to upload</Button>
+          {/* <Button><HiMiniPhoto className="mr-2 h-5 w-5" />Select image to upload</Button> */}
+          <ImageUpload/>
           </div>
           </div>
   
